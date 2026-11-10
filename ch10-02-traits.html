@@ -1,0 +1,823 @@
+<!DOCTYPE HTML>
+<html lang="en" class="light sidebar-visible" dir="ltr">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>Mendefinisikan Perilaku Bersama dengan Trait - The Rust Programming Language</title>
+
+
+        <!-- Custom HTML head -->
+
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff">
+
+        <link rel="icon" href="favicon-de23e50b.svg">
+        <link rel="shortcut icon" href="favicon-8114d1fc.png">
+        <link rel="stylesheet" href="css/variables-8adf115d.css">
+        <link rel="stylesheet" href="css/general-0392ca55.css">
+        <link rel="stylesheet" href="css/chrome-fc474251.css">
+        <link rel="stylesheet" href="css/print-9e4910d8.css" media="print">
+
+        <!-- Fonts -->
+        <link rel="stylesheet" href="fonts/fonts-9644e21d.css">
+
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" id="mdbook-highlight-css" href="highlight-493f70e1.css">
+        <link rel="stylesheet" id="mdbook-tomorrow-night-css" href="tomorrow-night-4c0ae647.css">
+        <link rel="stylesheet" id="mdbook-ayu-highlight-css" href="ayu-highlight-3fdfc3ac.css">
+
+        <!-- Custom theme stylesheets -->
+        <link rel="stylesheet" href="ferris-d33b75bf.css">
+        <link rel="stylesheet" href="theme/2018-edition-4e126c62.css">
+        <link rel="stylesheet" href="theme/semantic-notes-9b5766c0.css">
+        <link rel="stylesheet" href="theme/listing-cab26221.css">
+
+
+        <!-- Provide site root and default themes to javascript -->
+        <script>
+            const path_to_root = "";
+            const default_light_theme = "light";
+            const default_dark_theme = "navy";
+            window.path_to_searchindex_js = "searchindex-e298a7a7.js";
+        </script>
+        <!-- Start loading toc.js asap -->
+        <script src="toc-8d1d8862.js"></script>
+    </head>
+    <body>
+    <div id="mdbook-help-container">
+        <div id="mdbook-help-popup">
+            <h2 class="mdbook-help-title">Keyboard shortcuts</h2>
+            <div>
+                <p>Press <kbd>←</kbd> or <kbd>→</kbd> to navigate between chapters</p>
+                <p>Press <kbd>S</kbd> or <kbd>/</kbd> to search in the book</p>
+                <p>Press <kbd>?</kbd> to show this help</p>
+                <p>Press <kbd>Esc</kbd> to hide this help</p>
+            </div>
+        </div>
+    </div>
+    <div id="mdbook-body-container">
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script>
+            try {
+                let theme = localStorage.getItem('mdbook-theme');
+                let sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script>
+            const default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? default_dark_theme : default_light_theme;
+            let theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            const html = document.documentElement;
+            html.classList.remove('light')
+            html.classList.add(theme);
+            html.classList.add("js");
+        </script>
+
+        <input type="checkbox" id="mdbook-sidebar-toggle-anchor" class="hidden">
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script>
+            let sidebar = null;
+            const sidebar_toggle = document.getElementById("mdbook-sidebar-toggle-anchor");
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            } else {
+                sidebar = 'hidden';
+                sidebar_toggle.checked = false;
+            }
+            if (sidebar === 'visible') {
+                sidebar_toggle.checked = true;
+            } else {
+                html.classList.remove('sidebar-visible');
+            }
+        </script>
+
+        <nav id="mdbook-sidebar" class="sidebar" aria-label="Table of contents">
+            <!-- populated by js -->
+            <mdbook-sidebar-scrollbox class="sidebar-scrollbox"></mdbook-sidebar-scrollbox>
+            <noscript>
+                <iframe class="sidebar-iframe-outer" src="toc.html"></iframe>
+            </noscript>
+            <div id="mdbook-sidebar-resize-handle" class="sidebar-resize-handle">
+                <div class="sidebar-resize-indicator"></div>
+            </div>
+        </nav>
+
+        <div id="mdbook-page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                <div id="mdbook-menu-bar-hover-placeholder"></div>
+                <div id="mdbook-menu-bar" class="menu-bar sticky">
+                    <div class="left-buttons">
+                        <label id="mdbook-sidebar-toggle" class="icon-button" for="mdbook-sidebar-toggle-anchor" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="mdbook-sidebar">
+                            <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M0 96C0 78.3 14.3 64 32 64H416c17.7 0 32 14.3 32 32s-14.3 32-32 32H32C14.3 128 0 113.7 0 96zM0 256c0-17.7 14.3-32 32-32H416c17.7 0 32 14.3 32 32s-14.3 32-32 32H32c-17.7 0-32-14.3-32-32zM448 416c0 17.7-14.3 32-32 32H32c-17.7 0-32-14.3-32-32s14.3-32 32-32H416c17.7 0 32 14.3 32 32z"/></svg></span>
+                        </label>
+                        <button id="mdbook-theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="mdbook-theme-list">
+                            <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M371.3 367.1c27.3-3.9 51.9-19.4 67.2-42.9L600.2 74.1c12.6-19.5 9.4-45.3-7.6-61.2S549.7-4.4 531.1 9.6L294.4 187.2c-24 18-38.2 46.1-38.4 76.1L371.3 367.1zm-19.6 25.4l-116-104.4C175.9 290.3 128 339.6 128 400c0 3.9 .2 7.8 .6 11.6c1.8 17.5-10.2 36.4-27.8 36.4H96c-17.7 0-32 14.3-32 32s14.3 32 32 32H240c61.9 0 112-50.1 112-112c0-2.5-.1-5-.2-7.5z"/></svg></span>
+                        </button>
+                        <ul id="mdbook-theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                            <li role="none"><button role="menuitem" class="theme" id="mdbook-theme-default_theme">Auto</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="mdbook-theme-light">Light</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="mdbook-theme-rust">Rust</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="mdbook-theme-coal">Coal</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="mdbook-theme-navy">Navy</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="mdbook-theme-ayu">Ayu</button></li>
+                        </ul>
+                        <button id="mdbook-search-toggle" class="icon-button" type="button" title="Search (`/`)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="/ s" aria-controls="mdbook-searchbar">
+                            <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M416 208c0 45.9-14.9 88.3-40 122.7L502.6 457.4c12.5 12.5 12.5 32.8 0 45.3s-32.8 12.5-45.3 0L330.7 376c-34.4 25.2-76.8 40-122.7 40C93.1 416 0 322.9 0 208S93.1 0 208 0S416 93.1 416 208zM208 352c79.5 0 144-64.5 144-144s-64.5-144-144-144S64 128.5 64 208s64.5 144 144 144z"/></svg></span>
+                        </button>
+                    </div>
+
+                    <h1 class="menu-title">The Rust Programming Language</h1>
+
+                    <div class="right-buttons">
+                        <a href="print.html" title="Print this book" aria-label="Print this book">
+                            <span class=fa-svg id="print-button"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M128 0C92.7 0 64 28.7 64 64v96h64V64H354.7L384 93.3V160h64V93.3c0-17-6.7-33.3-18.7-45.3L400 18.7C388 6.7 371.7 0 354.7 0H128zM384 352v32 64H128V384 368 352H384zm64 32h32c17.7 0 32-14.3 32-32V256c0-35.3-28.7-64-64-64H64c-35.3 0-64 28.7-64 64v96c0 17.7 14.3 32 32 32H64v64c0 35.3 28.7 64 64 64H384c35.3 0 64-28.7 64-64V384zm-16-88c-13.3 0-24-10.7-24-24s10.7-24 24-24s24 10.7 24 24s-10.7 24-24 24z"/></svg></span>
+                        </a>
+                        <a href="https://github.com/rust-lang/book" title="Git repository" aria-label="Git repository">
+                            <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 496 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M165.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6zm-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3zm44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9zM244.8 8C106.1 8 0 113.3 0 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C428.2 457.8 496 362.9 496 252 496 113.3 383.5 8 244.8 8zM97.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1zm-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7zm32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1zm-11.4-14.7c-1.6 1-1.6 3.6 0 5.9 1.6 2.3 4.3 3.3 5.6 2.3 1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2z"/></svg></span>
+                        </a>
+
+                    </div>
+                </div>
+
+                <div id="mdbook-search-wrapper" class="hidden">
+                    <form id="mdbook-searchbar-outer" class="searchbar-outer">
+                        <div class="search-wrapper">
+                            <input type="search" id="mdbook-searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="mdbook-searchresults-outer" aria-describedby="searchresults-header">
+                            <div class="spinner-wrapper">
+                                <span class=fa-svg id="fa-spin"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M304 48c0-26.5-21.5-48-48-48s-48 21.5-48 48s21.5 48 48 48s48-21.5 48-48zm0 416c0-26.5-21.5-48-48-48s-48 21.5-48 48s21.5 48 48 48s48-21.5 48-48zM48 304c26.5 0 48-21.5 48-48s-21.5-48-48-48s-48 21.5-48 48s21.5 48 48 48zm464-48c0-26.5-21.5-48-48-48s-48 21.5-48 48s21.5 48 48 48s48-21.5 48-48zM142.9 437c18.7-18.7 18.7-49.1 0-67.9s-49.1-18.7-67.9 0s-18.7 49.1 0 67.9s49.1 18.7 67.9 0zm0-294.2c18.7-18.7 18.7-49.1 0-67.9S93.7 56.2 75 75s-18.7 49.1 0 67.9s49.1 18.7 67.9 0zM369.1 437c18.7 18.7 49.1 18.7 67.9 0s18.7-49.1 0-67.9s-49.1-18.7-67.9 0s-18.7 49.1 0 67.9z"/></svg></span>
+                            </div>
+                        </div>
+                    </form>
+                    <div id="mdbook-searchresults-outer" class="searchresults-outer hidden">
+                        <div id="mdbook-searchresults-header" class="searchresults-header"></div>
+                        <ul id="mdbook-searchresults">
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script>
+                    document.getElementById('mdbook-sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('mdbook-sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#mdbook-sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="mdbook-content" class="content">
+                    <main>
+                        <!-- Judul lama. Jangan dihapus atau tautan bisa rusak. -->
+<p><a id="traits-defining-shared-behavior"></a></p>
+<h2 id="mendefinisikan-perilaku-bersama-dengan-trait"><a class="header" href="#mendefinisikan-perilaku-bersama-dengan-trait">Mendefinisikan Perilaku Bersama dengan Trait</a></h2>
+<p>Sebuah <em>trait</em> mendefinisikan fungsionalitas yang dimiliki tipe tertentu dan
+bisa dibagikan dengan tipe lain. Kami bisa menggunakan trait untuk
+mendefinisikan perilaku bersama secara abstrak. Kami bisa menggunakan <em>trait
+bounds</em> (batasan trait) untuk menentukan bahwa tipe generik bisa menjadi tipe
+apa pun yang memiliki perilaku tertentu.</p>
+<blockquote>
+<p>Catatan: Trait mirip dengan fitur yang sering disebut <em>interfaces</em> di
+bahasa lain, meskipun dengan beberapa perbedaan.</p>
+</blockquote>
+<h3 id="mendefinisikan-trait"><a class="header" href="#mendefinisikan-trait">Mendefinisikan Trait</a></h3>
+<p>Perilaku tipe terdiri dari metode yang bisa kami panggil pada tipe itu. Tipe
+yang berbeda berbagi perilaku yang sama jika kami bisa memanggil metode yang
+sama pada semua tipe tersebut. Definisi trait adalah cara mengelompokkan
+tanda tangan metode bersama-sama untuk mendefinisikan sekumpulan perilaku
+yang diperlukan untuk mencapai beberapa tujuan.</p>
+<p>Misalnya, katakanlah kami memiliki beberapa struct yang menampung berbagai
+jenis dan jumlah teks: struct <code>NewsArticle</code> yang menampung cerita berita yang
+diarsipkan di lokasi tertentu dan <code>SocialPost</code> yang bisa memiliki, paling
+banyak, 280 karakter bersama metadata yang menunjukkan apakah itu pos baru,
+repost, atau balasan ke pos lain.</p>
+<p>Kami ingin membuat crate library pengumpul media bernama <code>aggregator</code> yang
+bisa menampilkan ringkasan data yang mungkin disimpan di instance
+<code>NewsArticle</code> atau <code>SocialPost</code>. Untuk melakukannya, kami butuh ringkasan
+dari setiap tipe, dan kami akan meminta ringkasan itu dengan memanggil
+metode <code>summarize</code> pada instance. Listing 10-12 menunjukkan definisi trait
+<code>Summary</code> publik yang mengekspresikan perilaku ini.</p>
+<figure class="listing" id="listing-10-12">
+<span class="file-name">Filename: src/lib.rs</span>
+<pre><code class="language-rust noplayground">pub trait Summary {
+    fn summarize(&amp;self) -&gt; String;
+}</code></pre>
+<figcaption><a href="#listing-10-12">Listing 10-12</a>: Trait <code>Summary</code> yang terdiri dari perilaku yang disediakan metode <code>summarize</code></figcaption>
+</figure>
+<p>Di sini, kami mendeklarasikan trait menggunakan kata kunci <code>trait</code> dan lalu
+nama trait-nya, yang dalam kasus ini adalah <code>Summary</code>. Kami juga
+mendeklarasikan trait sebagai <code>pub</code> sehingga crate yang bergantung pada crate
+ini juga bisa menggunakan trait ini, seperti yang akan kami lihat di beberapa
+contoh. Di dalam tanda kurung kurawal, kami mendeklarasikan tanda tangan
+metode yang menggambarkan perilaku tipe yang mengimplementasikan trait ini,
+yang dalam kasus ini adalah <code>fn summarize(&amp;self) -&gt; String</code>.</p>
+<p>Setelah tanda tangan metode, alih-alih menyediakan implementasi di dalam
+tanda kurung kurawal, kami menggunakan titik koma. Setiap tipe yang
+mengimplementasikan trait ini harus menyediakan perilaku kustom sendiri untuk
+badan metode. Compiler akan memberlakukan bahwa tipe apa pun yang memiliki
+trait <code>Summary</code> akan memiliki metode <code>summarize</code> didefinisikan dengan tanda
+tangan ini persis.</p>
+<p>Trait bisa memiliki beberapa metode di badannya: Tanda tangan metode
+dicatatkan satu per baris, dan setiap baris diakhiri titik koma.</p>
+<h3 id="mengimplementasikan-trait-pada-tipe"><a class="header" href="#mengimplementasikan-trait-pada-tipe">Mengimplementasikan Trait pada Tipe</a></h3>
+<p>Sekarang setelah kami mendefinisikan tanda tangan yang diinginkan metode
+trait <code>Summary</code>, kami bisa mengimplementasikannya pada tipe di pengumpul
+media kami. Listing 10-13 menunjukkan implementasi trait <code>Summary</code> pada
+struct <code>NewsArticle</code> yang menggunakan judul, penulis, dan lokasi untuk
+membuat nilai kembali <code>summarize</code>. Untuk struct <code>SocialPost</code>, kami
+mendefinisikan <code>summarize</code> sebagai username diikuti seluruh teks pos,
+dengan asumsi konten pos sudah dibatasi 280 karakter.</p>
+<figure class="listing" id="listing-10-13">
+<span class="file-name">Filename: src/lib.rs</span>
+<pre><code class="language-rust noplayground"><span class="boring">pub trait Summary {
+</span><span class="boring">    fn summarize(&amp;self) -&gt; String;
+</span><span class="boring">}
+</span><span class="boring">
+</span>pub struct NewsArticle {
+    pub headline: String,
+    pub location: String,
+    pub author: String,
+    pub content: String,
+}
+
+impl Summary for NewsArticle {
+    fn summarize(&amp;self) -&gt; String {
+        format!("{}, by {} ({})", self.headline, self.author, self.location)
+    }
+}
+
+pub struct SocialPost {
+    pub username: String,
+    pub content: String,
+    pub reply: bool,
+    pub repost: bool,
+}
+
+impl Summary for SocialPost {
+    fn summarize(&amp;self) -&gt; String {
+        format!("{}: {}", self.username, self.content)
+    }
+}</code></pre>
+<figcaption><a href="#listing-10-13">Listing 10-13</a>: Mengimplementasikan trait <code>Summary</code> pada tipe <code>NewsArticle</code> dan <code>SocialPost</code></figcaption>
+</figure>
+<p>Mengimplementasikan trait pada tipe mirip dengan mengimplementasikan metode
+biasa. Perbedaannya adalah setelah <code>impl</code>, kami letakkan nama trait yang
+ingin kami implementasikan, lalu gunakan kata kunci <code>for</code>, dan kemudian
+tentukan nama tipe yang ingin kami implementasikan trait untuknya. Di dalam
+blok <code>impl</code>, kami letakkan tanda tangan metode yang telah didefinisikan
+definisi trait. Alih-alih menambahkan titik koma setelah setiap tanda tangan,
+kami menggunakan tanda kurung kurawal dan mengisi badan metode dengan
+perilaku spesifik yang kami inginkan metode trait memiliki untuk tipe
+tertentu.</p>
+<p>Sekarang library telah mengimplementasikan trait <code>Summary</code> pada <code>NewsArticle</code>
+dan <code>SocialPost</code>, pengguna crate bisa memanggil metode trait pada instance
+<code>NewsArticle</code> dan <code>SocialPost</code> dengan cara yang sama kami memanggil metode
+biasa. Satu-satunya perbedaan adalah pengguna harus membawa trait ke dalam
+ruang lingkup serta tipe-tipenya. Berikut contoh bagaimana crate biner bisa
+menggunakan crate library <code>aggregator</code> kami:</p>
+<pre><code class="language-rust ignore">use aggregator::{SocialPost, Summary};
+
+fn main() {
+    let post = SocialPost {
+        username: String::from("horse_ebooks"),
+        content: String::from(
+            "of course, as you probably already know, people",
+        ),
+        reply: false,
+        repost: false,
+    };
+
+    println!("1 new post: {}", post.summarize());
+}</code></pre>
+<p>Kode ini mencetak <code>1 new post: horse_ebooks: of course, as you probably already know, people</code>.</p>
+<p>Crate lain yang bergantung pada crate <code>aggregator</code> juga bisa membawa trait
+<code>Summary</code> ke ruang lingkup untuk mengimplementasikan <code>Summary</code> pada tipe
+mereka sendiri. Satu pembatasan yang perlu dicatat adalah kami hanya bisa
+mengimplementasikan trait pada tipe jika trait atau tipe, atau keduanya,
+lokal ke crate kami. Misalnya, kami bisa mengimplementasikan trait pustaka
+standar seperti <code>Display</code> pada tipe kustom seperti <code>SocialPost</code> sebagai
+bagian dari fungsionalitas crate <code>aggregator</code> kami karena tipe <code>SocialPost</code>
+lokal ke crate <code>aggregator</code> kami. Kami juga bisa mengimplementasikan
+<code>Summary</code> pada <code>Vec&lt;T&gt;</code> di crate <code>aggregator</code> kami karena trait <code>Summary</code>
+lokal ke crate <code>aggregator</code> kami.</p>
+<p>Tapi kami tidak bisa mengimplementasikan trait eksternal pada tipe eksternal.
+Misalnya, kami tidak bisa mengimplementasikan trait <code>Display</code> pada <code>Vec&lt;T&gt;</code>
+di dalam crate <code>aggregator</code> kami, karena <code>Display</code> dan <code>Vec&lt;T&gt;</code> keduanya
+didefinisikan di pustaka standar dan bukan lokal ke crate <code>aggregator</code> kami.
+Pembatasan ini bagian dari properti yang disebut <em>coherence</em>, dan lebih
+spesifik lagi <em>orphan rule</em>, dinamai demikian karena tipe induk tidak hadir.
+Aturan ini memastikan kode orang lain tidak bisa merusak kode Anda dan
+sebaliknya. Tanpa aturan ini, dua crate bisa mengimplementasikan trait yang
+sama untuk tipe yang sama, dan Rust tidak akan tahu implementasi mana yang
+harus digunakan.</p>
+<!-- Judul lama. Jangan dihapus atau tautan bisa rusak. -->
+<p><a id="default-implementations"></a></p>
+<h3 id="menggunakan-implementasi-default"><a class="header" href="#menggunakan-implementasi-default">Menggunakan Implementasi Default</a></h3>
+<p>Terkadang berguna untuk memiliki perilaku default untuk beberapa atau semua
+metode di trait alih-alih mewajibkan implementasi untuk semua metode pada
+setiap tipe. Lalu, saat kami mengimplementasikan trait pada tipe tertentu,
+kami bisa mempertahankan atau menimpa (override) perilaku default setiap
+metode.</p>
+<p>Di Listing 10-14, kami menentukan string default untuk metode <code>summarize</code>
+trait <code>Summary</code> alih-alih hanya mendefinisikan tanda tangan metode, seperti
+yang kami lakukan di Listing 10-12.</p>
+<figure class="listing" id="listing-10-14">
+<span class="file-name">Filename: src/lib.rs</span>
+<pre><code class="language-rust noplayground">pub trait Summary {
+    fn summarize(&amp;self) -&gt; String {
+        String::from("(Read more...)")
+    }
+}
+<span class="boring">
+</span><span class="boring">pub struct NewsArticle {
+</span><span class="boring">    pub headline: String,
+</span><span class="boring">    pub location: String,
+</span><span class="boring">    pub author: String,
+</span><span class="boring">    pub content: String,
+</span><span class="boring">}
+</span><span class="boring">
+</span><span class="boring">impl Summary for NewsArticle {}
+</span><span class="boring">
+</span><span class="boring">pub struct SocialPost {
+</span><span class="boring">    pub username: String,
+</span><span class="boring">    pub content: String,
+</span><span class="boring">    pub reply: bool,
+</span><span class="boring">    pub repost: bool,
+</span><span class="boring">}
+</span><span class="boring">
+</span><span class="boring">impl Summary for SocialPost {
+</span><span class="boring">    fn summarize(&amp;self) -&gt; String {
+</span><span class="boring">        format!("{}: {}", self.username, self.content)
+</span><span class="boring">    }
+</span><span class="boring">}</span></code></pre>
+<figcaption><a href="#listing-10-14">Listing 10-14</a>: Mendefinisikan trait <code>Summary</code> dengan implementasi default metode <code>summarize</code></figcaption>
+</figure>
+<p>Untuk menggunakan implementasi default untuk merangkum instance <code>NewsArticle</code>,
+kami menentukan blok <code>impl</code> kosong dengan <code>impl Summary for NewsArticle {}</code>.</p>
+<p>Meskipun kami tidak lagi mendefinisikan metode <code>summarize</code> pada <code>NewsArticle</code>
+secara langsung, kami telah menyediakan implementasi default dan
+menentukan bahwa <code>NewsArticle</code> mengimplementasikan trait <code>Summary</code>. Hasilnya,
+kami tetap bisa memanggil metode <code>summarize</code> pada instance <code>NewsArticle</code>,
+seperti ini:</p>
+<pre><code class="language-rust ignore"><span class="boring">use aggregator::{self, NewsArticle, Summary};
+</span><span class="boring">
+</span><span class="boring">fn main() {
+</span>    let article = NewsArticle {
+        headline: String::from("Penguins win the Stanley Cup Championship!"),
+        location: String::from("Pittsburgh, PA, USA"),
+        author: String::from("Iceburgh"),
+        content: String::from(
+            "The Pittsburgh Penguins once again are the best \
+             hockey team in the NHL.",
+        ),
+    };
+
+    println!("New article available! {}", article.summarize());
+<span class="boring">}</span></code></pre>
+<p>Kode ini mencetak <code>New article available! (Read more...)</code>.</p>
+<p>Membuat implementasi default tidak mewajibkan kami mengubah apapun tentang
+implementasi <code>Summary</code> pada <code>SocialPost</code> di Listing 10-13. Alasannya adalah
+sintaks untuk menimpa implementasi default sama dengan sintaks untuk
+mengimplementasikan metode trait yang tidak memiliki implementasi default.</p>
+<p>Implementasi default bisa memanggil metode lain di trait yang sama, bahkan
+jika metode lain itu tidak punya implementasi default. Dengan cara ini, trait
+bisa menyediakan banyak fungsionalitas berguna dan hanya mewajibkan
+implementor menentukan bagian kecil darinya. Misalnya, kami bisa mendefinisikan
+trait <code>Summary</code> agar memiliki metode <code>summarize_author</code> yang implementasinya
+diwajibkan, dan lalu mendefinisikan metode <code>summarize</code> yang memiliki
+implementasi default yang memanggil metode <code>summarize_author</code>:</p>
+<pre><code class="language-rust noplayground">pub trait Summary {
+    fn summarize_author(&amp;self) -&gt; String;
+
+    fn summarize(&amp;self) -&gt; String {
+        format!("(Read more from {}...)", self.summarize_author())
+    }
+}
+<span class="boring">
+</span><span class="boring">pub struct SocialPost {
+</span><span class="boring">    pub username: String,
+</span><span class="boring">    pub content: String,
+</span><span class="boring">    pub reply: bool,
+</span><span class="boring">    pub repost: bool,
+</span><span class="boring">}
+</span><span class="boring">
+</span><span class="boring">impl Summary for SocialPost {
+</span><span class="boring">    fn summarize_author(&amp;self) -&gt; String {
+</span><span class="boring">        format!("@{}", self.username)
+</span><span class="boring">    }
+</span><span class="boring">}</span></code></pre>
+<p>Untuk menggunakan versi <code>Summary</code> ini, kami hanya perlu mendefinisikan
+<code>summarize_author</code> saat kami mengimplementasikan trait pada tipe:</p>
+<pre><code class="language-rust ignore"><span class="boring">pub trait Summary {
+</span><span class="boring">    fn summarize_author(&amp;self) -&gt; String;
+</span><span class="boring">
+</span><span class="boring">    fn summarize(&amp;self) -&gt; String {
+</span><span class="boring">        format!("(Read more from {}...)", self.summarize_author())
+</span><span class="boring">    }
+</span><span class="boring">}
+</span><span class="boring">
+</span><span class="boring">pub struct SocialPost {
+</span><span class="boring">    pub username: String,
+</span><span class="boring">    pub content: String,
+</span><span class="boring">    pub reply: bool,
+</span><span class="boring">    pub repost: bool,
+</span><span class="boring">}
+</span><span class="boring">
+</span>impl Summary for SocialPost {
+    fn summarize_author(&amp;self) -&gt; String {
+        format!("@{}", self.username)
+    }
+}</code></pre>
+<p>Setelah kami mendefinisikan <code>summarize_author</code>, kami bisa memanggil
+<code>summarize</code> pada instance struct <code>SocialPost</code>, dan implementasi default
+<code>summarize</code> akan memanggil definisi <code>summarize_author</code> yang kami berikan.
+Karena kami telah mengimplementasikan <code>summarize_author</code>, trait <code>Summary</code>
+telah memberi kami perilaku metode <code>summarize</code> tanpa mewajibkan kami menulis
+kode lebih banyak. Inilah seperti apa kelihatannya:</p>
+<pre><code class="language-rust ignore"><span class="boring">use aggregator::{self, SocialPost, Summary};
+</span><span class="boring">
+</span><span class="boring">fn main() {
+</span>    let post = SocialPost {
+        username: String::from("horse_ebooks"),
+        content: String::from(
+            "of course, as you probably already know, people",
+        ),
+        reply: false,
+        repost: false,
+    };
+
+    println!("1 new post: {}", post.summarize());
+<span class="boring">}</span></code></pre>
+<p>Kode ini mencetak <code>1 new post: (Read more from @horse_ebooks...)</code>.</p>
+<p>Perhatikan bahwa tidak mungkin memanggil implementasi default dari
+implementasi menimpa (overriding) metode yang sama.</p>
+<!-- Judul lama. Jangan dihapus atau tautan bisa rusak. -->
+<p><a id="traits-as-parameters"></a></p>
+<h3 id="menggunakan-trait-sebagai-parameter"><a class="header" href="#menggunakan-trait-sebagai-parameter">Menggunakan Trait sebagai Parameter</a></h3>
+<p>Sekarang setelah Anda tahu cara mendefinisikan dan mengimplementasikan trait,
+kami bisa mengeksplorasi cara menggunakan trait untuk mendefinisikan fungsi
+yang menerima banyak tipe berbeda. Kami akan menggunakan trait <code>Summary</code> yang
+kami implementasikan pada tipe <code>NewsArticle</code> dan <code>SocialPost</code> di Listing
+10-13 untuk mendefinisikan fungsi <code>notify</code> yang memanggil metode <code>summarize</code>
+pada parameter <code>item</code>-nya, yang bertipe beberapa tipe yang mengimplementasikan
+trait <code>Summary</code>. Untuk melakukannya, kami menggunakan sintaks <code>impl Trait</code>,
+seperti ini:</p>
+<pre><code class="language-rust ignore"><span class="boring">pub trait Summary {
+</span><span class="boring">    fn summarize(&amp;self) -&gt; String;
+</span><span class="boring">}
+</span><span class="boring">
+</span><span class="boring">pub struct NewsArticle {
+</span><span class="boring">    pub headline: String,
+</span><span class="boring">    pub location: String,
+</span><span class="boring">    pub author: String,
+</span><span class="boring">    pub content: String,
+</span><span class="boring">}
+</span><span class="boring">
+</span><span class="boring">impl Summary for NewsArticle {
+</span><span class="boring">    fn summarize(&amp;self) -&gt; String {
+</span><span class="boring">        format!("{}, by {} ({})", self.headline, self.author, self.location)
+</span><span class="boring">    }
+</span><span class="boring">}
+</span><span class="boring">
+</span><span class="boring">pub struct SocialPost {
+</span><span class="boring">    pub username: String,
+</span><span class="boring">    pub content: String,
+</span><span class="boring">    pub reply: bool,
+</span><span class="boring">    pub repost: bool,
+</span><span class="boring">}
+</span><span class="boring">
+</span><span class="boring">impl Summary for SocialPost {
+</span><span class="boring">    fn summarize(&amp;self) -&gt; String {
+</span><span class="boring">        format!("{}: {}", self.username, self.content)
+</span><span class="boring">    }
+</span><span class="boring">}
+</span><span class="boring">
+</span>pub fn notify(item: &amp;impl Summary) {
+    println!("Breaking news! {}", item.summarize());
+}</code></pre>
+<p>Alih-alih tipe konkret untuk parameter <code>item</code>, kami menentukan kata kunci
+<code>impl</code> dan nama trait. Parameter ini menerima tipe apa pun yang mengimplementasikan
+trait yang ditentukan. Di badan <code>notify</code>, kami bisa memanggil metode apa pun
+pada <code>item</code> yang berasal dari trait <code>Summary</code>, seperti <code>summarize</code>. Kami
+bisa memanggil <code>notify</code> dan meneruskan instance apa pun dari <code>NewsArticle</code>
+atau <code>SocialPost</code>. Kode yang memanggil fungsi dengan tipe lain, seperti
+<code>String</code> atau <code>i32</code>, tidak akan kompilasi, karena tipe-tipe itu tidak
+mengimplementasikan <code>Summary</code>.</p>
+<!-- Judul lama. Jangan dihapus atau tautan bisa rusak. -->
+<p><a id="fixing-the-largest-function-with-trait-bounds"></a></p>
+<h4 id="sintaks-trait-bound"><a class="header" href="#sintaks-trait-bound">Sintaks Trait Bound</a></h4>
+<p>Sintaks <code>impl Trait</code> berfungsi untuk kasus yang sederhana tapi sebenarnya
+adalah gula sintaks (syntax sugar) untuk bentuk lebih panjang yang dikenal
+sebagai <em>trait bound</em>; terlihat seperti ini:</p>
+<pre><code class="language-rust ignore">pub fn notify&lt;T: Summary&gt;(item: &amp;T) {
+    println!("Breaking news! {}", item.summarize());
+}</code></pre>
+<p>Bentuk lebih panjang ini ekuivalen dengan contoh di bagian sebelumnya tapi
+lebih verbose. Kami menempatkan trait bound dengan deklarasi parameter tipe
+generik setelah titik dua dan di dalam tanda kurung sudut.</p>
+<p>Sintaks <code>impl Trait</code> nyaman dan membuat kode lebih ringkas dalam kasus
+sederhana, sementara sintaks trait bound yang lebih lengkap bisa mengekspresikan
+kompleksitas lebih di kasus lain. Misalnya, kami bisa memiliki dua parameter
+yang mengimplementasikan <code>Summary</code>. Melakukannya dengan sintaks <code>impl Trait</code>
+terlihat seperti ini:</p>
+<pre><code class="language-rust ignore">pub fn notify(item1: &amp;impl Summary, item2: &amp;impl Summary) {</code></pre>
+<p>Menggunakan <code>impl Trait</code> tepat jika kami ingin fungsi ini mengizinkan
+<code>item1</code> dan <code>item2</code> memiliki tipe yang berbeda (selama kedua tipe
+mengimplementasikan <code>Summary</code>). Jika kami ingin memaksa kedua parameter
+memiliki tipe yang sama, bagaimanapun, kami harus menggunakan trait bound,
+seperti ini:</p>
+<pre><code class="language-rust ignore">pub fn notify&lt;T: Summary&gt;(item1: &amp;T, item2: &amp;T) {</code></pre>
+<p>Tipe generik <code>T</code> yang dispesifikasikan sebagai tipe parameter <code>item1</code> dan
+<code>item2</code> membatasi fungsi sehingga tipe konkret nilai yang diteruskan sebagai
+argumen untuk <code>item1</code> dan <code>item2</code> harus sama.</p>
+<!-- Judul lama. Jangan dihapus atau tautan bisa rusak. -->
+<p><a id="specifying-multiple-trait-bounds-with-the--syntax"></a></p>
+<h4 id="banyak-trait-bound-dengan-sintaks-"><a class="header" href="#banyak-trait-bound-dengan-sintaks-">Banyak Trait Bound dengan Sintaks <code>+</code></a></h4>
+<p>Kami juga bisa menentukan lebih dari satu trait bound. Katakanlah kami ingin
+<code>notify</code> menggunakan pemformatan display serta <code>summarize</code> pada <code>item</code>:
+Kami menentukan di definisi <code>notify</code> bahwa <code>item</code> harus mengimplementasikan
+baik <code>Display</code> maupun <code>Summary</code>. Kami bisa melakukannya menggunakan sintaks
+<code>+</code>:</p>
+<pre><code class="language-rust ignore">pub fn notify(item: &amp;(impl Summary + Display)) {</code></pre>
+<p>Sintaks <code>+</code> juga valid dengan trait bound pada tipe generik:</p>
+<pre><code class="language-rust ignore">pub fn notify&lt;T: Summary + Display&gt;(item: &amp;T) {</code></pre>
+<p>Dengan dua trait bound yang dispesifikasikan, badan <code>notify</code> bisa memanggil
+<code>summarize</code> dan menggunakan <code>{}</code> untuk memformat <code>item</code>.</p>
+<h4 id="trait-bound-lebih-jelas-dengan-klausa-where"><a class="header" href="#trait-bound-lebih-jelas-dengan-klausa-where">Trait Bound Lebih Jelas dengan Klausa <code>where</code></a></h4>
+<p>Menggunakan terlalu banyak trait bound punya sisi negatifnya. Setiap
+generik punya trait bound-nya sendiri, jadi fungsi dengan beberapa parameter
+tipe generik bisa berisi banyak informasi trait bound di antara nama fungsi
+dan daftar parameternya, membuat tanda tangan fungsi sulit dibaca. Untuk
+alasan ini, Rust memiliki sintaks alternatif untuk menentukan trait bound di
+dalam klausa <code>where</code> setelah tanda tangan fungsi. Jadi, alih-alih menulis
+ini:</p>
+<pre><code class="language-rust ignore">fn some_function&lt;T: Display + Clone, U: Clone + Debug&gt;(t: &amp;T, u: &amp;U) -&gt; i32 {</code></pre>
+<p>kami bisa menggunakan klausa <code>where</code>, seperti ini:</p>
+<pre><code class="language-rust ignore">fn some_function&lt;T, U&gt;(t: &amp;T, u: &amp;U) -&gt; i32
+where
+    T: Display + Clone,
+    U: Clone + Debug,
+{
+<span class="boring">    unimplemented!()
+</span><span class="boring">}</span></code></pre>
+<p>Tanda tangan fungsi ini kurang berantakan: Nama fungsi, daftar parameter,
+dan tipe kembalian berdekatan, mirip fungsi tanpa banyak trait bound.</p>
+<h3 id="mengembalikan-tipe-yang-mengimplementasikan-trait"><a class="header" href="#mengembalikan-tipe-yang-mengimplementasikan-trait">Mengembalikan Tipe yang Mengimplementasikan Trait</a></h3>
+<p>Kami juga bisa menggunakan sintaks <code>impl Trait</code> di posisi kembalian untuk
+mengembalikan nilai bertipe yang mengimplementasikan trait, seperti yang
+ditampilkan di sini:</p>
+<pre><code class="language-rust ignore"><span class="boring">pub trait Summary {
+</span><span class="boring">    fn summarize(&amp;self) -&gt; String;
+</span><span class="boring">}
+</span><span class="boring">
+</span><span class="boring">pub struct NewsArticle {
+</span><span class="boring">    pub headline: String,
+</span><span class="boring">    pub location: String,
+</span><span class="boring">    pub author: String,
+</span><span class="boring">    pub content: String,
+</span><span class="boring">}
+</span><span class="boring">
+</span><span class="boring">impl Summary for NewsArticle {
+</span><span class="boring">    fn summarize(&amp;self) -&gt; String {
+</span><span class="boring">        format!("{}, by {} ({})", self.headline, self.author, self.location)
+</span><span class="boring">    }
+</span><span class="boring">}
+</span><span class="boring">
+</span><span class="boring">pub struct SocialPost {
+</span><span class="boring">    pub username: String,
+</span><span class="boring">    pub content: String,
+</span><span class="boring">    pub reply: bool,
+</span><span class="boring">    pub repost: bool,
+</span><span class="boring">}
+</span><span class="boring">
+</span><span class="boring">impl Summary for SocialPost {
+</span><span class="boring">    fn summarize(&amp;self) -&gt; String {
+</span><span class="boring">        format!("{}: {}", self.username, self.content)
+</span><span class="boring">    }
+</span><span class="boring">}
+</span><span class="boring">
+</span>fn returns_summarizable() -&gt; impl Summary {
+    SocialPost {
+        username: String::from("horse_ebooks"),
+        content: String::from(
+            "of course, as you probably already know, people",
+        ),
+        reply: false,
+        repost: false,
+    }
+}</code></pre>
+<p>Dengan menggunakan <code>impl Summary</code> untuk tipe kembalian, kami menentukan bahwa
+fungsi <code>returns_summarizable</code> mengembalikan tipe yang mengimplementasikan
+trait <code>Summary</code> tanpa menamai tipe konkret. Dalam kasus ini,
+<code>returns_summarizable</code> mengembalikan <code>SocialPost</code>, tapi kode yang memanggil
+fungsi ini tidak perlu tahu itu.</p>
+<p>Kemampuan menentukan tipe kembalian hanya dengan trait yang diimplementasikan
+terutama berguna dalam konteks closure dan iterator, yang kami bahas di Bab
+13. Closure dan iterator menciptakan tipe yang hanya compiler yang tahu atau
+tipe yang sangat panjang untuk ditulis. Sintaks <code>impl Trait</code> memungkinkan
+Anda dengan ringkas menentukan bahwa fungsi mengembalikan tipe yang
+mengimplementasikan trait <code>Iterator</code> tanpa perlu menuliskan tipe yang sangat
+panjang.</p>
+<p>Akan tetapi, Anda hanya bisa menggunakan <code>impl Trait</code> jika Anda
+mengembalikan satu tipe. Misalnya, kode ini yang mengembalikan baik
+<code>NewsArticle</code> maupun <code>SocialPost</code> dengan tipe kembalian dispesifikasikan
+sebagai <code>impl Summary</code> tidak akan berfungsi:</p>
+<pre><code class="language-rust ignore does_not_compile"><span class="boring">pub trait Summary {
+</span><span class="boring">    fn summarize(&amp;self) -&gt; String;
+</span><span class="boring">}
+</span><span class="boring">
+</span><span class="boring">pub struct NewsArticle {
+</span><span class="boring">    pub headline: String,
+</span><span class="boring">    pub location: String,
+</span><span class="boring">    pub author: String,
+</span><span class="boring">    pub content: String,
+</span><span class="boring">}
+</span><span class="boring">
+</span><span class="boring">impl Summary for NewsArticle {
+</span><span class="boring">    fn summarize(&amp;self) -&gt; String {
+</span><span class="boring">        format!("{}, by {} ({})", self.headline, self.author, self.location)
+</span><span class="boring">    }
+</span><span class="boring">}
+</span><span class="boring">
+</span><span class="boring">pub struct SocialPost {
+</span><span class="boring">    pub username: String,
+</span><span class="boring">    pub content: String,
+</span><span class="boring">    pub reply: bool,
+</span><span class="boring">    pub repost: bool,
+</span><span class="boring">}
+</span><span class="boring">
+</span><span class="boring">impl Summary for SocialPost {
+</span><span class="boring">    fn summarize(&amp;self) -&gt; String {
+</span><span class="boring">        format!("{}: {}", self.username, self.content)
+</span><span class="boring">    }
+</span><span class="boring">}
+</span><span class="boring">
+</span>fn returns_summarizable(switch: bool) -&gt; impl Summary {
+    if switch {
+        NewsArticle {
+            headline: String::from(
+                "Penguins win the Stanley Cup Championship!",
+            ),
+            location: String::from("Pittsburgh, PA, USA"),
+            author: String::from("Iceburgh"),
+            content: String::from(
+                "The Pittsburgh Penguins once again are the best \
+                 hockey team in the NHL.",
+            ),
+        }
+    } else {
+        SocialPost {
+            username: String::from("horse_ebooks"),
+            content: String::from(
+                "of course, as you probably already know, people",
+            ),
+            reply: false,
+            repost: false,
+        }
+    }
+}</code></pre>
+<p>Mengembalikan baik <code>NewsArticle</code> maupun <code>SocialPost</code> tidak diizinkan karena
+pembatasan seputar cara sintaks <code>impl Trait</code> diimplementasikan di compiler.
+Kami akan membahas cara menulis fungsi dengan perilaku ini di bagian <a href="ch18-02-trait-objects.html#using-trait-objects-to-abstract-over-shared-behavior">“Menggunakan
+Trait Object untuk Abstraksi Perilaku Bersama”</a><!-- ignore -->
+di Bab 18.</p>
+<h3 id="menggunakan-trait-bound-untuk-mengimplementasikan-metode-secara-kondisional"><a class="header" href="#menggunakan-trait-bound-untuk-mengimplementasikan-metode-secara-kondisional">Menggunakan Trait Bound untuk Mengimplementasikan Metode Secara Kondisional</a></h3>
+<p>Dengan menggunakan trait bound dengan blok <code>impl</code> yang menggunakan parameter
+tipe generik, kami bisa mengimplementasikan metode secara kondisional untuk
+tipe yang mengimplementasikan trait yang ditentukan. Misalnya, tipe
+<code>Pair&lt;T&gt;</code> di Listing 10-15 selalu mengimplementasikan fungsi <code>new</code> untuk
+mengembalikan instance baru <code>Pair&lt;T&gt;</code> (ingat dari bagian <a href="ch05-03-method-syntax.html#method-syntax">“Sintaks
+Metode”</a><!-- ignore --> Bab 5 bahwa <code>Self</code> adalah alias tipe untuk
+tipe blok <code>impl</code>, yang dalam kasus ini adalah <code>Pair&lt;T&gt;</code>). Tapi di blok
+<code>impl</code> berikutnya, <code>Pair&lt;T&gt;</code> hanya mengimplementasikan metode <code>cmp_display</code>
+jika tipe dalamnya <code>T</code> mengimplementasikan trait <code>PartialOrd</code> yang
+mengaktifkan perbandingan <em>dan</em> trait <code>Display</code> yang mengaktifkan pencetakan.</p>
+<figure class="listing" id="listing-10-15">
+<span class="file-name">Filename: src/lib.rs</span>
+<pre><code class="language-rust noplayground">use std::fmt::Display;
+
+struct Pair&lt;T&gt; {
+    x: T,
+    y: T,
+}
+
+impl&lt;T&gt; Pair&lt;T&gt; {
+    fn new(x: T, y: T) -&gt; Self {
+        Self { x, y }
+    }
+}
+
+impl&lt;T: Display + PartialOrd&gt; Pair&lt;T&gt; {
+    fn cmp_display(&amp;self) {
+        if self.x &gt;= self.y {
+            println!("The largest member is x = {}", self.x);
+        } else {
+            println!("The largest member is y = {}", self.y);
+        }
+    }
+}</code></pre>
+<figcaption><a href="#listing-10-15">Listing 10-15</a>: Mengimplementasikan metode secara kondisional pada tipe generik tergantung trait bound</figcaption>
+</figure>
+<p>Kami juga bisa secara kondisional mengimplementasikan trait untuk tipe apa
+pun yang memenuhi trait bound lain. Implementasi trait pada tipe apa pun
+yang memenuhi trait bound disebut <em>blanket implementations</em> dan digunakan
+luas di pustaka standar Rust. Misalnya, pustaka standar mengimplementasikan
+trait <code>ToString</code> pada tipe apa pun yang mengimplementasikan trait
+<code>Display</code>. Blok <code>impl</code> di pustaka standar terlihat mirip kode ini:</p>
+<pre><code class="language-rust ignore">impl&lt;T: Display&gt; ToString for T {
+    // --snip--
+}</code></pre>
+<p>Karena pustaka standar memiliki blanket implementation ini, kami bisa
+memanggil metode <code>to_string</code> yang didefinisikan oleh trait <code>ToString</code> pada
+tipe apa pun yang mengimplementasikan trait <code>Display</code>. Misalnya, kami bisa
+mengubah integer menjadi nilai <code>String</code> yang sesuai seperti ini karena
+integer mengimplementasikan <code>Display</code>:</p>
+<pre class="playground"><code class="language-rust edition2024"><span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>let s = 3.to_string();
+<span class="boring">}</span></code></pre>
+<p>Blanket implementation muncul di dokumentasi trait di bagian “Implementors”.</p>
+<p>Trait dan trait bound memungkinkan kami menulis kode yang menggunakan
+parameter tipe generik untuk mengurangi duplikasi tapi juga menentukan ke
+compiler bahwa kami ingin tipe generik memiliki perilaku tertentu. Compiler
+kemudian bisa menggunakan informasi trait bound untuk memeriksa bahwa semua
+tipe konkret yang digunakan dengan kode kami menyediakan perilaku yang
+benar. Di bahasa yang dynamically typed, kami akan mendapat kesalahan pada
+runtime jika kami memanggil metode pada tipe yang tidak mendefinisikan
+metode itu. Tapi Rust memindahkan kesalahan ini ke waktu kompilasi sehingga
+kami dipaksa memperbaiki masalah sebelum kode kami bahkan bisa dijalankan.
+Selain itu, kami tidak perlu menulis kode yang memeriksa perilaku pada
+runtime, karena kami sudah memeriksa pada waktu kompilasi. Melakukannya
+meningkatkan performa tanpa harus menyerahkan fleksibilitas generik.</p>
+
+                    </main>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+                            <a rel="prev" href="ch10-01-syntax.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                                <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M41.4 233.4c-12.5 12.5-12.5 32.8 0 45.3l160 160c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3L109.3 256 246.6 118.6c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0l-160 160z"/></svg></span>
+                            </a>
+
+                            <a rel="next prefetch" href="ch10-03-lifetime-syntax.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                                <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M278.6 233.4c12.5 12.5 12.5 32.8 0 45.3l-160 160c-12.5 12.5-32.8 12.5-45.3 0s-12.5-32.8 0-45.3L210.7 256 73.4 118.6c-12.5-12.5-12.5-32.8 0-45.3s32.8-12.5 45.3 0l160 160z"/></svg></span>
+                            </a>
+
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+                    <a rel="prev" href="ch10-01-syntax.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                        <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M41.4 233.4c-12.5 12.5-12.5 32.8 0 45.3l160 160c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3L109.3 256 246.6 118.6c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0l-160 160z"/></svg></span>
+                    </a>
+
+                    <a rel="next prefetch" href="ch10-03-lifetime-syntax.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                        <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M278.6 233.4c12.5 12.5 12.5 32.8 0 45.3l-160 160c-12.5 12.5-32.8 12.5-45.3 0s-12.5-32.8 0-45.3L210.7 256 73.4 118.6c-12.5-12.5-12.5-32.8 0-45.3s32.8-12.5 45.3 0l160 160z"/></svg></span>
+                    </a>
+            </nav>
+
+        </div>
+
+        <template id=fa-eye><span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M288 32c-80.8 0-145.5 36.8-192.6 80.6C48.6 156 17.3 208 2.5 243.7c-3.3 7.9-3.3 16.7 0 24.6C17.3 304 48.6 356 95.4 399.4C142.5 443.2 207.2 480 288 480s145.5-36.8 192.6-80.6c46.8-43.5 78.1-95.4 93-131.1c3.3-7.9 3.3-16.7 0-24.6c-14.9-35.7-46.2-87.7-93-131.1C433.5 68.8 368.8 32 288 32zM432 256c0 79.5-64.5 144-144 144s-144-64.5-144-144s64.5-144 144-144s144 64.5 144 144zM288 192c0 35.3-28.7 64-64 64c-11.5 0-22.3-3-31.6-8.4c-.2 2.8-.4 5.5-.4 8.4c0 53 43 96 96 96s96-43 96-96s-43-96-96-96c-2.8 0-5.6 .1-8.4 .4c5.3 9.3 8.4 20.1 8.4 31.6z"/></svg></span></template>
+        <template id=fa-eye-slash><span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M38.8 5.1C28.4-3.1 13.3-1.2 5.1 9.2S-1.2 34.7 9.2 42.9l592 464c10.4 8.2 25.5 6.3 33.7-4.1s6.3-25.5-4.1-33.7L525.6 386.7c39.6-40.6 66.4-86.1 79.9-118.4c3.3-7.9 3.3-16.7 0-24.6c-14.9-35.7-46.2-87.7-93-131.1C465.5 68.8 400.8 32 320 32c-68.2 0-125 26.3-169.3 60.8L38.8 5.1zM223.1 149.5C248.6 126.2 282.7 112 320 112c79.5 0 144 64.5 144 144c0 24.9-6.3 48.3-17.4 68.7L408 294.5c5.2-11.8 8-24.8 8-38.5c0-53-43-96-96-96c-2.8 0-5.6 .1-8.4 .4c5.3 9.3 8.4 20.1 8.4 31.6c0 10.2-2.4 19.8-6.6 28.3l-90.3-70.8zm223.1 298L373 389.9c-16.4 6.5-34.3 10.1-53 10.1c-79.5 0-144-64.5-144-144c0-6.9 .5-13.6 1.4-20.2L83.1 161.5C60.3 191.2 44 220.8 34.5 243.7c-3.3 7.9-3.3 16.7 0 24.6c14.9 35.7 46.2 87.7 93 131.1C174.5 443.2 239.2 480 320 480c47.8 0 89.9-12.9 126.2-32.5z"/></svg></span></template>
+        <template id=fa-copy><span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M502.6 70.63l-61.25-61.25C435.4 3.371 427.2 0 418.7 0H255.1c-35.35 0-64 28.66-64 64l.0195 256C192 355.4 220.7 384 256 384h192c35.2 0 64-28.8 64-64V93.25C512 84.77 508.6 76.63 502.6 70.63zM464 320c0 8.836-7.164 16-16 16H255.1c-8.838 0-16-7.164-16-16L239.1 64.13c0-8.836 7.164-16 16-16h128L384 96c0 17.67 14.33 32 32 32h47.1V320zM272 448c0 8.836-7.164 16-16 16H63.1c-8.838 0-16-7.164-16-16L47.98 192.1c0-8.836 7.164-16 16-16H160V128H63.99c-35.35 0-64 28.65-64 64l.0098 256C.002 483.3 28.66 512 64 512h192c35.2 0 64-28.8 64-64v-32h-47.1L272 448z"/></svg></span></template>
+        <template id=fa-play><span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 384 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M73 39c-14.8-9.1-33.4-9.4-48.5-.9S0 62.6 0 80V432c0 17.4 9.4 33.4 24.5 41.9s33.7 8.1 48.5-.9L361 297c14.3-8.7 23-24.2 23-41s-8.7-32.2-23-41L73 39z"/></svg></span></template>
+        <template id=fa-clock-rotate-left><span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M75 75L41 41C25.9 25.9 0 36.6 0 57.9V168c0 13.3 10.7 24 24 24H134.1c21.4 0 32.1-25.9 17-41l-30.8-30.8C155 85.5 203 64 256 64c106 0 192 86 192 192s-86 192-192 192c-40.8 0-78.6-12.7-109.7-34.4c-14.5-10.1-34.4-6.6-44.6 7.9s-6.6 34.4 7.9 44.6C151.2 495 201.7 512 256 512c141.4 0 256-114.6 256-256S397.4 0 256 0C185.3 0 121.3 28.7 75 75zm181 53c-13.3 0-24 10.7-24 24V256c0 6.4 2.5 12.5 7 17l72 72c9.4 9.4 24.6 9.4 33.9 0s9.4-24.6 0-33.9l-65-65V152c0-13.3-10.7-24-24-24z"/></svg></span></template>
+
+
+
+        <script>
+            window.playground_copyable = true;
+        </script>
+
+
+        <script src="elasticlunr-ef4e11c1.min.js"></script>
+        <script src="mark-09e88c2c.min.js"></script>
+        <script src="searcher-09f2665d.js"></script>
+
+        <script src="clipboard-1626706a.min.js"></script>
+        <script src="highlight-abc7f01d.js"></script>
+        <script src="book-c22b7243.js"></script>
+
+        <!-- Custom JS scripts -->
+        <script src="ferris-2317480c.js"></script>
+
+
+
+    </div>
+    </body>
+</html>

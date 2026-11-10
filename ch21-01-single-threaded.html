@@ -1,0 +1,866 @@
+<!DOCTYPE HTML>
+<html lang="en" class="light sidebar-visible" dir="ltr">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>Membangun Server Web Single-Thread - The Rust Programming Language</title>
+
+
+        <!-- Custom HTML head -->
+
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff">
+
+        <link rel="icon" href="favicon-de23e50b.svg">
+        <link rel="shortcut icon" href="favicon-8114d1fc.png">
+        <link rel="stylesheet" href="css/variables-8adf115d.css">
+        <link rel="stylesheet" href="css/general-0392ca55.css">
+        <link rel="stylesheet" href="css/chrome-fc474251.css">
+        <link rel="stylesheet" href="css/print-9e4910d8.css" media="print">
+
+        <!-- Fonts -->
+        <link rel="stylesheet" href="fonts/fonts-9644e21d.css">
+
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" id="mdbook-highlight-css" href="highlight-493f70e1.css">
+        <link rel="stylesheet" id="mdbook-tomorrow-night-css" href="tomorrow-night-4c0ae647.css">
+        <link rel="stylesheet" id="mdbook-ayu-highlight-css" href="ayu-highlight-3fdfc3ac.css">
+
+        <!-- Custom theme stylesheets -->
+        <link rel="stylesheet" href="ferris-d33b75bf.css">
+        <link rel="stylesheet" href="theme/2018-edition-4e126c62.css">
+        <link rel="stylesheet" href="theme/semantic-notes-9b5766c0.css">
+        <link rel="stylesheet" href="theme/listing-cab26221.css">
+
+
+        <!-- Provide site root and default themes to javascript -->
+        <script>
+            const path_to_root = "";
+            const default_light_theme = "light";
+            const default_dark_theme = "navy";
+            window.path_to_searchindex_js = "searchindex-e298a7a7.js";
+        </script>
+        <!-- Start loading toc.js asap -->
+        <script src="toc-8d1d8862.js"></script>
+    </head>
+    <body>
+    <div id="mdbook-help-container">
+        <div id="mdbook-help-popup">
+            <h2 class="mdbook-help-title">Keyboard shortcuts</h2>
+            <div>
+                <p>Press <kbd>←</kbd> or <kbd>→</kbd> to navigate between chapters</p>
+                <p>Press <kbd>S</kbd> or <kbd>/</kbd> to search in the book</p>
+                <p>Press <kbd>?</kbd> to show this help</p>
+                <p>Press <kbd>Esc</kbd> to hide this help</p>
+            </div>
+        </div>
+    </div>
+    <div id="mdbook-body-container">
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script>
+            try {
+                let theme = localStorage.getItem('mdbook-theme');
+                let sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script>
+            const default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? default_dark_theme : default_light_theme;
+            let theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            const html = document.documentElement;
+            html.classList.remove('light')
+            html.classList.add(theme);
+            html.classList.add("js");
+        </script>
+
+        <input type="checkbox" id="mdbook-sidebar-toggle-anchor" class="hidden">
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script>
+            let sidebar = null;
+            const sidebar_toggle = document.getElementById("mdbook-sidebar-toggle-anchor");
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            } else {
+                sidebar = 'hidden';
+                sidebar_toggle.checked = false;
+            }
+            if (sidebar === 'visible') {
+                sidebar_toggle.checked = true;
+            } else {
+                html.classList.remove('sidebar-visible');
+            }
+        </script>
+
+        <nav id="mdbook-sidebar" class="sidebar" aria-label="Table of contents">
+            <!-- populated by js -->
+            <mdbook-sidebar-scrollbox class="sidebar-scrollbox"></mdbook-sidebar-scrollbox>
+            <noscript>
+                <iframe class="sidebar-iframe-outer" src="toc.html"></iframe>
+            </noscript>
+            <div id="mdbook-sidebar-resize-handle" class="sidebar-resize-handle">
+                <div class="sidebar-resize-indicator"></div>
+            </div>
+        </nav>
+
+        <div id="mdbook-page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                <div id="mdbook-menu-bar-hover-placeholder"></div>
+                <div id="mdbook-menu-bar" class="menu-bar sticky">
+                    <div class="left-buttons">
+                        <label id="mdbook-sidebar-toggle" class="icon-button" for="mdbook-sidebar-toggle-anchor" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="mdbook-sidebar">
+                            <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M0 96C0 78.3 14.3 64 32 64H416c17.7 0 32 14.3 32 32s-14.3 32-32 32H32C14.3 128 0 113.7 0 96zM0 256c0-17.7 14.3-32 32-32H416c17.7 0 32 14.3 32 32s-14.3 32-32 32H32c-17.7 0-32-14.3-32-32zM448 416c0 17.7-14.3 32-32 32H32c-17.7 0-32-14.3-32-32s14.3-32 32-32H416c17.7 0 32 14.3 32 32z"/></svg></span>
+                        </label>
+                        <button id="mdbook-theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="mdbook-theme-list">
+                            <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M371.3 367.1c27.3-3.9 51.9-19.4 67.2-42.9L600.2 74.1c12.6-19.5 9.4-45.3-7.6-61.2S549.7-4.4 531.1 9.6L294.4 187.2c-24 18-38.2 46.1-38.4 76.1L371.3 367.1zm-19.6 25.4l-116-104.4C175.9 290.3 128 339.6 128 400c0 3.9 .2 7.8 .6 11.6c1.8 17.5-10.2 36.4-27.8 36.4H96c-17.7 0-32 14.3-32 32s14.3 32 32 32H240c61.9 0 112-50.1 112-112c0-2.5-.1-5-.2-7.5z"/></svg></span>
+                        </button>
+                        <ul id="mdbook-theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                            <li role="none"><button role="menuitem" class="theme" id="mdbook-theme-default_theme">Auto</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="mdbook-theme-light">Light</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="mdbook-theme-rust">Rust</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="mdbook-theme-coal">Coal</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="mdbook-theme-navy">Navy</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="mdbook-theme-ayu">Ayu</button></li>
+                        </ul>
+                        <button id="mdbook-search-toggle" class="icon-button" type="button" title="Search (`/`)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="/ s" aria-controls="mdbook-searchbar">
+                            <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M416 208c0 45.9-14.9 88.3-40 122.7L502.6 457.4c12.5 12.5 12.5 32.8 0 45.3s-32.8 12.5-45.3 0L330.7 376c-34.4 25.2-76.8 40-122.7 40C93.1 416 0 322.9 0 208S93.1 0 208 0S416 93.1 416 208zM208 352c79.5 0 144-64.5 144-144s-64.5-144-144-144S64 128.5 64 208s64.5 144 144 144z"/></svg></span>
+                        </button>
+                    </div>
+
+                    <h1 class="menu-title">The Rust Programming Language</h1>
+
+                    <div class="right-buttons">
+                        <a href="print.html" title="Print this book" aria-label="Print this book">
+                            <span class=fa-svg id="print-button"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M128 0C92.7 0 64 28.7 64 64v96h64V64H354.7L384 93.3V160h64V93.3c0-17-6.7-33.3-18.7-45.3L400 18.7C388 6.7 371.7 0 354.7 0H128zM384 352v32 64H128V384 368 352H384zm64 32h32c17.7 0 32-14.3 32-32V256c0-35.3-28.7-64-64-64H64c-35.3 0-64 28.7-64 64v96c0 17.7 14.3 32 32 32H64v64c0 35.3 28.7 64 64 64H384c35.3 0 64-28.7 64-64V384zm-16-88c-13.3 0-24-10.7-24-24s10.7-24 24-24s24 10.7 24 24s-10.7 24-24 24z"/></svg></span>
+                        </a>
+                        <a href="https://github.com/rust-lang/book" title="Git repository" aria-label="Git repository">
+                            <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 496 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M165.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6zm-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3zm44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9zM244.8 8C106.1 8 0 113.3 0 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C428.2 457.8 496 362.9 496 252 496 113.3 383.5 8 244.8 8zM97.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1zm-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7zm32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1zm-11.4-14.7c-1.6 1-1.6 3.6 0 5.9 1.6 2.3 4.3 3.3 5.6 2.3 1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2z"/></svg></span>
+                        </a>
+
+                    </div>
+                </div>
+
+                <div id="mdbook-search-wrapper" class="hidden">
+                    <form id="mdbook-searchbar-outer" class="searchbar-outer">
+                        <div class="search-wrapper">
+                            <input type="search" id="mdbook-searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="mdbook-searchresults-outer" aria-describedby="searchresults-header">
+                            <div class="spinner-wrapper">
+                                <span class=fa-svg id="fa-spin"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M304 48c0-26.5-21.5-48-48-48s-48 21.5-48 48s21.5 48 48 48s48-21.5 48-48zm0 416c0-26.5-21.5-48-48-48s-48 21.5-48 48s21.5 48 48 48s48-21.5 48-48zM48 304c26.5 0 48-21.5 48-48s-21.5-48-48-48s-48 21.5-48 48s21.5 48 48 48zm464-48c0-26.5-21.5-48-48-48s-48 21.5-48 48s21.5 48 48 48s48-21.5 48-48zM142.9 437c18.7-18.7 18.7-49.1 0-67.9s-49.1-18.7-67.9 0s-18.7 49.1 0 67.9s49.1 18.7 67.9 0zm0-294.2c18.7-18.7 18.7-49.1 0-67.9S93.7 56.2 75 75s-18.7 49.1 0 67.9s49.1 18.7 67.9 0zM369.1 437c18.7 18.7 49.1 18.7 67.9 0s18.7-49.1 0-67.9s-49.1-18.7-67.9 0s-18.7 49.1 0 67.9z"/></svg></span>
+                            </div>
+                        </div>
+                    </form>
+                    <div id="mdbook-searchresults-outer" class="searchresults-outer hidden">
+                        <div id="mdbook-searchresults-header" class="searchresults-header"></div>
+                        <ul id="mdbook-searchresults">
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script>
+                    document.getElementById('mdbook-sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('mdbook-sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#mdbook-sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="mdbook-content" class="content">
+                    <main>
+                        <h1 id="membangun-web-server-single-threaded"><a class="header" href="#membangun-web-server-single-threaded">Membangun Web Server Single-Threaded</a></h1>
+<p>Kami akan memulai dengan membuat web server single-threaded yang
+bekerja. Sebelum memulai, mari lihat gambaran singkat protokol yang
+terlibat dalam membangun web server. Detail protokol ini di luar
+cakupan buku ini, tapi gambaran singkat akan memberi Anda informasi
+yang Anda butuhkan.</p>
+<p>Dua protokol utama yang terlibat di web server adalah <em>Hypertext
+Transfer Protocol</em> <em>(HTTP)</em> dan <em>Transmission Control Protocol</em>
+<em>(TCP)</em>. Kedua protokol ini adalah protokol <em>request-response</em>,
+artinya seorang <em>client</em> memulai permintaan dan sebuah <em>server</em>
+mendengarkan permintaan dan menyediakan respons ke client. Isi dari
+permintaan dan respons tersebut didefinisikan oleh protokol.</p>
+<p>TCP adalah protokol level-lower yang mendeskripsikan detail bagaimana
+informasi sampai dari satu server ke server lain tapi tidak
+menspesifikasikan informasi apa itu. HTTP membangun di atas TCP dengan
+mendefinisikan isi permintaan dan respons. Secara teknis memungkinkan
+menggunakan HTTP dengan protokol lain, tapi di sebagian besar kasus,
+HTTP mengirim datanya melalui TCP. Kami akan bekerja dengan byte
+mentah dari permintaan dan respons TCP dan HTTP.</p>
+<h3 id="mendengarkan-koneksi-tcp"><a class="header" href="#mendengarkan-koneksi-tcp">Mendengarkan Koneksi TCP</a></h3>
+<p>Web server kami perlu mendengarkan koneksi TCP, jadi itulah bagian
+pertama yang akan kami kerjakan. Pustaka standar menawarkan modul
+<code>std::net</code> yang memungkinkan kami melakukan ini. Mari buat proyek
+baru dengan cara biasa:</p>
+<pre><code class="language-console">$ cargo new hello
+     Created binary (application) `hello` project
+$ cd hello
+</code></pre>
+<p>Sekarang masukkan kode di Listing 21-1 di <em>src/main.rs</em> untuk
+memulai. Kode ini akan mendengarkan di alamat lokal
+<code>127.0.0.1:7878</code> untuk stream TCP masuk. Saat mendapat stream masuk,
+ia akan mencetak <code>Connection established!</code>.</p>
+<figure class="listing" id="listing-21-1">
+<span class="file-name">Filename: src/main.rs</span>
+<pre class="playground"><code class="language-rust no_run edition2024">use std::net::TcpListener;
+
+fn main() {
+    let listener = TcpListener::bind("127.0.0.1:7878").unwrap();
+
+    for stream in listener.incoming() {
+        let stream = stream.unwrap();
+
+        println!("Connection established!");
+    }
+}</code></pre>
+<figcaption><a href="#listing-21-1">Listing 21-1</a>: Mendengarkan stream masuk dan mencetak pesan saat menerima stream</figcaption>
+</figure>
+<p>Menggunakan <code>TcpListener</code>, kami bisa mendengarkan koneksi TCP di
+alamat <code>127.0.0.1:7878</code>. Di alamat, bagian sebelum titik dua adalah
+alamat IP yang mewakili komputer Anda (ini sama di setiap komputer
+dan tidak mewakili komputer penulis secara spesifik), dan <code>7878</code> adalah
+port. Kami memilih port ini karena dua alasan: HTTP biasanya tidak
+diterima di port ini, jadi server kami tidak akan konflik dengan web
+server lain yang mungkin Anda jalankan di mesin Anda, dan 7878 adalah
+<em>rust</em> yang diketik di telepon.</p>
+<p>Fungsi <code>bind</code> dalam skenario ini bekerja seperti fungsi <code>new</code> karena
+ia akan mengembalikan instance <code>TcpListener</code> baru. Fungsi disebut
+<code>bind</code> karena, di jaringan, menghubungkan ke port untuk mendengarkan
+dikenal sebagai “binding ke port.”</p>
+<p>Fungsi <code>bind</code> mengembalikan <code>Result&lt;T, E&gt;</code>, yang menunjukkan bahwa
+binding bisa gagal, misalnya, jika kita menjalankan dua instance
+program kita dan jadi ada dua program yang mendengarkan port yang
+sama. Karena kami menulis server dasar hanya untuk tujuan belajar,
+kami tidak akan khawatir menangani jenis error ini; sebagai gantinya,
+kami menggunakan <code>unwrap</code> untuk menghentikan program jika error
+terjadi.</p>
+<p>Metode <code>incoming</code> pada <code>TcpListener</code> mengembalikan iterator yang
+memberi kami urutan stream (lebih spesifik, stream bertipe
+<code>TcpStream</code>). Satu <em>stream</em> mewakili koneksi terbuka antara client
+dan server. <em>Connection</em> adalah nama untuk proses permintaan dan
+respons penuh di mana client terhubung ke server, server menghasilkan
+respons, dan server menutup koneksi. Sebagai gantinya, kami akan
+membaca dari <code>TcpStream</code> untuk melihat apa yang dikirim client dan
+lalu menulis respons kami ke stream untuk mengirim data kembali ke
+client. Secara keseluruhan, loop <code>for</code> ini akan memproses setiap
+koneksi secara bergiliran dan menghasilkan serangkaian stream untuk
+kami tangani.</p>
+<p>Saat ini, penanganan stream kami terdiri dari memanggil <code>unwrap</code> untuk
+menghentikan program jika stream punya error; jika tidak ada error,
+program mencetak pesan. Kami akan menambah fungsionalitas untuk kasus
+sukses di listing selanjutnya. Alasan kami mungkin menerima error dari
+metode <code>incoming</code> saat client terhubung ke server adalah bahwa kami
+benar-benar tidak mengiterasi koneksi. Sebagai gantinya, kami
+mengiterasi <em>connection attempts</em>. Koneksi mungkin tidak sukses karena
+sejumlah alasan, banyak di antaranya spesifik sistem operasi. Misalnya,
+banyak sistem operasi punya batas jumlah koneksi terbuka simultan yang
+bisa didukung; percobaan koneksi baru di luar angka itu akan
+menghasilkan error sampai beberapa koneksi terbuka ditutup.</p>
+<p>Mari coba jalankan kode ini! Panggil <code>cargo run</code> di terminal lalu
+buka <em>127.0.0.1:7878</em> di browser web. Browser seharusnya menampilkan
+pesan error seperti “Connection reset” karena server saat ini tidak
+mengirim data kembali. Tapi saat Anda melihat terminal Anda, Anda
+seharusnya melihat beberapa pesan yang dicetak saat browser terhubung
+ke server!</p>
+<pre><code class="language-text">     Running `target/debug/hello`
+Connection established!
+Connection established!
+Connection established!
+</code></pre>
+<p>Kadang Anda akan melihat beberapa pesan dicetak untuk satu permintaan
+browser; alasannya mungkin browser membuat permintaan untuk halaman
+serta permintaan untuk resource lain, seperti ikon <em>favicon.ico</em> yang
+muncul di tab browser.</p>
+<p>Ini juga bisa jadi browser mencoba terhubung ke server beberapa kali
+karena server tidak merespons dengan data apa pun. Saat <code>stream</code> keluar
+dari scope dan di-drop di akhir loop, koneksi ditutup sebagai bagian
+dari implementasi <code>drop</code>. Browser kadang menangani koneksi tertutup
+dengan mencoba lagi, karena masalah mungkin bersifat sementara.</p>
+<p>Browser juga kadang membuka beberapa koneksi ke server tanpa mengirim
+permintaan apa pun sehingga jika mereka <em>nanti</em> mengirim permintaan,
+permintaan itu bisa terjadi lebih cepat. Saat ini terjadi, server
+kami akan melihat setiap koneksi, tidak peduli apakah ada permintaan
+melalui koneksi itu. Banyak versi browser berbasis Chrome melakukan
+ini, misalnya; Anda bisa menonaktifkan optimisasi itu dengan menggunakan
+mode private browsing atau browser berbeda.</p>
+<p>Faktor pentingnya adalah kami telah berhasil mendapatkan handle ke
+koneksi TCP!</p>
+<p>Ingat untuk menghentikan program dengan menekan <kbd>ctrl</kbd>-<kbd>C</kbd> saat
+Anda selesai menjalankan versi tertentu kode. Lalu, restart program
+dengan memanggil perintah <code>cargo run</code> setelah Anda membuat setiap set
+perubahan kode untuk memastikan Anda menjalankan kode terbaru.</p>
+<h3 id="membaca-permintaan"><a class="header" href="#membaca-permintaan">Membaca Permintaan</a></h3>
+<p>Mari implementasikan fungsionalitas untuk membaca permintaan dari
+browser! Untuk memisahkan kepedulian pertama mendapatkan koneksi dan
+lalu melakukan tindakan dengan koneksi, kami akan memulai fungsi baru
+untuk memproses koneksi. Di fungsi <code>handle_connection</code> baru ini, kami
+akan membaca data dari stream TCP dan mencetaknya sehingga kami bisa
+melihat data yang dikirim dari browser. Ubah kode agar terlihat seperti
+Listing 21-2.</p>
+<figure class="listing" id="listing-21-2">
+<span class="file-name">Filename: src/main.rs</span>
+<pre class="playground"><code class="language-rust no_run edition2024">use std::{
+    io::{BufReader, prelude::*},
+    net::{TcpListener, TcpStream},
+};
+
+fn main() {
+    let listener = TcpListener::bind("127.0.0.1:7878").unwrap();
+
+    for stream in listener.incoming() {
+        let stream = stream.unwrap();
+
+        handle_connection(stream);
+    }
+}
+
+fn handle_connection(mut stream: TcpStream) {
+    let buf_reader = BufReader::new(&amp;stream);
+    let http_request: Vec&lt;_&gt; = buf_reader
+        .lines()
+        .map(|result| result.unwrap())
+        .take_while(|line| !line.is_empty())
+        .collect();
+
+    println!("Request: {http_request:#?}");
+}</code></pre>
+<figcaption><a href="#listing-21-2">Listing 21-2</a>: Membaca dari <code>TcpStream</code> dan mencetak data</figcaption>
+</figure>
+<p>Kami memasukkan <code>std::io::BufReader</code> dan <code>std::io::prelude</code> ke scope
+untuk mendapatkan akses ke trait dan tipe yang memungkinkan kami
+membaca dari dan menulis ke stream. Di loop <code>for</code> di fungsi <code>main</code>,
+alih-alih mencetak pesan yang bilang kami membuat koneksi, kami sekarang
+memanggil fungsi <code>handle_connection</code> baru dan meneruskan <code>stream</code>
+kepadanya.</p>
+<p>Di fungsi <code>handle_connection</code>, kami membuat instance <code>BufReader</code> baru
+yang membungkus referensi ke <code>stream</code>. <code>BufReader</code> menambah buffering
+dengan mengelola pemanggilan metode trait <code>std::io::Read</code> untuk kami.</p>
+<p>Kami membuat variabel bernama <code>http_request</code> untuk mengumpulkan
+baris-baris permintaan yang dikirim browser ke server kami. Kami
+menunjukkan bahwa kami ingin mengumpulkan baris-baris ini ke vector
+dengan menambahkan anotasi tipe <code>Vec&lt;_&gt;</code>.</p>
+<p><code>BufReader</code> mengimplementasikan trait <code>std::io::BufRead</code>, yang
+menyediakan metode <code>lines</code>. Metode <code>lines</code> mengembalikan iterator
+<code>Result&lt;String, std::io::Error&gt;</code> dengan memecah stream data kapan
+pun ia melihat byte newline. Untuk mendapatkan setiap <code>String</code>, kami
+<code>map</code> dan <code>unwrap</code> setiap <code>Result</code>. <code>Result</code> mungkin error jika data
+bukan UTF-8 valid atau jika ada masalah membaca dari stream. Lagi
+lagi, program produksi seharusnya menangani error ini dengan lebih
+halus, tapi kami memilih untuk menghentikan program di kasus error
+untuk kesederhanaan.</p>
+<p>Browser menandakan akhir permintaan HTTP dengan mengirim dua karakter
+newline berturut-turut, jadi untuk mendapatkan satu permintaan dari
+stream, kami mengambil baris sampai mendapat baris yang adalah string
+kosong. Setelah kami mengumpulkan baris-baris ke vector, kami
+mencetaknya menggunakan pretty debug formatting sehingga kami bisa
+melihat instruksi yang dikirim browser web ke server kami.</p>
+<p>Mari coba kode ini! Jalankan program dan buat permintaan di browser
+web lagi. Perhatikan bahwa kami tetap akan mendapat halaman error di
+browser, tapi output program di terminal sekarang akan terlihat
+mirip ini:</p>
+<!-- manual-regeneration
+cd listings/ch21-web-server/listing-21-02
+cargo run
+make a request to 127.0.0.1:7878
+Can't automate because the output depends on making requests
+-->
+<pre><code class="language-console">$ cargo run
+   Compiling hello v0.1.0 (file:///projects/hello)
+    Finished `dev` profile [unoptimized + debuginfo] target(s) in 0.42s
+     Running `target/debug/hello`
+Request: [
+    "GET / HTTP/1.1",
+    "Host: 127.0.0.1:7878",
+    "User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:99.0) Gecko/20100101 Firefox/99.0",
+    "Accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,*/*;q=0.8",
+    "Accept-Language: en-US,en;q=0.5",
+    "Accept-Encoding: gzip, deflate, br",
+    "DNT: 1",
+    "Connection: keep-alive",
+    "Upgrade-Insecure-Requests: 1",
+    "Sec-Fetch-Dest: document",
+    "Sec-Fetch-Mode: navigate",
+    "Sec-Fetch-Site: none",
+    "Sec-Fetch-User: ?1",
+    "Cache-Control: max-age=0",
+]
+</code></pre>
+<p>Tergantung browser Anda, Anda mungkin mendapat output sedikit
+berbeda. Sekarang setelah kami mencetak data permintaan, kami bisa
+melihat mengapa kami mendapat beberapa koneksi dari satu permintaan
+browser dengan melihat path setelah <code>GET</code> di baris pertama permintaan.
+Jika koneksi berulang semuanya meminta <em>/</em>, kami tahu browser mencoba
+mengambil <em>/</em> berulang karena tidak mendapat respons dari program
+kami.</p>
+<p>Mari uraikan data permintaan ini untuk memahami apa yang diminta
+browser dari program kami.</p>
+<!-- Judul lama. Jangan dihapus atau tautan bisa rusak. -->
+<p><a id="a-closer-look-at-an-http-request"></a>
+<a id="looking-closer-at-an-http-request"></a></p>
+<h3 id="melihat-lebih-dekat-permintaan-http"><a class="header" href="#melihat-lebih-dekat-permintaan-http">Melihat Lebih Dekat Permintaan HTTP</a></h3>
+<p>HTTP adalah protokol berbasis teks, dan permintaan mengambil format
+ini:</p>
+<pre><code class="language-text">Method Request-URI HTTP-Version CRLF
+headers CRLF
+message-body
+</code></pre>
+<p>Baris pertama adalah <em>request line</em> yang menampung informasi tentang
+apa yang diminta client. Bagian pertama dari request line menunjukkan
+metode yang digunakan, seperti <code>GET</code> atau <code>POST</code>, yang mendeskripsikan
+bagaimana client membuat permintaan ini. Client kami menggunakan
+permintaan <code>GET</code>, yang berarti ia meminta informasi.</p>
+<p>Bagian selanjutnya dari request line adalah <em>/</em>, yang menunjukkan
+<em>uniform resource identifier</em> <em>(URI)</em> yang diminta client: URI hampir,
+tapi tidak sama persis, dengan <em>uniform resource locator</em> <em>(URL)</em>.
+Perbedaan antara URI dan URL tidak penting untuk tujuan kami di bab
+ini, tapi spesifikasi HTTP menggunakan istilah <em>URI</em>, jadi kami bisa
+hanya mengganti mental <em>URL</em> untuk <em>URI</em> di sini.</p>
+<p>Bagian terakhir adalah versi HTTP yang digunakan client, dan lalu
+request line berakhir dalam urutan CRLF. (<em>CRLF</em> singkatan dari
+<em>carriage return</em> dan <em>line feed</em>, yang adalah istilah dari era
+mesin tik!) Urutan CRLF juga bisa ditulis sebagai <code>\r\n</code>, di mana
+<code>\r</code> adalah carriage return dan <code>\n</code> adalah line feed. <em>Urutan
+CRLF</em> memisahkan request line dari sisa data permintaan. Perhatikan
+bahwa saat CRLF dicetak, kami melihat awal baris baru bukannya <code>\r\n</code>.</p>
+<p>Melihat data request line yang kami terima dari menjalankan program
+jauh ini, kami melihat bahwa <code>GET</code> adalah metode, <em>/</em> adalah request
+URI, dan <code>HTTP/1.1</code> adalah versinya.</p>
+<p>Setelah request line, sisa baris mulai dari <code>Host:</code> ke bawah adalah
+headers. Permintaan <code>GET</code> tidak punya body.</p>
+<p>Coba buat permintaan dari browser berbeda atau minta alamat berbeda,
+seperti <em>127.0.0.1:7878/test</em>, untuk melihat bagaimana data
+permintaan berubah.</p>
+<p>Sekarang setelah kami tahu apa yang diminta browser, mari kirim
+kembali beberapa data!</p>
+<h3 id="menulis-respons"><a class="header" href="#menulis-respons">Menulis Respons</a></h3>
+<p>Kami akan mengimplementasikan pengiriman data sebagai respons ke
+permintaan client. Respons memiliki format berikut:</p>
+<pre><code class="language-text">HTTP-Version Status-Code Reason-Phrase CRLF
+headers CRLF
+message-body
+</code></pre>
+<p>Baris pertama adalah <em>status line</em> yang berisi versi HTTP yang
+digunakan di respons, kode status numerik yang merangkum hasil
+permintaan, dan reason phrase yang menyediakan deskripsi teks dari
+kode status. Setelah urutan CRLF adalah header apa pun, urutan CRLF
+lain, dan body respons.</p>
+<p>Ini contoh respons yang menggunakan versi HTTP 1.1 dan punya kode
+status 200, reason phrase OK, tidak ada header, dan tidak ada body:</p>
+<pre><code class="language-text">HTTP/1.1 200 OK\r\n\r\n
+</code></pre>
+<p>Kode status 200 adalah respons sukses standar. Teks ini adalah
+respons HTTP sukses kecil. Mari tulis ini ke stream sebagai respons
+kami ke permintaan sukses! Dari fungsi <code>handle_connection</code>, hapus
+<code>println!</code> yang mencetak data permintaan dan ganti dengan kode di
+Listing 21-3.</p>
+<figure class="listing" id="listing-21-3">
+<span class="file-name">Filename: src/main.rs</span>
+<pre class="playground"><code class="language-rust no_run edition2024"><span class="boring">use std::{
+</span><span class="boring">    io::{BufReader, prelude::*},
+</span><span class="boring">    net::{TcpListener, TcpStream},
+</span><span class="boring">};
+</span><span class="boring">
+</span><span class="boring">fn main() {
+</span><span class="boring">    let listener = TcpListener::bind("127.0.0.1:7878").unwrap();
+</span><span class="boring">
+</span><span class="boring">    for stream in listener.incoming() {
+</span><span class="boring">        let stream = stream.unwrap();
+</span><span class="boring">
+</span><span class="boring">        handle_connection(stream);
+</span><span class="boring">    }
+</span><span class="boring">}
+</span><span class="boring">
+</span>fn handle_connection(mut stream: TcpStream) {
+    let buf_reader = BufReader::new(&amp;stream);
+    let http_request: Vec&lt;_&gt; = buf_reader
+        .lines()
+        .map(|result| result.unwrap())
+        .take_while(|line| !line.is_empty())
+        .collect();
+
+    let response = "HTTP/1.1 200 OK\r\n\r\n";
+
+    stream.write_all(response.as_bytes()).unwrap();
+}</code></pre>
+<figcaption><a href="#listing-21-3">Listing 21-3</a>: Menulis respons HTTP sukses kecil ke stream</figcaption>
+</figure>
+<p>Baris baru pertama mendefinisikan variabel <code>response</code> yang menampung
+data pesan sukses. Lalu, kami memanggil <code>as_bytes</code> pada <code>response</code>
+kami untuk mengubah data string ke byte. Metode <code>write_all</code> pada
+<code>stream</code> mengambil <code>&amp;[u8]</code> dan mengirim byte-byte itu langsung ke
+koneksi. Karena operasi <code>write_all</code> bisa gagal, kami menggunakan
+<code>unwrap</code> pada hasil error seperti sebelumnya. Lagi, di aplikasi
+nyata, Anda akan menambahkan penanganan error di sini.</p>
+<p>Dengan perubahan ini, mari jalankan kode kami dan buat permintaan.
+Kami tidak lagi mencetak data ke terminal, jadi kami tidak akan
+melihat output selain output dari Cargo. Saat Anda memuat
+<em>127.0.0.1:7878</em> di browser web, Anda seharusnya mendapat halaman
+kosong alih-alih error. Anda baru saja menulis manual menerima
+permintaan HTTP dan mengirim respons!</p>
+<h3 id="mengembalikan-html-nyata"><a class="header" href="#mengembalikan-html-nyata">Mengembalikan HTML Nyata</a></h3>
+<p>Mari implementasikan fungsionalitas untuk mengembalikan lebih dari
+halaman kosong. Buat file baru <em>hello.html</em> di root direktori proyek
+Anda, bukan di direktori <em>src</em>. Anda bisa memasukkan HTML apa pun;
+Listing 21-4 menunjukkan satu kemungkinan.</p>
+<figure class="listing" id="listing-21-4">
+<span class="file-name">Filename: hello.html</span>
+<pre><code class="language-html">&lt;!DOCTYPE html&gt;
+&lt;html lang="en"&gt;
+  &lt;head&gt;
+    &lt;meta charset="utf-8"&gt;
+    &lt;title&gt;Hello!&lt;/title&gt;
+  &lt;/head&gt;
+  &lt;body&gt;
+    &lt;h1&gt;Hello!&lt;/h1&gt;
+    &lt;p&gt;Hi from Rust&lt;/p&gt;
+  &lt;/body&gt;
+&lt;/html&gt;
+</code></pre>
+<figcaption><a href="#listing-21-4">Listing 21-4</a>: Contoh file HTML untuk dikembalikan dalam respons</figcaption>
+</figure>
+<p>Ini adalah dokumen HTML5 minimal dengan heading dan beberapa teks.
+Untuk mengembalikan ini dari server saat permintaan diterima, kami
+akan memodifikasi <code>handle_connection</code> seperti yang ditampilkan di
+Listing 21-5 untuk membaca file HTML, menambahkannya ke respons
+sebagai body, dan mengirimkannya.</p>
+<figure class="listing" id="listing-21-5">
+<span class="file-name">Filename: src/main.rs</span>
+<pre class="playground"><code class="language-rust no_run edition2024">use std::{
+    fs,
+    io::{BufReader, prelude::*},
+    net::{TcpListener, TcpStream},
+};
+// --snip--
+
+<span class="boring">fn main() {
+</span><span class="boring">    let listener = TcpListener::bind("127.0.0.1:7878").unwrap();
+</span><span class="boring">
+</span><span class="boring">    for stream in listener.incoming() {
+</span><span class="boring">        let stream = stream.unwrap();
+</span><span class="boring">
+</span><span class="boring">        handle_connection(stream);
+</span><span class="boring">    }
+</span><span class="boring">}
+</span><span class="boring">
+</span>fn handle_connection(mut stream: TcpStream) {
+    let buf_reader = BufReader::new(&amp;stream);
+    let http_request: Vec&lt;_&gt; = buf_reader
+        .lines()
+        .map(|result| result.unwrap())
+        .take_while(|line| !line.is_empty())
+        .collect();
+
+    let status_line = "HTTP/1.1 200 OK";
+    let contents = fs::read_to_string("hello.html").unwrap();
+    let length = contents.len();
+
+    let response =
+        format!("{status_line}\r\nContent-Length: {length}\r\n\r\n{contents}");
+
+    stream.write_all(response.as_bytes()).unwrap();
+}</code></pre>
+<figcaption><a href="#listing-21-5">Listing 21-5</a>: Mengirim isi <em>hello.html</em> sebagai body respons</figcaption>
+</figure>
+<p>Kami telah menambahkan <code>fs</code> ke pernyataan <code>use</code> untuk memasukkan
+modul filesystem pustaka standar ke scope. Kode untuk membaca isi
+file ke string seharusnya terlihat familiar; kami menggunakannya saat
+kami membaca isi file untuk proyek I/O kami di Listing 12-4.</p>
+<p>Selanjutnya, kami menggunakan <code>format!</code> untuk menambah isi file
+sebagai body respons sukses. Untuk memastikan respons HTTP valid,
+kami menambahkan header <code>Content-Length</code>, yang di-set ke ukuran body
+respons kami—dalam kasus ini, ukuran <code>hello.html</code>.</p>
+<p>Jalankan kode ini dengan <code>cargo run</code> dan buka <em>127.0.0.1:7878</em> di
+browser Anda; Anda seharusnya melihat HTML Anda dirender!</p>
+<p>Saat ini, kami mengabaikan data permintaan di <code>http_request</code> dan hanya
+mengirim kembali isi file HTML tanpa kondisi. Artinya jika Anda
+mencoba meminta <em>127.0.0.1:7878/something-else</em> di browser Anda,
+Anda tetap akan mendapat respons HTML yang sama. Saat ini, server
+kami sangat terbatas dan tidak melakukan apa yang dilakukan kebanyakan
+web server. Kami ingin menyesuaikan respons kami tergantung pada
+permintaan dan hanya mengirim kembali file HTML untuk permintaan
+well-formed ke <em>/</em>.</p>
+<h3 id="memvalidasi-permintaan-dan-merespons-secara-selektif"><a class="header" href="#memvalidasi-permintaan-dan-merespons-secara-selektif">Memvalidasi Permintaan dan Merespons Secara Selektif</a></h3>
+<p>Saat ini, web server kami akan mengembalikan HTML di file apa pun
+yang diminta client. Mari tambahkan fungsionalitas untuk memeriksa
+bahwa browser meminta <em>/</em> sebelum mengembalikan file HTML dan
+mengembalikan error jika browser meminta hal lain. Untuk ini kami
+perlu memodifikasi <code>handle_connection</code>, seperti yang ditampilkan di
+Listing 21-6. Kode baru ini memeriksa isi permintaan yang diterima
+terhadap apa yang kami ketahui permintaan untuk <em>/</em> terlihat seperti
+dan menambahkan blok <code>if</code> dan <code>else</code> untuk memperlakukan permintaan
+secara berbeda.</p>
+<figure class="listing" id="listing-21-6">
+<span class="file-name">Filename: src/main.rs</span>
+<pre class="playground"><code class="language-rust no_run edition2024"><span class="boring">use std::{
+</span><span class="boring">    fs,
+</span><span class="boring">    io::{BufReader, prelude::*},
+</span><span class="boring">    net::{TcpListener, TcpStream},
+</span><span class="boring">};
+</span><span class="boring">
+</span><span class="boring">fn main() {
+</span><span class="boring">    let listener = TcpListener::bind("127.0.0.1:7878").unwrap();
+</span><span class="boring">
+</span><span class="boring">    for stream in listener.incoming() {
+</span><span class="boring">        let stream = stream.unwrap();
+</span><span class="boring">
+</span><span class="boring">        handle_connection(stream);
+</span><span class="boring">    }
+</span><span class="boring">}
+</span>// --snip--
+
+fn handle_connection(mut stream: TcpStream) {
+    let buf_reader = BufReader::new(&amp;stream);
+    let request_line = buf_reader.lines().next().unwrap().unwrap();
+
+    if request_line == "GET / HTTP/1.1" {
+        let status_line = "HTTP/1.1 200 OK";
+        let contents = fs::read_to_string("hello.html").unwrap();
+        let length = contents.len();
+
+        let response = format!(
+            "{status_line}\r\nContent-Length: {length}\r\n\r\n{contents}"
+        );
+
+        stream.write_all(response.as_bytes()).unwrap();
+    } else {
+        // some other request
+    }
+}</code></pre>
+<figcaption><a href="#listing-21-6">Listing 21-6</a>: Menangani permintaan ke <em>/</em> berbeda dari permintaan lain</figcaption>
+</figure>
+<p>Kami hanya akan melihat baris pertama permintaan HTTP, jadi alih-alih
+membaca seluruh permintaan ke vector, kami memanggil <code>next</code> untuk
+mendapat item pertama dari iterator. <code>unwrap</code> pertama menangani
+<code>Option</code> dan menghentikan program jika iterator tidak punya item.
+<code>unwrap</code> kedua menangani <code>Result</code> dan memiliki efek yang sama seperti
+<code>unwrap</code> yang ada di <code>map</code> yang ditambah di Listing 21-2.</p>
+<p>Selanjutnya, kami memeriksa <code>request_line</code> untuk melihat apakah ia
+sama dengan request line dari permintaan GET ke path <em>/</em>. Jika ya,
+blok <code>if</code> mengembalikan isi file HTML kami.</p>
+<p>Jika <code>request_line</code> <em>tidak</em> sama dengan permintaan GET ke path <em>/</em>,
+artinya kami menerima permintaan lain. Kami akan menambah kode ke
+blok <code>else</code> sebentar lagi untuk merespons semua permintaan lain.</p>
+<p>Jalankan kode ini sekarang dan minta <em>127.0.0.1:7878</em>; Anda seharusnya
+mendapat HTML di <em>hello.html</em>. Jika Anda membuat permintaan lain,
+seperti <em>127.0.0.1:7878/something-else</em>, Anda akan mendapat error
+koneksi seperti yang Anda lihat saat menjalankan kode di Listing 21-1
+dan Listing 21-2.</p>
+<p>Sekarang mari tambahkan kode di Listing 21-7 ke blok <code>else</code> untuk
+mengembalikan respons dengan kode status 404, yang menandakan bahwa
+konten untuk permintaan tidak ditemukan. Kami juga akan mengembalikan
+beberapa HTML untuk halaman yang dirender di browser menunjukkan
+respons ke end user.</p>
+<figure class="listing" id="listing-21-7">
+<span class="file-name">Filename: src/main.rs</span>
+<pre class="playground"><code class="language-rust no_run edition2024"><span class="boring">use std::{
+</span><span class="boring">    fs,
+</span><span class="boring">    io::{BufReader, prelude::*},
+</span><span class="boring">    net::{TcpListener, TcpStream},
+</span><span class="boring">};
+</span><span class="boring">
+</span><span class="boring">fn main() {
+</span><span class="boring">    let listener = TcpListener::bind("127.0.0.1:7878").unwrap();
+</span><span class="boring">
+</span><span class="boring">    for stream in listener.incoming() {
+</span><span class="boring">        let stream = stream.unwrap();
+</span><span class="boring">
+</span><span class="boring">        handle_connection(stream);
+</span><span class="boring">    }
+</span><span class="boring">}
+</span><span class="boring">
+</span><span class="boring">fn handle_connection(mut stream: TcpStream) {
+</span><span class="boring">    let buf_reader = BufReader::new(&amp;stream);
+</span><span class="boring">    let request_line = buf_reader.lines().next().unwrap().unwrap();
+</span><span class="boring">
+</span><span class="boring">    if request_line == "GET / HTTP/1.1" {
+</span><span class="boring">        let status_line = "HTTP/1.1 200 OK";
+</span><span class="boring">        let contents = fs::read_to_string("hello.html").unwrap();
+</span><span class="boring">        let length = contents.len();
+</span><span class="boring">
+</span><span class="boring">        let response = format!(
+</span><span class="boring">            "{status_line}\r\nContent-Length: {length}\r\n\r\n{contents}"
+</span><span class="boring">        );
+</span><span class="boring">
+</span><span class="boring">        stream.write_all(response.as_bytes()).unwrap();
+</span>    // --snip--
+    } else {
+        let status_line = "HTTP/1.1 404 NOT FOUND";
+        let contents = fs::read_to_string("404.html").unwrap();
+        let length = contents.len();
+
+        let response = format!(
+            "{status_line}\r\nContent-Length: {length}\r\n\r\n{contents}"
+        );
+
+        stream.write_all(response.as_bytes()).unwrap();
+    }
+<span class="boring">}</span></code></pre>
+<figcaption><a href="#listing-21-7">Listing 21-7</a>: Merespons dengan kode status 404 dan halaman error jika selain <em>/</em> yang diminta</figcaption>
+</figure>
+<p>Di sini, respons kami punya status line dengan kode status 404 dan
+reason phrase <code>NOT FOUND</code>. Body respons akan berisi HTML di file
+<em>404.html</em>. Anda perlu membuat file <em>404.html</em> di sebelah <em>hello.html</em>
+untuk halaman error; lagi, bebas gunakan HTML apa pun, atau gunakan
+contoh HTML di Listing 21-8.</p>
+<figure class="listing" id="listing-21-8">
+<span class="file-name">Filename: 404.html</span>
+<pre><code class="language-html">&lt;!DOCTYPE html&gt;
+&lt;html lang="en"&gt;
+  &lt;head&gt;
+    &lt;meta charset="utf-8"&gt;
+    &lt;title&gt;Hello!&lt;/title&gt;
+  &lt;/head&gt;
+  &lt;body&gt;
+    &lt;h1&gt;Oops!&lt;/h1&gt;
+    &lt;p&gt;Sorry, I don't know what you're asking for.&lt;/p&gt;
+  &lt;/body&gt;
+&lt;/html&gt;
+</code></pre>
+<figcaption><a href="#listing-21-8">Listing 21-8</a>: Contoh konten untuk halaman yang dikirim kembali dengan respons 404 apa pun</figcaption>
+</figure>
+<p>Dengan perubahan ini, jalankan server Anda lagi. Meminta
+<em>127.0.0.1:7878</em> seharusnya mengembalikan isi <em>hello.html</em>, dan
+permintaan lain, seperti <em>127.0.0.1:7878/foo</em>, seharusnya
+mengembalikan HTML error dari <em>404.html</em>.</p>
+<!-- Judul lama. Jangan dihapus atau tautan bisa rusak. -->
+<p><a id="a-touch-of-refactoring"></a></p>
+<h3 id="refactoring"><a class="header" href="#refactoring">Refactoring</a></h3>
+<p>Saat ini, blok <code>if</code> dan <code>else</code> punya banyak pengulangan: Keduanya
+membaca file dan menulis isi file ke stream. Satu-satunya perbedaan
+adalah status line dan nama file. Mari buat kode lebih ringkas dengan
+menarik perbedaan itu ke baris <code>if</code> dan <code>else</code> terpisah yang akan
+menetapkan nilai status line dan nama file ke variabel; kami kemudian
+bisa menggunakan variabel itu tanpa kondisi di kode untuk membaca file
+dan menulis respons. Listing 21-9 menunjukkan kode hasilnya setelah
+mengganti blok <code>if</code> dan <code>else</code> besar.</p>
+<figure class="listing" id="listing-21-9">
+<span class="file-name">Filename: src/main.rs</span>
+<pre class="playground"><code class="language-rust no_run edition2024"><span class="boring">use std::{
+</span><span class="boring">    fs,
+</span><span class="boring">    io::{BufReader, prelude::*},
+</span><span class="boring">    net::{TcpListener, TcpStream},
+</span><span class="boring">};
+</span><span class="boring">
+</span><span class="boring">fn main() {
+</span><span class="boring">    let listener = TcpListener::bind("127.0.0.1:7878").unwrap();
+</span><span class="boring">
+</span><span class="boring">    for stream in listener.incoming() {
+</span><span class="boring">        let stream = stream.unwrap();
+</span><span class="boring">
+</span><span class="boring">        handle_connection(stream);
+</span><span class="boring">    }
+</span><span class="boring">}
+</span>// --snip--
+
+fn handle_connection(mut stream: TcpStream) {
+    // --snip--
+<span class="boring">    let buf_reader = BufReader::new(&amp;stream);
+</span><span class="boring">    let request_line = buf_reader.lines().next().unwrap().unwrap();
+</span>
+    let (status_line, filename) = if request_line == "GET / HTTP/1.1" {
+        ("HTTP/1.1 200 OK", "hello.html")
+    } else {
+        ("HTTP/1.1 404 NOT FOUND", "404.html")
+    };
+
+    let contents = fs::read_to_string(filename).unwrap();
+    let length = contents.len();
+
+    let response =
+        format!("{status_line}\r\nContent-Length: {length}\r\n\r\n{contents}");
+
+    stream.write_all(response.as_bytes()).unwrap();
+}</code></pre>
+<figcaption><a href="#listing-21-9">Listing 21-9</a>: Refactoring blok <code>if</code> dan <code>else</code> agar hanya berisi kode yang berbeda antara dua kasus</figcaption>
+</figure>
+<p>Sekarang blok <code>if</code> dan <code>else</code> hanya mengembalikan nilai yang
+sesuai untuk status line dan nama file dalam tuple; kami kemudian
+menggunakan destrukturisasi untuk menetapkan dua nilai ini ke
+<code>status_line</code> dan <code>filename</code> menggunakan pola di pernyataan <code>let</code>,
+seperti yang dibahas di Bab 19.</p>
+<p>Kode yang duplikat sebelumnya sekarang di luar blok <code>if</code> dan <code>else</code>
+dan menggunakan variabel <code>status_line</code> dan <code>filename</code>. Ini membuat
+lebih mudah melihat perbedaan antara dua kasus, dan artinya kami hanya
+punya satu tempat untuk memperbarui kode jika kami ingin mengubah
+cara pembacaan file dan penulisan respons bekerja. Perilaku kode di
+Listing 21-9 akan sama dengan yang di Listing 21-7.</p>
+<p>Luar biasa! Kami sekarang punya web server sederhana dalam kira-kira
+40 baris kode Rust yang merespons satu permintaan dengan halaman
+konten dan merespons semua permintaan lain dengan respons 404.</p>
+<p>Saat ini, server kami berjalan di single thread, artinya ia hanya
+bisa melayani satu permintaan pada satu waktu. Mari periksa bagaimana
+itu bisa menjadi masalah dengan mensimulasikan beberapa permintaan
+lambat. Lalu, kami akan memperbaikinya sehingga server kami bisa
+menangani beberapa permintaan sekaligus.</p>
+
+                    </main>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+                            <a rel="prev" href="ch21-00-final-project-a-web-server.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                                <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M41.4 233.4c-12.5 12.5-12.5 32.8 0 45.3l160 160c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3L109.3 256 246.6 118.6c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0l-160 160z"/></svg></span>
+                            </a>
+
+                            <a rel="next prefetch" href="ch21-02-multithreaded.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                                <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M278.6 233.4c12.5 12.5 12.5 32.8 0 45.3l-160 160c-12.5 12.5-32.8 12.5-45.3 0s-12.5-32.8 0-45.3L210.7 256 73.4 118.6c-12.5-12.5-12.5-32.8 0-45.3s32.8-12.5 45.3 0l160 160z"/></svg></span>
+                            </a>
+
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+                    <a rel="prev" href="ch21-00-final-project-a-web-server.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                        <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M41.4 233.4c-12.5 12.5-12.5 32.8 0 45.3l160 160c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3L109.3 256 246.6 118.6c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0l-160 160z"/></svg></span>
+                    </a>
+
+                    <a rel="next prefetch" href="ch21-02-multithreaded.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                        <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M278.6 233.4c12.5 12.5 12.5 32.8 0 45.3l-160 160c-12.5 12.5-32.8 12.5-45.3 0s-12.5-32.8 0-45.3L210.7 256 73.4 118.6c-12.5-12.5-12.5-32.8 0-45.3s32.8-12.5 45.3 0l160 160z"/></svg></span>
+                    </a>
+            </nav>
+
+        </div>
+
+        <template id=fa-eye><span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M288 32c-80.8 0-145.5 36.8-192.6 80.6C48.6 156 17.3 208 2.5 243.7c-3.3 7.9-3.3 16.7 0 24.6C17.3 304 48.6 356 95.4 399.4C142.5 443.2 207.2 480 288 480s145.5-36.8 192.6-80.6c46.8-43.5 78.1-95.4 93-131.1c3.3-7.9 3.3-16.7 0-24.6c-14.9-35.7-46.2-87.7-93-131.1C433.5 68.8 368.8 32 288 32zM432 256c0 79.5-64.5 144-144 144s-144-64.5-144-144s64.5-144 144-144s144 64.5 144 144zM288 192c0 35.3-28.7 64-64 64c-11.5 0-22.3-3-31.6-8.4c-.2 2.8-.4 5.5-.4 8.4c0 53 43 96 96 96s96-43 96-96s-43-96-96-96c-2.8 0-5.6 .1-8.4 .4c5.3 9.3 8.4 20.1 8.4 31.6z"/></svg></span></template>
+        <template id=fa-eye-slash><span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M38.8 5.1C28.4-3.1 13.3-1.2 5.1 9.2S-1.2 34.7 9.2 42.9l592 464c10.4 8.2 25.5 6.3 33.7-4.1s6.3-25.5-4.1-33.7L525.6 386.7c39.6-40.6 66.4-86.1 79.9-118.4c3.3-7.9 3.3-16.7 0-24.6c-14.9-35.7-46.2-87.7-93-131.1C465.5 68.8 400.8 32 320 32c-68.2 0-125 26.3-169.3 60.8L38.8 5.1zM223.1 149.5C248.6 126.2 282.7 112 320 112c79.5 0 144 64.5 144 144c0 24.9-6.3 48.3-17.4 68.7L408 294.5c5.2-11.8 8-24.8 8-38.5c0-53-43-96-96-96c-2.8 0-5.6 .1-8.4 .4c5.3 9.3 8.4 20.1 8.4 31.6c0 10.2-2.4 19.8-6.6 28.3l-90.3-70.8zm223.1 298L373 389.9c-16.4 6.5-34.3 10.1-53 10.1c-79.5 0-144-64.5-144-144c0-6.9 .5-13.6 1.4-20.2L83.1 161.5C60.3 191.2 44 220.8 34.5 243.7c-3.3 7.9-3.3 16.7 0 24.6c14.9 35.7 46.2 87.7 93 131.1C174.5 443.2 239.2 480 320 480c47.8 0 89.9-12.9 126.2-32.5z"/></svg></span></template>
+        <template id=fa-copy><span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M502.6 70.63l-61.25-61.25C435.4 3.371 427.2 0 418.7 0H255.1c-35.35 0-64 28.66-64 64l.0195 256C192 355.4 220.7 384 256 384h192c35.2 0 64-28.8 64-64V93.25C512 84.77 508.6 76.63 502.6 70.63zM464 320c0 8.836-7.164 16-16 16H255.1c-8.838 0-16-7.164-16-16L239.1 64.13c0-8.836 7.164-16 16-16h128L384 96c0 17.67 14.33 32 32 32h47.1V320zM272 448c0 8.836-7.164 16-16 16H63.1c-8.838 0-16-7.164-16-16L47.98 192.1c0-8.836 7.164-16 16-16H160V128H63.99c-35.35 0-64 28.65-64 64l.0098 256C.002 483.3 28.66 512 64 512h192c35.2 0 64-28.8 64-64v-32h-47.1L272 448z"/></svg></span></template>
+        <template id=fa-play><span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 384 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M73 39c-14.8-9.1-33.4-9.4-48.5-.9S0 62.6 0 80V432c0 17.4 9.4 33.4 24.5 41.9s33.7 8.1 48.5-.9L361 297c14.3-8.7 23-24.2 23-41s-8.7-32.2-23-41L73 39z"/></svg></span></template>
+        <template id=fa-clock-rotate-left><span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M75 75L41 41C25.9 25.9 0 36.6 0 57.9V168c0 13.3 10.7 24 24 24H134.1c21.4 0 32.1-25.9 17-41l-30.8-30.8C155 85.5 203 64 256 64c106 0 192 86 192 192s-86 192-192 192c-40.8 0-78.6-12.7-109.7-34.4c-14.5-10.1-34.4-6.6-44.6 7.9s-6.6 34.4 7.9 44.6C151.2 495 201.7 512 256 512c141.4 0 256-114.6 256-256S397.4 0 256 0C185.3 0 121.3 28.7 75 75zm181 53c-13.3 0-24 10.7-24 24V256c0 6.4 2.5 12.5 7 17l72 72c9.4 9.4 24.6 9.4 33.9 0s9.4-24.6 0-33.9l-65-65V152c0-13.3-10.7-24-24-24z"/></svg></span></template>
+
+
+
+        <script>
+            window.playground_copyable = true;
+        </script>
+
+
+        <script src="elasticlunr-ef4e11c1.min.js"></script>
+        <script src="mark-09e88c2c.min.js"></script>
+        <script src="searcher-09f2665d.js"></script>
+
+        <script src="clipboard-1626706a.min.js"></script>
+        <script src="highlight-abc7f01d.js"></script>
+        <script src="book-c22b7243.js"></script>
+
+        <!-- Custom JS scripts -->
+        <script src="ferris-2317480c.js"></script>
+
+
+
+    </div>
+    </body>
+</html>

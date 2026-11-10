@@ -1,0 +1,1177 @@
+<!DOCTYPE HTML>
+<html lang="en" class="light sidebar-visible" dir="ltr">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>Menerapkan Pola Desain Berorientasi Objek - The Rust Programming Language</title>
+
+
+        <!-- Custom HTML head -->
+
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff">
+
+        <link rel="icon" href="favicon-de23e50b.svg">
+        <link rel="shortcut icon" href="favicon-8114d1fc.png">
+        <link rel="stylesheet" href="css/variables-8adf115d.css">
+        <link rel="stylesheet" href="css/general-0392ca55.css">
+        <link rel="stylesheet" href="css/chrome-fc474251.css">
+        <link rel="stylesheet" href="css/print-9e4910d8.css" media="print">
+
+        <!-- Fonts -->
+        <link rel="stylesheet" href="fonts/fonts-9644e21d.css">
+
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" id="mdbook-highlight-css" href="highlight-493f70e1.css">
+        <link rel="stylesheet" id="mdbook-tomorrow-night-css" href="tomorrow-night-4c0ae647.css">
+        <link rel="stylesheet" id="mdbook-ayu-highlight-css" href="ayu-highlight-3fdfc3ac.css">
+
+        <!-- Custom theme stylesheets -->
+        <link rel="stylesheet" href="ferris-d33b75bf.css">
+        <link rel="stylesheet" href="theme/2018-edition-4e126c62.css">
+        <link rel="stylesheet" href="theme/semantic-notes-9b5766c0.css">
+        <link rel="stylesheet" href="theme/listing-cab26221.css">
+
+
+        <!-- Provide site root and default themes to javascript -->
+        <script>
+            const path_to_root = "";
+            const default_light_theme = "light";
+            const default_dark_theme = "navy";
+            window.path_to_searchindex_js = "searchindex-e298a7a7.js";
+        </script>
+        <!-- Start loading toc.js asap -->
+        <script src="toc-8d1d8862.js"></script>
+    </head>
+    <body>
+    <div id="mdbook-help-container">
+        <div id="mdbook-help-popup">
+            <h2 class="mdbook-help-title">Keyboard shortcuts</h2>
+            <div>
+                <p>Press <kbd>←</kbd> or <kbd>→</kbd> to navigate between chapters</p>
+                <p>Press <kbd>S</kbd> or <kbd>/</kbd> to search in the book</p>
+                <p>Press <kbd>?</kbd> to show this help</p>
+                <p>Press <kbd>Esc</kbd> to hide this help</p>
+            </div>
+        </div>
+    </div>
+    <div id="mdbook-body-container">
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script>
+            try {
+                let theme = localStorage.getItem('mdbook-theme');
+                let sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script>
+            const default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? default_dark_theme : default_light_theme;
+            let theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            const html = document.documentElement;
+            html.classList.remove('light')
+            html.classList.add(theme);
+            html.classList.add("js");
+        </script>
+
+        <input type="checkbox" id="mdbook-sidebar-toggle-anchor" class="hidden">
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script>
+            let sidebar = null;
+            const sidebar_toggle = document.getElementById("mdbook-sidebar-toggle-anchor");
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            } else {
+                sidebar = 'hidden';
+                sidebar_toggle.checked = false;
+            }
+            if (sidebar === 'visible') {
+                sidebar_toggle.checked = true;
+            } else {
+                html.classList.remove('sidebar-visible');
+            }
+        </script>
+
+        <nav id="mdbook-sidebar" class="sidebar" aria-label="Table of contents">
+            <!-- populated by js -->
+            <mdbook-sidebar-scrollbox class="sidebar-scrollbox"></mdbook-sidebar-scrollbox>
+            <noscript>
+                <iframe class="sidebar-iframe-outer" src="toc.html"></iframe>
+            </noscript>
+            <div id="mdbook-sidebar-resize-handle" class="sidebar-resize-handle">
+                <div class="sidebar-resize-indicator"></div>
+            </div>
+        </nav>
+
+        <div id="mdbook-page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                <div id="mdbook-menu-bar-hover-placeholder"></div>
+                <div id="mdbook-menu-bar" class="menu-bar sticky">
+                    <div class="left-buttons">
+                        <label id="mdbook-sidebar-toggle" class="icon-button" for="mdbook-sidebar-toggle-anchor" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="mdbook-sidebar">
+                            <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M0 96C0 78.3 14.3 64 32 64H416c17.7 0 32 14.3 32 32s-14.3 32-32 32H32C14.3 128 0 113.7 0 96zM0 256c0-17.7 14.3-32 32-32H416c17.7 0 32 14.3 32 32s-14.3 32-32 32H32c-17.7 0-32-14.3-32-32zM448 416c0 17.7-14.3 32-32 32H32c-17.7 0-32-14.3-32-32s14.3-32 32-32H416c17.7 0 32 14.3 32 32z"/></svg></span>
+                        </label>
+                        <button id="mdbook-theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="mdbook-theme-list">
+                            <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M371.3 367.1c27.3-3.9 51.9-19.4 67.2-42.9L600.2 74.1c12.6-19.5 9.4-45.3-7.6-61.2S549.7-4.4 531.1 9.6L294.4 187.2c-24 18-38.2 46.1-38.4 76.1L371.3 367.1zm-19.6 25.4l-116-104.4C175.9 290.3 128 339.6 128 400c0 3.9 .2 7.8 .6 11.6c1.8 17.5-10.2 36.4-27.8 36.4H96c-17.7 0-32 14.3-32 32s14.3 32 32 32H240c61.9 0 112-50.1 112-112c0-2.5-.1-5-.2-7.5z"/></svg></span>
+                        </button>
+                        <ul id="mdbook-theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                            <li role="none"><button role="menuitem" class="theme" id="mdbook-theme-default_theme">Auto</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="mdbook-theme-light">Light</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="mdbook-theme-rust">Rust</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="mdbook-theme-coal">Coal</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="mdbook-theme-navy">Navy</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="mdbook-theme-ayu">Ayu</button></li>
+                        </ul>
+                        <button id="mdbook-search-toggle" class="icon-button" type="button" title="Search (`/`)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="/ s" aria-controls="mdbook-searchbar">
+                            <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M416 208c0 45.9-14.9 88.3-40 122.7L502.6 457.4c12.5 12.5 12.5 32.8 0 45.3s-32.8 12.5-45.3 0L330.7 376c-34.4 25.2-76.8 40-122.7 40C93.1 416 0 322.9 0 208S93.1 0 208 0S416 93.1 416 208zM208 352c79.5 0 144-64.5 144-144s-64.5-144-144-144S64 128.5 64 208s64.5 144 144 144z"/></svg></span>
+                        </button>
+                    </div>
+
+                    <h1 class="menu-title">The Rust Programming Language</h1>
+
+                    <div class="right-buttons">
+                        <a href="print.html" title="Print this book" aria-label="Print this book">
+                            <span class=fa-svg id="print-button"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M128 0C92.7 0 64 28.7 64 64v96h64V64H354.7L384 93.3V160h64V93.3c0-17-6.7-33.3-18.7-45.3L400 18.7C388 6.7 371.7 0 354.7 0H128zM384 352v32 64H128V384 368 352H384zm64 32h32c17.7 0 32-14.3 32-32V256c0-35.3-28.7-64-64-64H64c-35.3 0-64 28.7-64 64v96c0 17.7 14.3 32 32 32H64v64c0 35.3 28.7 64 64 64H384c35.3 0 64-28.7 64-64V384zm-16-88c-13.3 0-24-10.7-24-24s10.7-24 24-24s24 10.7 24 24s-10.7 24-24 24z"/></svg></span>
+                        </a>
+                        <a href="https://github.com/rust-lang/book" title="Git repository" aria-label="Git repository">
+                            <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 496 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M165.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6zm-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3zm44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9zM244.8 8C106.1 8 0 113.3 0 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C428.2 457.8 496 362.9 496 252 496 113.3 383.5 8 244.8 8zM97.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1zm-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7zm32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1zm-11.4-14.7c-1.6 1-1.6 3.6 0 5.9 1.6 2.3 4.3 3.3 5.6 2.3 1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2z"/></svg></span>
+                        </a>
+
+                    </div>
+                </div>
+
+                <div id="mdbook-search-wrapper" class="hidden">
+                    <form id="mdbook-searchbar-outer" class="searchbar-outer">
+                        <div class="search-wrapper">
+                            <input type="search" id="mdbook-searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="mdbook-searchresults-outer" aria-describedby="searchresults-header">
+                            <div class="spinner-wrapper">
+                                <span class=fa-svg id="fa-spin"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M304 48c0-26.5-21.5-48-48-48s-48 21.5-48 48s21.5 48 48 48s48-21.5 48-48zm0 416c0-26.5-21.5-48-48-48s-48 21.5-48 48s21.5 48 48 48s48-21.5 48-48zM48 304c26.5 0 48-21.5 48-48s-21.5-48-48-48s-48 21.5-48 48s21.5 48 48 48zm464-48c0-26.5-21.5-48-48-48s-48 21.5-48 48s21.5 48 48 48s48-21.5 48-48zM142.9 437c18.7-18.7 18.7-49.1 0-67.9s-49.1-18.7-67.9 0s-18.7 49.1 0 67.9s49.1 18.7 67.9 0zm0-294.2c18.7-18.7 18.7-49.1 0-67.9S93.7 56.2 75 75s-18.7 49.1 0 67.9s49.1 18.7 67.9 0zM369.1 437c18.7 18.7 49.1 18.7 67.9 0s18.7-49.1 0-67.9s-49.1-18.7-67.9 0s-18.7 49.1 0 67.9z"/></svg></span>
+                            </div>
+                        </div>
+                    </form>
+                    <div id="mdbook-searchresults-outer" class="searchresults-outer hidden">
+                        <div id="mdbook-searchresults-header" class="searchresults-header"></div>
+                        <ul id="mdbook-searchresults">
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script>
+                    document.getElementById('mdbook-sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('mdbook-sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#mdbook-sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="mdbook-content" class="content">
+                    <main>
+                        <h1 id="mengimplementasikan-pola-desain-berorientasi-objek"><a class="header" href="#mengimplementasikan-pola-desain-berorientasi-objek">Mengimplementasikan Pola Desain Berorientasi Objek</a></h1>
+<p>Pola <em>state</em> adalah pola desain berorientasi objek. Inti dari pola
+ini adalah kita mendefinisikan sekumpulan state yang bisa dimiliki
+suatu nilai secara internal. State-state itu diwakili oleh sekumpulan
+<em>state objects</em>, dan perilaku nilai berubah berdasarkan state-nya.
+Kami akan bekerja melalui contoh struct blog post yang punya field
+untuk menampung state-nya, yang akan menjadi state object dari
+kumpulan “draft,” “review,” atau “published.”</p>
+<p>State objects berbagi fungsionalitas: Di Rust, tentu saja, kami
+menggunakan struct dan trait alih-alih objek dan pewarisan. Setiap
+state object bertanggung jawab atas perilakunya sendiri dan mengatur
+kapan harus berubah ke state lain. Nilai yang menampung state object
+tidak tahu apa pun tentang perilaku berbeda dari state-state atau
+kapan transisi antar state.</p>
+<p>Kelebihan menggunakan state pattern adalah bahwa, saat persyaratan
+bisnis program berubah, kami tidak perlu mengubah kode nilai yang
+menampung state atau kode yang menggunakan nilai itu. Kami hanya
+perlu memperbarui kode di dalam salah satu state object untuk mengubah
+atasurannya atau mungkin menambah state object lagi.</p>
+<p>Pertama, kami akan mengimplementasikan state pattern dengan cara
+object-oriented tradisional. Lalu, kami akan menggunakan pendekatan
+yang sedikit lebih natural di Rust. Mari selami untuk mengimplementasikan
+alur kerja blog post secara inkremental menggunakan state pattern.</p>
+<p>Fungsionalitas final akan terlihat seperti ini:</p>
+<ol>
+<li>Sebuah blog post dimulai sebagai draft kosong.</li>
+<li>Saat draft selesai, review post diminta.</li>
+<li>Saat post disetujui, ia dipublikasikan.</li>
+<li>Hanya blog post yang dipublikasikan yang mengembalikan konten untuk
+dicetak sehingga post yang belum disetujui tidak bisa tidak sengaja
+dipublikasikan.</li>
+</ol>
+<p>Perubahan lain yang dicoba pada post seharusnya tidak berpengaruh.
+Misalnya, jika kita mencoba menyetujui draft blog post sebelum kita
+meminta review, post harus tetap menjadi draft tidak dipublikasikan.</p>
+<!-- Judul lama. Jangan dihapus atau tautan bisa rusak. -->
+<p><a id="a-traditional-object-oriented-attempt"></a></p>
+<h3 id="mencoba-gaya-object-oriented-tradisional"><a class="header" href="#mencoba-gaya-object-oriented-tradisional">Mencoba Gaya Object-Oriented Tradisional</a></h3>
+<p>Ada tak terhingga cara struktur kode untuk memecahkan masalah yang
+sama, masing-masing dengan trade-off berbeda. Implementasi bagian ini
+adalah lebih gaya object-oriented tradisional, yang memungkinkan
+ditulis di Rust, tapi tidak memanfaatkan beberapa kekuatan Rust.
+Nanti, kami akan mendemonstrasikan solusi berbeda yang tetap
+menggunakan pola desain object-oriented tapi terstruktur dengan cara
+yang mungkin terlihat kurang familiar bagi programmer dengan pengalaman
+object-oriented. Kami akan membandingkan kedua solusi untuk merasakan
+trade-off mendesain kode Rust berbeda dari kode di bahasa lain.</p>
+<p>Listing 18-11 menunjukkan alur kerja ini dalam bentuk kode: Ini
+contoh penggunaan API yang akan kami implementasikan di library crate
+bernama <code>blog</code>. Ini belum akan kompilasi karena kami belum
+mengimplementasikan crate <code>blog</code>.</p>
+<figure class="listing" id="listing-18-11">
+<span class="file-name">Filename: src/main.rs</span>
+<pre><code class="language-rust ignore does_not_compile">use blog::Post;
+
+fn main() {
+    let mut post = Post::new();
+
+    post.add_text("I ate a salad for lunch today");
+    assert_eq!("", post.content());
+
+    post.request_review();
+    assert_eq!("", post.content());
+
+    post.approve();
+    assert_eq!("I ate a salad for lunch today", post.content());
+}</code></pre>
+<figcaption><a href="#listing-18-11">Listing 18-11</a>: Kode yang mendemonstrasikan perilaku yang diinginkan untuk crate <code>blog</code> kami</figcaption>
+</figure>
+<p>Kami ingin mengizinkan pengguna membuat draft blog post baru dengan
+<code>Post::new</code>. Kami ingin mengizinkan teks ditambahkan ke blog post.
+Jika kita mencoba mendapatkan konten post segera, sebelum approval,
+kita tidak seharusnya mendapat teks apa pun karena post masih draft.
+Kami telah menambahkan <code>assert_eq!</code> di kode untuk tujuan
+demonstrasi. Unit test yang bagus untuk ini akan menegaskan bahwa
+draft blog post mengembalikan string kosong dari metode <code>content</code>,
+tapi kami tidak akan menulis test untuk contoh ini.</p>
+<p>Selanjutnya, kami ingin mengaktifkan permintaan review post, dan
+menginginkan <code>content</code> mengembalikan string kosong saat menunggu
+review. Saat post mendapat approval, ia seharusnya dipublikasikan,
+artinya teks post akan dikembalikan saat <code>content</code> dipanggil.</p>
+<p>Perhatikan bahwa satu-satunya tipe yang kami interaksikan dari crate
+adalah tipe <code>Post</code>. Tipe ini akan menggunakan state pattern dan
+menampung nilai yang akan menjadi salah satu dari tiga state object
+yang mewakili berbagai state post bisa berada—draft, review, atau
+published. Perubahan dari satu state ke state lain akan dikelola
+secara internal di dalam tipe <code>Post</code>. State berubah sebagai respons
+metode yang dipanggil oleh pengguna library kami pada instance <code>Post</code>,
+tapi mereka tidak perlu mengelola perubahan state secara langsung.
+Juga, pengguna tidak bisa membuat kesalahan dengan state, seperti
+publikasi post sebelum direview.</p>
+<!-- Judul lama. Jangan dihapus atau tautan bisa rusak. -->
+<p><a id="defining-post-and-creating-a-new-instance-in-the-draft-state"></a></p>
+<h4 id="mendefinisikan-post-dan-membuat-instance-baru"><a class="header" href="#mendefinisikan-post-dan-membuat-instance-baru">Mendefinisikan <code>Post</code> dan Membuat Instance Baru</a></h4>
+<p>Mari mulai implementasi library! Kami tahu kami butuh struct <code>Post</code>
+publik yang menampung beberapa konten, jadi kami akan mulai dengan
+definisi struct dan associated public function <code>new</code> untuk membuat
+instance <code>Post</code>, seperti yang ditampilkan di Listing 18-12. Kami juga
+akan membuat trait <code>State</code> privat yang akan mendefinisikan perilaku
+yang harus dimiliki semua state object untuk <code>Post</code>.</p>
+<p>Lalu, <code>Post</code> akan menampung trait object <code>Box&lt;dyn State&gt;</code> di dalam
+<code>Option&lt;T&gt;</code> di field privat bernama <code>state</code> untuk menampung state
+object. Anda akan melihat mengapa <code>Option&lt;T&gt;</code> diperlukan sebentar
+lagi.</p>
+<figure class="listing" id="listing-18-12">
+<span class="file-name">Filename: src/lib.rs</span>
+<pre><code class="language-rust noplayground">pub struct Post {
+    state: Option&lt;Box&lt;dyn State&gt;&gt;,
+    content: String,
+}
+
+impl Post {
+    pub fn new() -&gt; Post {
+        Post {
+            state: Some(Box::new(Draft {})),
+            content: String::new(),
+        }
+    }
+}
+
+trait State {}
+
+struct Draft {}
+
+impl State for Draft {}</code></pre>
+<figcaption><a href="#listing-18-12">Listing 18-12</a>: Definisi struct <code>Post</code> dan fungsi <code>new</code> yang membuat instance <code>Post</code> baru, trait <code>State</code>, dan struct <code>Draft</code></figcaption>
+</figure>
+<p>Trait <code>State</code> mendefinisikan perilaku yang dibagi oleh state post
+yang berbeda. State objects adalah <code>Draft</code>, <code>PendingReview</code>, dan
+<code>Published</code>, dan mereka semua akan mengimplementasikan trait <code>State</code>.
+Untuk saat ini, trait tidak punya metode apa pun, dan kami akan
+mulai dengan mendefinisikan hanya state <code>Draft</code> karena itulah state
+di mana post dimulai.</p>
+<p>Saat kami membuat <code>Post</code> baru, kami set field <code>state</code>-nya ke nilai
+<code>Some</code> yang menampung <code>Box</code>. <code>Box</code> ini menunjuk ke instance baru
+struct <code>Draft</code>. Ini memastikan bahwa kapan pun kami membuat instance
+baru <code>Post</code>, ia akan mulai sebagai draft. Karena field <code>state</code> dari
+<code>Post</code> privat, tidak ada cara membuat <code>Post</code> di state lain! Di fungsi
+<code>Post::new</code>, kami set field <code>content</code> ke <code>String</code> baru, kosong.</p>
+<h4 id="menyimpan-teks-konten-post"><a class="header" href="#menyimpan-teks-konten-post">Menyimpan Teks Konten Post</a></h4>
+<p>Kami melihat di Listing 18-11 bahwa kami ingin bisa memanggil metode
+bernama <code>add_text</code> dan meneruskan <code>&amp;str</code> yang kemudian ditambahkan
+sebagai teks konten blog post. Kami mengimplementasikan ini sebagai
+metode, alih-alih mengekspos field <code>content</code> sebagai <code>pub</code>, sehingga
+nanti kami bisa mengimplementasikan metode yang akan mengontrol
+bagaimana data field <code>content</code> dibaca. Metode <code>add_text</code> cukup
+straightforward, jadi mari tambahkan implementasi di Listing 18-13 ke
+blok <code>impl Post</code>.</p>
+<figure class="listing" id="listing-18-13">
+<span class="file-name">Filename: src/lib.rs</span>
+<pre><code class="language-rust noplayground"><span class="boring">pub struct Post {
+</span><span class="boring">    state: Option&lt;Box&lt;dyn State&gt;&gt;,
+</span><span class="boring">    content: String,
+</span><span class="boring">}
+</span><span class="boring">
+</span>impl Post {
+    // --snip--
+<span class="boring">    pub fn new() -&gt; Post {
+</span><span class="boring">        Post {
+</span><span class="boring">            state: Some(Box::new(Draft {})),
+</span><span class="boring">            content: String::new(),
+</span><span class="boring">        }
+</span><span class="boring">    }
+</span><span class="boring">
+</span>    pub fn add_text(&amp;mut self, text: &amp;str) {
+        self.content.push_str(text);
+    }
+}
+<span class="boring">
+</span><span class="boring">trait State {}
+</span><span class="boring">
+</span><span class="boring">struct Draft {}
+</span><span class="boring">
+</span><span class="boring">impl State for Draft {}</span></code></pre>
+<figcaption><a href="#listing-18-13">Listing 18-13</a>: Mengimplementasikan metode <code>add_text</code> untuk menambah teks ke <code>content</code> post</figcaption>
+</figure>
+<p>Metode <code>add_text</code> mengambil mutable reference ke <code>self</code> karena kami
+mengubah instance <code>Post</code> yang kami panggil <code>add_text</code> padanya. Kami
+kemudian memanggil <code>push_str</code> pada <code>String</code> di <code>content</code> dan meneruskan
+argumen <code>text</code> untuk ditambahkan ke <code>content</code> yang disimpan. Perilaku
+ini tidak bergantung pada state post, jadi bukan bagian dari state
+pattern. Metode <code>add_text</code> tidak berinteraksi dengan field <code>state</code>
+sama sekali, tapi itu bagian dari perilaku yang ingin kami dukung.</p>
+<!-- Judul lama. Jangan dihapus atau tautan bisa rusak. -->
+<p><a id="ensuring-the-content-of-a-draft-post-is-empty"></a></p>
+<h4 id="memastikan-konten-draft-post-kosong"><a class="header" href="#memastikan-konten-draft-post-kosong">Memastikan Konten Draft Post Kosong</a></h4>
+<p>Meski setelah kami memanggil <code>add_text</code> dan menambah konten ke post
+kami, kami tetap ingin metode <code>content</code> mengembalikan slice string
+kosong karena post masih dalam state draft, seperti yang ditunjukkan
+oleh <code>assert_eq!</code> pertama di Listing 18-11. Untuk saat ini, mari
+implementasikan metode <code>content</code> dengan hal paling sederhana yang
+memenuhi persyaratan ini: selalu mengembalikan slice string kosong.
+Kami akan mengubah ini nanti setelah kami mengimplementasikan kemampuan
+mengubah state post sehingga bisa dipublikasikan. Sejauh ini, post
+hanya bisa dalam state draft, jadi konten post seharusnya selalu
+kosong. Listing 18-14 menunjukkan implementasi placeholder ini.</p>
+<figure class="listing" id="listing-18-14">
+<span class="file-name">Filename: src/lib.rs</span>
+<pre><code class="language-rust noplayground"><span class="boring">pub struct Post {
+</span><span class="boring">    state: Option&lt;Box&lt;dyn State&gt;&gt;,
+</span><span class="boring">    content: String,
+</span><span class="boring">}
+</span><span class="boring">
+</span>impl Post {
+    // --snip--
+<span class="boring">    pub fn new() -&gt; Post {
+</span><span class="boring">        Post {
+</span><span class="boring">            state: Some(Box::new(Draft {})),
+</span><span class="boring">            content: String::new(),
+</span><span class="boring">        }
+</span><span class="boring">    }
+</span><span class="boring">
+</span><span class="boring">    pub fn add_text(&amp;mut self, text: &amp;str) {
+</span><span class="boring">        self.content.push_str(text);
+</span><span class="boring">    }
+</span><span class="boring">
+</span>    pub fn content(&amp;self) -&gt; &amp;str {
+        ""
+    }
+}
+<span class="boring">
+</span><span class="boring">trait State {}
+</span><span class="boring">
+</span><span class="boring">struct Draft {}
+</span><span class="boring">
+</span><span class="boring">impl State for Draft {}</span></code></pre>
+<figcaption><a href="#listing-18-14">Listing 18-14</a>: Menambahkan implementasi placeholder untuk metode <code>content</code> pada <code>Post</code> yang selalu mengembalikan slice string kosong</figcaption>
+</figure>
+<p>Dengan metode <code>content</code> yang ditambah ini, semuanya di Listing 18-11
+sampai <code>assert_eq!</code> pertama bekerja seperti yang diinginkan.</p>
+<!-- Judul lama. Jangan dihapus atau tautan bisa rusak. -->
+<p><a id="requesting-a-review-of-the-post-changes-its-state"></a>
+<a id="requesting-a-review-changes-the-posts-state"></a></p>
+<h4 id="meminta-review-yang-mengubah-state-post"><a class="header" href="#meminta-review-yang-mengubah-state-post">Meminta Review, Yang Mengubah State Post</a></h4>
+<p>Selanjutnya, kami perlu menambah fungsionalitas untuk meminta review
+post, yang seharusnya mengubah state-nya dari <code>Draft</code> ke
+<code>PendingReview</code>. Listing 18-15 menunjukkan kode ini.</p>
+<figure class="listing" id="listing-18-15">
+<span class="file-name">Filename: src/lib.rs</span>
+<pre><code class="language-rust noplayground"><span class="boring">pub struct Post {
+</span><span class="boring">    state: Option&lt;Box&lt;dyn State&gt;&gt;,
+</span><span class="boring">    content: String,
+</span><span class="boring">}
+</span><span class="boring">
+</span>impl Post {
+    // --snip--
+<span class="boring">    pub fn new() -&gt; Post {
+</span><span class="boring">        Post {
+</span><span class="boring">            state: Some(Box::new(Draft {})),
+</span><span class="boring">            content: String::new(),
+</span><span class="boring">        }
+</span><span class="boring">    }
+</span><span class="boring">
+</span><span class="boring">    pub fn add_text(&amp;mut self, text: &amp;str) {
+</span><span class="boring">        self.content.push_str(text);
+</span><span class="boring">    }
+</span><span class="boring">
+</span><span class="boring">    pub fn content(&amp;self) -&gt; &amp;str {
+</span><span class="boring">        ""
+</span><span class="boring">    }
+</span><span class="boring">
+</span>    pub fn request_review(&amp;mut self) {
+        if let Some(s) = self.state.take() {
+            self.state = Some(s.request_review())
+        }
+    }
+}
+
+trait State {
+    fn request_review(self: Box&lt;Self&gt;) -&gt; Box&lt;dyn State&gt;;
+}
+
+struct Draft {}
+
+impl State for Draft {
+    fn request_review(self: Box&lt;Self&gt;) -&gt; Box&lt;dyn State&gt; {
+        Box::new(PendingReview {})
+    }
+}
+
+struct PendingReview {}
+
+impl State for PendingReview {
+    fn request_review(self: Box&lt;Self&gt;) -&gt; Box&lt;dyn State&gt; {
+        self
+    }
+}</code></pre>
+<figcaption><a href="#listing-18-15">Listing 18-15</a>: Mengimplementasikan metode <code>request_review</code> pada <code>Post</code> dan trait <code>State</code></figcaption>
+</figure>
+<p>Kami memberi <code>Post</code> metode publik bernama <code>request_review</code> yang akan
+mengambil mutable reference ke <code>self</code>. Lalu, kami memanggil internal
+method <code>request_review</code> pada state saat ini <code>Post</code>, dan method
+<code>request_review</code> kedua ini mengkonsumsi state saat ini dan
+mengembalikan state baru.</p>
+<p>Kami menambahkan metode <code>request_review</code> ke trait <code>State</code>; semua tipe
+yang mengimplementasikan trait sekarang perlu mengimplementasikan
+metode <code>request_review</code>. Perhatikan bahwa alih-alih punya <code>self</code>,
+<code>&amp;self</code>, atau <code>&amp;mut self</code> sebagai parameter pertama metode, kami
+punya <code>self: Box&lt;Self&gt;</code>. Sintaks ini berarti metode hanya valid saat
+dipanggil pada <code>Box</code> yang menampung tipe. Sintaks ini mengambil
+kepemilikan <code>Box&lt;Self&gt;</code>, meng-invalid-kan state lama sehingga nilai
+state <code>Post</code> bisa transform ke state baru.</p>
+<p>Untuk mengkonsumsi state lama, metode <code>request_review</code> perlu mengambil
+kepemilikan nilai state. Di sinilah <code>Option</code> di field <code>state</code> dari
+<code>Post</code> berguna: Kami memanggil metode <code>take</code> untuk mengambil nilai
+<code>Some</code> keluar dari field <code>state</code> dan meninggalkan <code>None</code> di tempatnya
+karena Rust tidak mengizinkan field struct yang tidak terisi. Ini
+memungkinkan kami memindahkan nilai <code>state</code> keluar dari <code>Post</code>
+alih-alih meminjamnya. Lalu, kami akan set nilai <code>state</code> post ke
+hasil operasi ini.</p>
+<p>Kami perlu set <code>state</code> ke <code>None</code> sementara alih-alih set langsung
+dengan kode seperti <code>self.state = self.state.request_review();</code> untuk
+mendapatkan kepemilikan nilai <code>state</code>. Ini memastikan <code>Post</code> tidak
+bisa menggunakan nilai <code>state</code> lama setelah kami mentransformasikannya
+ke state baru.</p>
+<p>Metode <code>request_review</code> pada <code>Draft</code> mengembalikan instance baru,
+boxed, dari struct <code>PendingReview</code> baru, yang mewakili state saat
+post menunggu review. Struct <code>PendingReview</code> juga mengimplementasikan
+metode <code>request_review</code> tapi tidak melakukan transformasi apa pun.
+Sebagai gantinya, ia mengembalikan dirinya sendiri karena saat kami
+meminta review pada post yang sudah di state <code>PendingReview</code>, ia
+seharusnya tetap di state <code>PendingReview</code>.</p>
+<p>Sekarang kami mulai melihat keuntungan state pattern: Metode
+<code>request_review</code> pada <code>Post</code> sama apa pun nilai <code>state</code>-nya. Masing-
+masing state bertanggung jawab atas aturannya sendiri.</p>
+<p>Kami akan biarkan metode <code>content</code> pada <code>Post</code> apa adanya,
+mengembalikan slice string kosong. Kami sekarang bisa punya <code>Post</code> di
+state <code>PendingReview</code> serta di state <code>Draft</code>, tapi kami ingin perilaku
+sama di state <code>PendingReview</code>. Listing 18-11 sekarang bekerja sampai
+pemanggilan <code>assert_eq!</code> kedua!</p>
+<!-- Judul lama. Jangan dihapus atau tautan bisa rusak. -->
+<p><a id="adding-the-approve-method-that-changes-the-behavior-of-content"></a>
+<a id="adding-approve-to-change-the-behavior-of-content"></a></p>
+<h4 id="menambah-approve-untuk-mengubah-perilaku-content"><a class="header" href="#menambah-approve-untuk-mengubah-perilaku-content">Menambah <code>approve</code> untuk Mengubah Perilaku <code>content</code></a></h4>
+<p>Metode <code>approve</code> akan mirip dengan metode <code>request_review</code>: Ia akan
+set <code>state</code> ke nilai yang dikatakan state saat ini seharusnya punya
+saat state itu disetujui, seperti yang ditampilkan di Listing 18-16.</p>
+<figure class="listing" id="listing-18-16">
+<span class="file-name">Filename: src/lib.rs</span>
+<pre><code class="language-rust noplayground"><span class="boring">pub struct Post {
+</span><span class="boring">    state: Option&lt;Box&lt;dyn State&gt;&gt;,
+</span><span class="boring">    content: String,
+</span><span class="boring">}
+</span><span class="boring">
+</span>impl Post {
+    // --snip--
+<span class="boring">    pub fn new() -&gt; Post {
+</span><span class="boring">        Post {
+</span><span class="boring">            state: Some(Box::new(Draft {})),
+</span><span class="boring">            content: String::new(),
+</span><span class="boring">        }
+</span><span class="boring">    }
+</span><span class="boring">
+</span><span class="boring">    pub fn add_text(&amp;mut self, text: &amp;str) {
+</span><span class="boring">        self.content.push_str(text);
+</span><span class="boring">    }
+</span><span class="boring">
+</span><span class="boring">    pub fn content(&amp;self) -&gt; &amp;str {
+</span><span class="boring">        ""
+</span><span class="boring">    }
+</span><span class="boring">
+</span><span class="boring">    pub fn request_review(&amp;mut self) {
+</span><span class="boring">        if let Some(s) = self.state.take() {
+</span><span class="boring">            self.state = Some(s.request_review())
+</span><span class="boring">        }
+</span><span class="boring">    }
+</span><span class="boring">
+</span>    pub fn approve(&amp;mut self) {
+        if let Some(s) = self.state.take() {
+            self.state = Some(s.approve())
+        }
+    }
+}
+
+trait State {
+    fn request_review(self: Box&lt;Self&gt;) -&gt; Box&lt;dyn State&gt;;
+    fn approve(self: Box&lt;Self&gt;) -&gt; Box&lt;dyn State&gt;;
+}
+
+struct Draft {}
+
+impl State for Draft {
+    // --snip--
+<span class="boring">    fn request_review(self: Box&lt;Self&gt;) -&gt; Box&lt;dyn State&gt; {
+</span><span class="boring">        Box::new(PendingReview {})
+</span><span class="boring">    }
+</span><span class="boring">
+</span>    fn approve(self: Box&lt;Self&gt;) -&gt; Box&lt;dyn State&gt; {
+        self
+    }
+}
+
+struct PendingReview {}
+
+impl State for PendingReview {
+    // --snip--
+<span class="boring">    fn request_review(self: Box&lt;Self&gt;) -&gt; Box&lt;dyn State&gt; {
+</span><span class="boring">        self
+</span><span class="boring">    }
+</span><span class="boring">
+</span>    fn approve(self: Box&lt;Self&gt;) -&gt; Box&lt;dyn State&gt; {
+        Box::new(Published {})
+    }
+}
+
+struct Published {}
+
+impl State for Published {
+    fn request_review(self: Box&lt;Self&gt;) -&gt; Box&lt;dyn State&gt; {
+        self
+    }
+
+    fn approve(self: Box&lt;Self&gt;) -&gt; Box&lt;dyn State&gt; {
+        self
+    }
+}</code></pre>
+<figcaption><a href="#listing-18-16">Listing 18-16</a>: Mengimplementasikan metode <code>approve</code> pada <code>Post</code> dan trait <code>State</code></figcaption>
+</figure>
+<p>Kami menambahkan metode <code>approve</code> ke trait <code>State</code> dan menambah struct
+baru yang mengimplementasikan <code>State</code>, state <code>Published</code>.</p>
+<p>Mirip dengan cara <code>request_review</code> pada <code>PendingReview</code> bekerja, jika
+kami memanggil metode <code>approve</code> pada <code>Draft</code>, ia tidak akan berpengaruh
+karena <code>approve</code> akan mengembalikan <code>self</code>. Saat kami memanggil
+<code>approve</code> pada <code>PendingReview</code>, ia mengembalikan instance baru,
+boxed, dari struct <code>Published</code>. Struct <code>Published</code> mengimplementasikan
+trait <code>State</code>, dan untuk kedua metode <code>request_review</code> dan <code>approve</code>,
+ia mengembalikan dirinya sendiri karena post harus tetap di state
+<code>Published</code> di kasus-kasus itu.</p>
+<p>Sekarang kami perlu memperbarui metode <code>content</code> pada <code>Post</code>. Kami
+ingin nilai yang dikembalikan dari <code>content</code> bergantung pada state
+saat ini <code>Post</code>, jadi kami akan membuat <code>Post</code> mendelegasikan ke
+metode <code>content</code> yang didefinisikan pada <code>state</code>-nya, seperti yang
+ditampilkan di Listing 18-17.</p>
+<figure class="listing" id="listing-18-17">
+<span class="file-name">Filename: src/lib.rs</span>
+<pre><code class="language-rust ignore does_not_compile"><span class="boring">pub struct Post {
+</span><span class="boring">    state: Option&lt;Box&lt;dyn State&gt;&gt;,
+</span><span class="boring">    content: String,
+</span><span class="boring">}
+</span><span class="boring">
+</span>impl Post {
+    // --snip--
+<span class="boring">    pub fn new() -&gt; Post {
+</span><span class="boring">        Post {
+</span><span class="boring">            state: Some(Box::new(Draft {})),
+</span><span class="boring">            content: String::new(),
+</span><span class="boring">        }
+</span><span class="boring">    }
+</span><span class="boring">
+</span><span class="boring">    pub fn add_text(&amp;mut self, text: &amp;str) {
+</span><span class="boring">        self.content.push_str(text);
+</span><span class="boring">    }
+</span><span class="boring">
+</span>    pub fn content(&amp;self) -&gt; &amp;str {
+        self.state.as_ref().unwrap().content(self)
+    }
+    // --snip--
+<span class="boring">
+</span><span class="boring">    pub fn request_review(&amp;mut self) {
+</span><span class="boring">        if let Some(s) = self.state.take() {
+</span><span class="boring">            self.state = Some(s.request_review())
+</span><span class="boring">        }
+</span><span class="boring">    }
+</span><span class="boring">
+</span><span class="boring">    pub fn approve(&amp;mut self) {
+</span><span class="boring">        if let Some(s) = self.state.take() {
+</span><span class="boring">            self.state = Some(s.approve())
+</span><span class="boring">        }
+</span><span class="boring">    }
+</span>}
+<span class="boring">
+</span><span class="boring">trait State {
+</span><span class="boring">    fn request_review(self: Box&lt;Self&gt;) -&gt; Box&lt;dyn State&gt;;
+</span><span class="boring">    fn approve(self: Box&lt;Self&gt;) -&gt; Box&lt;dyn State&gt;;
+</span><span class="boring">}
+</span><span class="boring">
+</span><span class="boring">struct Draft {}
+</span><span class="boring">
+</span><span class="boring">impl State for Draft {
+</span><span class="boring">    fn request_review(self: Box&lt;Self&gt;) -&gt; Box&lt;dyn State&gt; {
+</span><span class="boring">        Box::new(PendingReview {})
+</span><span class="boring">    }
+</span><span class="boring">
+</span><span class="boring">    fn approve(self: Box&lt;Self&gt;) -&gt; Box&lt;dyn State&gt; {
+</span><span class="boring">        self
+</span><span class="boring">    }
+</span><span class="boring">}
+</span><span class="boring">
+</span><span class="boring">struct PendingReview {}
+</span><span class="boring">
+</span><span class="boring">impl State for PendingReview {
+</span><span class="boring">    fn request_review(self: Box&lt;Self&gt;) -&gt; Box&lt;dyn State&gt; {
+</span><span class="boring">        self
+</span><span class="boring">    }
+</span><span class="boring">
+</span><span class="boring">    fn approve(self: Box&lt;Self&gt;) -&gt; Box&lt;dyn State&gt; {
+</span><span class="boring">        Box::new(Published {})
+</span><span class="boring">    }
+</span><span class="boring">}
+</span><span class="boring">
+</span><span class="boring">struct Published {}
+</span><span class="boring">
+</span><span class="boring">impl State for Published {
+</span><span class="boring">    fn request_review(self: Box&lt;Self&gt;) -&gt; Box&lt;dyn State&gt; {
+</span><span class="boring">        self
+</span><span class="boring">    }
+</span><span class="boring">
+</span><span class="boring">    fn approve(self: Box&lt;Self&gt;) -&gt; Box&lt;dyn State&gt; {
+</span><span class="boring">        self
+</span><span class="boring">    }
+</span><span class="boring">}</span></code></pre>
+<figcaption><a href="#listing-18-17">Listing 18-17</a>: Memperbarui metode <code>content</code> pada <code>Post</code> untuk mendelegasikan ke metode <code>content</code> pada <code>State</code></figcaption>
+</figure>
+<p>Karena tujuannya adalah menjaga semua aturan ini di dalam struct yang
+mengimplementasikan <code>State</code>, kami memanggil metode <code>content</code> pada
+nilai di <code>state</code> dan meneruskan instance post (yaitu, <code>self</code>) sebagai
+argumen. Lalu, kami mengembalikan nilai yang dikembalikan dari
+menggunakan metode <code>content</code> pada nilai <code>state</code>.</p>
+<p>Kami memanggil metode <code>as_ref</code> pada <code>Option</code> karena kami ingin
+referensi ke nilai di dalam <code>Option</code> alih-alih kepemilikan nilai.
+Karena <code>state</code> adalah <code>Option&lt;Box&lt;dyn State&gt;&gt;</code>, saat kami memanggil
+<code>as_ref</code>, <code>Option&lt;&amp;Box&lt;dyn State&gt;&gt;</code> dikembalikan. Jika kami tidak
+memanggil <code>as_ref</code>, kami akan mendapat error karena kami tidak bisa
+memindahkan <code>state</code> keluar dari <code>&amp;self</code> yang dipinjam parameter
+fungsi.</p>
+<p>Kami lalu memanggil metode <code>unwrap</code>, yang kami tahu tidak akan pernah
+panic karena kami tahu metode-metode pada <code>Post</code> memastikan <code>state</code>
+selalu berisi nilai <code>Some</code> saat metode-metode itu selesai. Ini salah
+satu kasus yang kami bicarakan di bagian <a href="ch09-03-to-panic-or-not-to-panic.html#cases-in-which-you-have-more-information-than-the-compiler">“Ketika Anda Memiliki
+Informasi Lebih dari Compiler”</a><!-- ignore -->
+di Bab 9 saat kami tahu bahwa nilai <code>None</code> tidak mungkin, meski
+compiler tidak mampu memahaminya.</p>
+<p>Pada titik ini, saat kami memanggil <code>content</code> pada <code>&amp;Box&lt;dyn State&gt;</code>,
+deref coercion akan berlaku pada <code>&amp;</code> dan <code>Box</code> sehingga metode
+<code>content</code> akhirnya akan dipanggil pada tipe yang mengimplementasikan
+trait <code>State</code>. Artinya kami perlu menambahkan <code>content</code> ke definisi
+trait <code>State</code>, dan di sinilah kami akan menaruh logika untuk konten
+apa yang dikembalikan tergantung state mana yang kami miliki, seperti
+yang ditampilkan di Listing 18-18.</p>
+<figure class="listing" id="listing-18-18">
+<span class="file-name">Filename: src/lib.rs</span>
+<pre><code class="language-rust noplayground"><span class="boring">pub struct Post {
+</span><span class="boring">    state: Option&lt;Box&lt;dyn State&gt;&gt;,
+</span><span class="boring">    content: String,
+</span><span class="boring">}
+</span><span class="boring">
+</span><span class="boring">impl Post {
+</span><span class="boring">    pub fn new() -&gt; Post {
+</span><span class="boring">        Post {
+</span><span class="boring">            state: Some(Box::new(Draft {})),
+</span><span class="boring">            content: String::new(),
+</span><span class="boring">        }
+</span><span class="boring">    }
+</span><span class="boring">
+</span><span class="boring">    pub fn add_text(&amp;mut self, text: &amp;str) {
+</span><span class="boring">        self.content.push_str(text);
+</span><span class="boring">    }
+</span><span class="boring">
+</span><span class="boring">    pub fn content(&amp;self) -&gt; &amp;str {
+</span><span class="boring">        self.state.as_ref().unwrap().content(self)
+</span><span class="boring">    }
+</span><span class="boring">
+</span><span class="boring">    pub fn request_review(&amp;mut self) {
+</span><span class="boring">        if let Some(s) = self.state.take() {
+</span><span class="boring">            self.state = Some(s.request_review())
+</span><span class="boring">        }
+</span><span class="boring">    }
+</span><span class="boring">
+</span><span class="boring">    pub fn approve(&amp;mut self) {
+</span><span class="boring">        if let Some(s) = self.state.take() {
+</span><span class="boring">            self.state = Some(s.approve())
+</span><span class="boring">        }
+</span><span class="boring">    }
+</span><span class="boring">}
+</span><span class="boring">
+</span>trait State {
+    // --snip--
+<span class="boring">    fn request_review(self: Box&lt;Self&gt;) -&gt; Box&lt;dyn State&gt;;
+</span><span class="boring">    fn approve(self: Box&lt;Self&gt;) -&gt; Box&lt;dyn State&gt;;
+</span><span class="boring">
+</span>    fn content&lt;'a&gt;(&amp;self, post: &amp;'a Post) -&gt; &amp;'a str {
+        ""
+    }
+}
+
+// --snip--
+<span class="boring">
+</span><span class="boring">struct Draft {}
+</span><span class="boring">
+</span><span class="boring">impl State for Draft {
+</span><span class="boring">    fn request_review(self: Box&lt;Self&gt;) -&gt; Box&lt;dyn State&gt; {
+</span><span class="boring">        Box::new(PendingReview {})
+</span><span class="boring">    }
+</span><span class="boring">
+</span><span class="boring">    fn approve(self: Box&lt;Self&gt;) -&gt; Box&lt;dyn State&gt; {
+</span><span class="boring">        self
+</span><span class="boring">    }
+</span><span class="boring">}
+</span><span class="boring">
+</span><span class="boring">struct PendingReview {}
+</span><span class="boring">
+</span><span class="boring">impl State for PendingReview {
+</span><span class="boring">    fn request_review(self: Box&lt;Self&gt;) -&gt; Box&lt;dyn State&gt; {
+</span><span class="boring">        self
+</span><span class="boring">    }
+</span><span class="boring">
+</span><span class="boring">    fn approve(self: Box&lt;Self&gt;) -&gt; Box&lt;dyn State&gt; {
+</span><span class="boring">        Box::new(Published {})
+</span><span class="boring">    }
+</span><span class="boring">}
+</span><span class="boring">
+</span>struct Published {}
+
+impl State for Published {
+    // --snip--
+<span class="boring">    fn request_review(self: Box&lt;Self&gt;) -&gt; Box&lt;dyn State&gt; {
+</span><span class="boring">        self
+</span><span class="boring">    }
+</span><span class="boring">
+</span><span class="boring">    fn approve(self: Box&lt;Self&gt;) -&gt; Box&lt;dyn State&gt; {
+</span><span class="boring">        self
+</span><span class="boring">    }
+</span><span class="boring">
+</span>    fn content&lt;'a&gt;(&amp;self, post: &amp;'a Post) -&gt; &amp;'a str {
+        &amp;post.content
+    }
+}</code></pre>
+<figcaption><a href="#listing-18-18">Listing 18-18</a>: Menambahkan metode <code>content</code> ke trait <code>State</code></figcaption>
+</figure>
+<p>Kami menambahkan implementasi default untuk metode <code>content</code> yang
+mengembalikan slice string kosong. Artinya kami tidak perlu
+mengimplementasikan <code>content</code> pada struct <code>Draft</code> dan
+<code>PendingReview</code>. Struct <code>Published</code> akan meng-override metode
+<code>content</code> dan mengembalikan nilai di <code>post.content</code>. Meski nyata,
+memiliki metode <code>content</code> pada <code>State</code> yang menentukan konten <code>Post</code>
+adalah mengaburkan garis antara tanggung jawab <code>State</code> dan tanggung
+jawab <code>Post</code>.</p>
+<p>Perhatikan bahwa kami butuh anotasi lifetime pada metode ini, seperti
+yang dibahas di Bab 10. Kami mengambil referensi ke <code>post</code> sebagai
+argumen dan mengembalikan referensi ke bagian dari <code>post</code> itu, jadi
+lifetime referensi yang dikembalikan terkait dengan lifetime argumen
+<code>post</code>.</p>
+<p>Dan selesai—semua Listing 18-11 sekarang berfungsi! Kami telah
+mengimplementasikan state pattern dengan aturan alur kerja blog post.
+Logika terkait aturan tinggal di state object alih-alih tersebar di
+seluruh <code>Post</code>.</p>
+<section class="note" aria-role="note">
+<h3 id="mengapa-bukan-enum"><a class="header" href="#mengapa-bukan-enum">Mengapa Bukan Enum?</a></h3>
+<p>Anda mungkin bertanya-tanya mengapa kami tidak menggunakan enum dengan
+varian state post yang berbeda sebagai varian. Itu pasti solusi
+yang mungkin; coba dan bandingkan hasil akhir untuk melihat mana
+yang Anda sukai! Satu kelemahan menggunakan enum adalah setiap tempat
+yang memeriksa nilai enum akan butuh ekspresi <code>match</code> atau serupa
+untuk menangani setiap varian yang mungkin. Ini bisa jadi lebih
+repetitif dari solusi trait object ini.</p>
+</section>
+<!-- Judul lama. Jangan dihapus atau tautan bisa rusak. -->
+<p><a id="trade-offs-of-the-state-pattern"></a></p>
+<h4 id="mengevaluasi-state-pattern"><a class="header" href="#mengevaluasi-state-pattern">Mengevaluasi State Pattern</a></h4>
+<p>Kami telah menunjukkan bahwa Rust mampu mengimplementasikan pola
+state object-oriented untuk mengenkapsulasi berbagai jenis perilaku
+yang seharusnya dimiliki post di setiap state. Metode pada <code>Post</code>
+tidak tahu apa pun tentang perilaku berbagai. Karena cara kami
+mengorganisir kode, kami hanya perlu melihat di satu tempat untuk
+mengetahui berbagai cara published post bisa berperilaku:
+implementasi trait <code>State</code> pada struct <code>Published</code>.</p>
+<p>Jika kami membuat implementasi alternatif yang tidak menggunakan state
+pattern, kami mungkin akan menggunakan ekspresi <code>match</code> di metode
+pada <code>Post</code> atau bahkan di kode <code>main</code> yang memeriksa state post dan
+mengubah perilaku di tempat-tempat itu. Artinya kami harus melihat
+di beberapa tempat untuk memahami semua implikasi post berada di state
+published.</p>
+<p>Dengan state pattern, metode <code>Post</code> dan tempat-tempat kami menggunakan
+<code>Post</code> tidak butuh ekspresi <code>match</code>, dan untuk menambah state baru,
+kami hanya perlu menambah struct baru dan mengimplementasikan metode
+trait pada struct tunggal itu di satu lokasi.</p>
+<p>Implementasi menggunakan state pattern mudah diperluas untuk menambah
+fungsionalitas lebih. Untuk melihat kesederhanaan memelihara kode
+yang menggunakan state pattern, coba beberapa saran ini:</p>
+<ul>
+<li>Tambah metode <code>reject</code> yang mengubah state post dari
+<code>PendingReview</code> kembali ke <code>Draft</code>.</li>
+<li>Butuh dua pemanggilan <code>approve</code> sebelum state bisa diubah ke
+<code>Published</code>.</li>
+<li>Izinkan pengguna menambah konten teks hanya saat post di state
+<code>Draft</code>. Petunjuk: biarkan state object yang bertanggung jawab atas
+apa yang mungkin berubah tentang konten tapi tidak bertanggung jawab
+memodifikasi <code>Post</code>.</li>
+</ul>
+<p>Satu kelemahan state pattern adalah bahwa, karena state mengimplementasikan
+transisi antar state, beberapa state terikat (coupled) satu sama lain.
+Jika kami menambah state lain di antara <code>PendingReview</code> dan
+<code>Published</code>, seperti <code>Scheduled</code>, kami harus mengubah kode di
+<code>PendingReview</code> untuk transisi ke <code>Scheduled</code> sebagai gantinya. Akan
+lebih sedikit kerja jika <code>PendingReview</code> tidak perlu berubah dengan
+penambahan state baru, tapi itu berarti beralih ke pola desain lain.</p>
+<p>Kelemahan lain adalah kami menduplikasi beberapa logika. Untuk
+menghilangkan beberapa duplikasi, kami mungkin coba membuat
+implementasi default untuk metode <code>request_review</code> dan <code>approve</code> pada
+trait <code>State</code> yang mengembalikan <code>self</code>. Akan tetapi, ini tidak akan
+bekerja: Saat menggunakan <code>State</code> sebagai trait object, trait tidak
+tahu <code>self</code> konkret apa persisnya, jadi tipe pengembalian tidak
+dikenal pada waktu kompilasi. (Ini salah satu aturan dyn compatibility
+yang disebutkan sebelumnya.)</p>
+<p>Duplikasi lain mencakup implementasi serupa dari metode
+<code>request_review</code> dan <code>approve</code> pada <code>Post</code>. Kedua metode menggunakan
+<code>Option::take</code> dengan field <code>state</code> dari <code>Post</code>, dan jika <code>state</code>
+adalah <code>Some</code>, mereka mendelegasikan ke implementasi nilai yang
+dibungkus dari metode yang sama dan menetapkan nilai baru field
+<code>state</code> ke hasilnya. Jika kami punya banyak metode pada <code>Post</code> yang
+mengikuti pola ini, kami mungkin mempertimbangkan mendefinisikan
+makro untuk menghilangkan pengulangan (lihat bagian
+<a href="ch20-05-macros.html#macros">“Makro”</a><!-- ignore --> di Bab 20).</p>
+<p>Dengan mengimplementasikan state pattern persis seperti yang
+didefinisikan untuk bahasa object-oriented, kami tidak mengambil
+sepenuhnya keuntungan kekuatan Rust sebagus yang bisa. Mari lihat
+beberapa perubahan yang bisa kami buat ke crate <code>blog</code> yang bisa
+membuat state dan transisi invalid menjadi error pada waktu kompilasi.</p>
+<h3 id="mengenkode-state-dan-perilaku-sebagai-tipe"><a class="header" href="#mengenkode-state-dan-perilaku-sebagai-tipe">Mengenkode State dan Perilaku sebagai Tipe</a></h3>
+<p>Kami akan menunjukkan cara memikir ulang state pattern untuk
+mendapatkan set trade-off berbeda. Alih-alih mengenkapsulasi state
+dan transisi sepenuhnya sehingga kode luar tidak punya pengetahuan
+tentang mereka, kami akan mengenkode state ke tipe yang berbeda.
+Akibatnya, sistem type-checking Rust akan mencegah upaya menggunakan
+draft post di mana hanya published post yang diizinkan dengan
+mengeluarkan error compiler.</p>
+<p>Mari pertimbangkan bagian pertama <code>main</code> di Listing 18-11:</p>
+<figure class="listing">
+<span class="file-name">Filename: src/main.rs</span>
+<pre><code class="language-rust ignore"><span class="boring">use blog::Post;
+</span><span class="boring">
+</span>fn main() {
+    let mut post = Post::new();
+
+    post.add_text("I ate a salad for lunch today");
+    assert_eq!("", post.content());
+<span class="boring">
+</span><span class="boring">    post.request_review();
+</span><span class="boring">    assert_eq!("", post.content());
+</span><span class="boring">
+</span><span class="boring">    post.approve();
+</span><span class="boring">    assert_eq!("I ate a salad for lunch today", post.content());
+</span>}</code></pre>
+</figure>
+<p>Kami tetap mengaktifkan pembuatan post baru di state draft menggunakan
+<code>Post::new</code> dan kemampuan menambah teks ke konten post. Tapi alih-alih
+punya metode <code>content</code> pada draft post yang mengembalikan string
+kosong, kami akan membuatnya sehingga draft post tidak punya metode
+<code>content</code> sama sekali. Dengan begitu, jika kami mencoba mendapatkan
+konten draft post, kami akan mendapat error compiler yang bilang
+metode tidak ada. Hasilnya, tidak mungkin bagi kami untuk secara tidak
+sengaja menampilkan konten draft post di production karena kode itu
+bahkan tidak akan kompilasi. Listing 18-19 menunjukkan definisi struct
+<code>Post</code> dan struct <code>DraftPost</code>, serta metode pada masing-masing.</p>
+<figure class="listing" id="listing-18-19">
+<span class="file-name">Filename: src/lib.rs</span>
+<pre><code class="language-rust noplayground">pub struct Post {
+    content: String,
+}
+
+pub struct DraftPost {
+    content: String,
+}
+
+impl Post {
+    pub fn new() -&gt; DraftPost {
+        DraftPost {
+            content: String::new(),
+        }
+    }
+
+    pub fn content(&amp;self) -&gt; &amp;str {
+        &amp;self.content
+    }
+}
+
+impl DraftPost {
+    pub fn add_text(&amp;mut self, text: &amp;str) {
+        self.content.push_str(text);
+    }
+}</code></pre>
+<figcaption><a href="#listing-18-19">Listing 18-19</a>: Sebuah <code>Post</code> dengan metode <code>content</code> dan <code>DraftPost</code> tanpa metode <code>content</code></figcaption>
+</figure>
+<p>Kedua struct <code>Post</code> dan <code>DraftPost</code> punya field <code>content</code> privat yang
+menyimpan teks blog post. Struct-struct tidak lagi punya field <code>state</code>
+karena kami memindahkan pengkodean state ke tipe struct-struct. Struct
+<code>Post</code> akan mewakili post yang dipublikasikan, dan ia punya metode
+<code>content</code> yang mengembalikan <code>content</code>.</p>
+<p>Kami tetap punya fungsi <code>Post::new</code>, tapi alih-alih mengembalikan
+instance <code>Post</code>, ia mengembalikan instance <code>DraftPost</code>. Karena
+<code>content</code> privat dan tidak ada fungsi yang mengembalikan <code>Post</code>, tidak
+mungkin membuat instance <code>Post</code> sekarang.</p>
+<p>Struct <code>DraftPost</code> punya metode <code>add_text</code>, jadi kami bisa menambah
+teks ke <code>content</code> seperti sebelumnya, tapi perhatikan bahwa
+<code>DraftPost</code> tidak punya metode <code>content</code> terdefinisi! Jadi sekarang
+program memastikan semua post dimulai sebagai draft post, dan draft
+post tidak punya kontennya tersedia untuk ditampilkan. Upaya apa pun
+untuk mengelak batasan ini akan menghasilkan error compiler.</p>
+<!-- Judul lama. Jangan dihapus atau tautan bisa rusak. -->
+<p><a id="implementing-transitions-as-transformations-into-different-types"></a></p>
+<p>Jadi, bagaimana cara mendapatkan published post? Kami ingin
+menegakkan aturan bahwa draft post harus direview dan disetujui sebelum
+bisa dipublikasikan. Post di state pending review seharusnya tetap
+tidak menampilkan konten. Mari implementasikan batasan ini dengan
+menambah struct lain, <code>PendingReviewPost</code>, mendefinisikan metode
+<code>request_review</code> pada <code>DraftPost</code> untuk mengembalikan
+<code>PendingReviewPost</code> dan mendefinisikan metode <code>approve</code> pada
+<code>PendingReviewPost</code> untuk mengembalikan <code>Post</code>, seperti yang
+ditampilkan di Listing 18-20.</p>
+<figure class="listing" id="listing-18-20">
+<span class="file-name">Filename: src/lib.rs</span>
+<pre><code class="language-rust noplayground"><span class="boring">pub struct Post {
+</span><span class="boring">    content: String,
+</span><span class="boring">}
+</span><span class="boring">
+</span><span class="boring">pub struct DraftPost {
+</span><span class="boring">    content: String,
+</span><span class="boring">}
+</span><span class="boring">
+</span><span class="boring">impl Post {
+</span><span class="boring">    pub fn new() -&gt; DraftPost {
+</span><span class="boring">        DraftPost {
+</span><span class="boring">            content: String::new(),
+</span><span class="boring">        }
+</span><span class="boring">    }
+</span><span class="boring">
+</span><span class="boring">    pub fn content(&amp;self) -&gt; &amp;str {
+</span><span class="boring">        &amp;self.content
+</span><span class="boring">    }
+</span><span class="boring">}
+</span><span class="boring">
+</span>impl DraftPost {
+    // --snip--
+<span class="boring">    pub fn add_text(&amp;mut self, text: &amp;str) {
+</span><span class="boring">        self.content.push_str(text);
+</span><span class="boring">    }
+</span><span class="boring">
+</span>    pub fn request_review(self) -&gt; PendingReviewPost {
+        PendingReviewPost {
+            content: self.content,
+        }
+    }
+}
+
+pub struct PendingReviewPost {
+    content: String,
+}
+
+impl PendingReviewPost {
+    pub fn approve(self) -&gt; Post {
+        Post {
+            content: self.content,
+        }
+    }
+}</code></pre>
+<figcaption><a href="#listing-18-20">Listing 18-20</a>: Sebuah <code>PendingReviewPost</code> yang dibuat dengan memanggil <code>request_review</code> pada <code>DraftPost</code> dan metode <code>approve</code> yang mengubah <code>PendingReviewPost</code> menjadi <code>Post</code> yang dipublikasikan</figcaption>
+</figure>
+<p>Metode <code>request_review</code> dan <code>approve</code> mengambil kepemilikan <code>self</code>,
+dengan demikian mengkonsumsi instance <code>DraftPost</code> dan
+<code>PendingReviewPost</code> dan mentransformasikannya menjadi
+<code>PendingReviewPost</code> dan <code>Post</code> yang dipublikasikan, secara berurutan.
+Dengan cara ini, kami tidak akan punya instance <code>DraftPost</code> yang
+tersisa setelah kami memanggil <code>request_review</code> pada mereka, dan
+seterusnya. Struct <code>PendingReviewPost</code> tidak punya metode <code>content</code>
+terdefinisi padanya, jadi upaya membaca kontennya menghasilkan error
+compiler, seperti pada <code>DraftPost</code>. Karena satu-satunya cara
+mendapat instance <code>Post</code> yang dipublikasikan yang memang punya metode
+<code>content</code> terdefinisi adalah dengan memanggil metode <code>approve</code> pada
+<code>PendingReviewPost</code>, dan satu-satunya cara mendapat
+<code>PendingReviewPost</code> adalah dengan memanggil metode <code>request_review</code>
+pada <code>DraftPost</code>, kami sekarang telah mengenkode alur kerja blog post
+ke dalam sistem tipe.</p>
+<p>Tapi kami juga harus membuat beberapa perubahan kecil ke <code>main</code>.
+Metode <code>request_review</code> dan <code>approve</code> mengembalikan instance baru
+alih-alih memodifikasi struct yang mereka dipanggil, jadi kami perlu
+menambah lebih banyak assignment <code>let post =</code> shadowing untuk menyimpan
+instance yang dikembalikan. Kami juga tidak bisa punya asersi tentang
+konten draft dan pending review posts menjadi string kosong, dan kami
+tidak butuh mereka: Kami tidak bisa mengompilasi kode yang mencoba
+menggunakan konten post di state-state tersebut lagi. Kode <code>main</code>
+yang diupdate ditampilkan di Listing 18-21.</p>
+<figure class="listing" id="listing-18-21">
+<span class="file-name">Filename: src/main.rs</span>
+<pre><code class="language-rust ignore">use blog::Post;
+
+fn main() {
+    let mut post = Post::new();
+
+    post.add_text("I ate a salad for lunch today");
+
+    let post = post.request_review();
+
+    let post = post.approve();
+
+    assert_eq!("I ate a salad for lunch today", post.content());
+}</code></pre>
+<figcaption><a href="#listing-18-21">Listing 18-21</a>: Modifikasi <code>main</code> untuk menggunakan implementasi baru alur kerja blog post</figcaption>
+</figure>
+<p>Perubahan yang kami butuhkan ke <code>main</code> untuk reassign <code>post</code> berarti
+implementasi ini tidak lagi mengikuti object-oriented state pattern
+dengan ketat: Transformasi antar state tidak lagi dienkapsulasi
+sepenuhnya di dalam implementasi <code>Post</code>. Akan tetapi, keuntungan kami
+adalah state invalid sekarang tidak mungkin karena sistem tipe dan
+type checking yang terjadi pada waktu kompilasi! Ini memastikan bahwa
+bug tertentu, seperti penampilan konten post yang belum dipublikasikan,
+akan ditemukan sebelum sampai ke production.</p>
+<p>Coba tugas-tugas yang disarankan di awal bagian ini pada crate
+<code>blog</code> sebagaimana setelah Listing 18-21 untuk melihat apa pendapat
+Anda tentang desain versi kode ini. Perhatikan bahwa beberapa tugas
+mungkin sudah selesai di desain ini.</p>
+<p>Kami telah melihat bahwa meski Rust mampu mengimplementasikan pola
+desain object-oriented, pola lain, seperti mengenkode state ke dalam
+sistem tipe, juga tersedia di Rust. Pola-pola ini punya trade-off
+yang berbeda. Meski Anda mungkin sangat familiar dengan pola
+object-oriented, memikirkan ulang masalah untuk memanfaatkan fitur
+Rust bisa memberikan manfaat, seperti mencegah beberapa bug pada
+waktu kompilasi. Pola object-oriented tidak selalu menjadi solusi
+terbaik di Rust karena fitur tertentu, seperti ownership, yang tidak
+dimiliki bahasa object-oriented.</p>
+<h2 id="ringkasan"><a class="header" href="#ringkasan">Ringkasan</a></h2>
+<p>Terlepas dari apakah Anda menganggap Rust sebagai bahasa
+object-oriented setelah membaca bab ini, Anda sekarang tahu bahwa
+Anda bisa menggunakan trait objects untuk mendapatkan beberapa fitur
+object-oriented di Rust. Dynamic dispatch bisa memberi kode Anda
+fleksibilitas beberapa sebagai tukar menukar sedikit performa runtime.
+Anda bisa menggunakan fleksibilitas ini untuk mengimplementasikan
+pola object-oriented yang bisa membantu maintainability kode Anda.
+Rust juga punya fitur lain, seperti ownership, yang tidak dimiliki
+bahasa object-oriented. Pola object-oriented tidak selalu akan
+menjadi cara terbaik memanfaatkan kekuatan Rust, tapi itu opsi yang
+tersedia.</p>
+<p>Selanjutnya, kami akan melihat pola (patterns), yang lain dari fitur
+Rust yang mengaktifkan banyak fleksibilitas. Kami telah melihatnya
+secara singkat sepanjang buku tapi belum melihat kemampuan penuhnya
+lagi. Ayo lanjut!</p>
+
+                    </main>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+                            <a rel="prev" href="ch18-02-trait-objects.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                                <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M41.4 233.4c-12.5 12.5-12.5 32.8 0 45.3l160 160c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3L109.3 256 246.6 118.6c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0l-160 160z"/></svg></span>
+                            </a>
+
+                            <a rel="next prefetch" href="ch19-00-patterns.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                                <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M278.6 233.4c12.5 12.5 12.5 32.8 0 45.3l-160 160c-12.5 12.5-32.8 12.5-45.3 0s-12.5-32.8 0-45.3L210.7 256 73.4 118.6c-12.5-12.5-12.5-32.8 0-45.3s32.8-12.5 45.3 0l160 160z"/></svg></span>
+                            </a>
+
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+                    <a rel="prev" href="ch18-02-trait-objects.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                        <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M41.4 233.4c-12.5 12.5-12.5 32.8 0 45.3l160 160c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3L109.3 256 246.6 118.6c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0l-160 160z"/></svg></span>
+                    </a>
+
+                    <a rel="next prefetch" href="ch19-00-patterns.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                        <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M278.6 233.4c12.5 12.5 12.5 32.8 0 45.3l-160 160c-12.5 12.5-32.8 12.5-45.3 0s-12.5-32.8 0-45.3L210.7 256 73.4 118.6c-12.5-12.5-12.5-32.8 0-45.3s32.8-12.5 45.3 0l160 160z"/></svg></span>
+                    </a>
+            </nav>
+
+        </div>
+
+        <template id=fa-eye><span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M288 32c-80.8 0-145.5 36.8-192.6 80.6C48.6 156 17.3 208 2.5 243.7c-3.3 7.9-3.3 16.7 0 24.6C17.3 304 48.6 356 95.4 399.4C142.5 443.2 207.2 480 288 480s145.5-36.8 192.6-80.6c46.8-43.5 78.1-95.4 93-131.1c3.3-7.9 3.3-16.7 0-24.6c-14.9-35.7-46.2-87.7-93-131.1C433.5 68.8 368.8 32 288 32zM432 256c0 79.5-64.5 144-144 144s-144-64.5-144-144s64.5-144 144-144s144 64.5 144 144zM288 192c0 35.3-28.7 64-64 64c-11.5 0-22.3-3-31.6-8.4c-.2 2.8-.4 5.5-.4 8.4c0 53 43 96 96 96s96-43 96-96s-43-96-96-96c-2.8 0-5.6 .1-8.4 .4c5.3 9.3 8.4 20.1 8.4 31.6z"/></svg></span></template>
+        <template id=fa-eye-slash><span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M38.8 5.1C28.4-3.1 13.3-1.2 5.1 9.2S-1.2 34.7 9.2 42.9l592 464c10.4 8.2 25.5 6.3 33.7-4.1s6.3-25.5-4.1-33.7L525.6 386.7c39.6-40.6 66.4-86.1 79.9-118.4c3.3-7.9 3.3-16.7 0-24.6c-14.9-35.7-46.2-87.7-93-131.1C465.5 68.8 400.8 32 320 32c-68.2 0-125 26.3-169.3 60.8L38.8 5.1zM223.1 149.5C248.6 126.2 282.7 112 320 112c79.5 0 144 64.5 144 144c0 24.9-6.3 48.3-17.4 68.7L408 294.5c5.2-11.8 8-24.8 8-38.5c0-53-43-96-96-96c-2.8 0-5.6 .1-8.4 .4c5.3 9.3 8.4 20.1 8.4 31.6c0 10.2-2.4 19.8-6.6 28.3l-90.3-70.8zm223.1 298L373 389.9c-16.4 6.5-34.3 10.1-53 10.1c-79.5 0-144-64.5-144-144c0-6.9 .5-13.6 1.4-20.2L83.1 161.5C60.3 191.2 44 220.8 34.5 243.7c-3.3 7.9-3.3 16.7 0 24.6c14.9 35.7 46.2 87.7 93 131.1C174.5 443.2 239.2 480 320 480c47.8 0 89.9-12.9 126.2-32.5z"/></svg></span></template>
+        <template id=fa-copy><span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M502.6 70.63l-61.25-61.25C435.4 3.371 427.2 0 418.7 0H255.1c-35.35 0-64 28.66-64 64l.0195 256C192 355.4 220.7 384 256 384h192c35.2 0 64-28.8 64-64V93.25C512 84.77 508.6 76.63 502.6 70.63zM464 320c0 8.836-7.164 16-16 16H255.1c-8.838 0-16-7.164-16-16L239.1 64.13c0-8.836 7.164-16 16-16h128L384 96c0 17.67 14.33 32 32 32h47.1V320zM272 448c0 8.836-7.164 16-16 16H63.1c-8.838 0-16-7.164-16-16L47.98 192.1c0-8.836 7.164-16 16-16H160V128H63.99c-35.35 0-64 28.65-64 64l.0098 256C.002 483.3 28.66 512 64 512h192c35.2 0 64-28.8 64-64v-32h-47.1L272 448z"/></svg></span></template>
+        <template id=fa-play><span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 384 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M73 39c-14.8-9.1-33.4-9.4-48.5-.9S0 62.6 0 80V432c0 17.4 9.4 33.4 24.5 41.9s33.7 8.1 48.5-.9L361 297c14.3-8.7 23-24.2 23-41s-8.7-32.2-23-41L73 39z"/></svg></span></template>
+        <template id=fa-clock-rotate-left><span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M75 75L41 41C25.9 25.9 0 36.6 0 57.9V168c0 13.3 10.7 24 24 24H134.1c21.4 0 32.1-25.9 17-41l-30.8-30.8C155 85.5 203 64 256 64c106 0 192 86 192 192s-86 192-192 192c-40.8 0-78.6-12.7-109.7-34.4c-14.5-10.1-34.4-6.6-44.6 7.9s-6.6 34.4 7.9 44.6C151.2 495 201.7 512 256 512c141.4 0 256-114.6 256-256S397.4 0 256 0C185.3 0 121.3 28.7 75 75zm181 53c-13.3 0-24 10.7-24 24V256c0 6.4 2.5 12.5 7 17l72 72c9.4 9.4 24.6 9.4 33.9 0s9.4-24.6 0-33.9l-65-65V152c0-13.3-10.7-24-24-24z"/></svg></span></template>
+
+
+
+        <script>
+            window.playground_copyable = true;
+        </script>
+
+
+        <script src="elasticlunr-ef4e11c1.min.js"></script>
+        <script src="mark-09e88c2c.min.js"></script>
+        <script src="searcher-09f2665d.js"></script>
+
+        <script src="clipboard-1626706a.min.js"></script>
+        <script src="highlight-abc7f01d.js"></script>
+        <script src="book-c22b7243.js"></script>
+
+        <!-- Custom JS scripts -->
+        <script src="ferris-2317480c.js"></script>
+
+
+
+    </div>
+    </body>
+</html>

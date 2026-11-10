@@ -1,0 +1,850 @@
+<!DOCTYPE HTML>
+<html lang="en" class="light sidebar-visible" dir="ltr">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>Closure - The Rust Programming Language</title>
+
+
+        <!-- Custom HTML head -->
+
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff">
+
+        <link rel="icon" href="favicon-de23e50b.svg">
+        <link rel="shortcut icon" href="favicon-8114d1fc.png">
+        <link rel="stylesheet" href="css/variables-8adf115d.css">
+        <link rel="stylesheet" href="css/general-0392ca55.css">
+        <link rel="stylesheet" href="css/chrome-fc474251.css">
+        <link rel="stylesheet" href="css/print-9e4910d8.css" media="print">
+
+        <!-- Fonts -->
+        <link rel="stylesheet" href="fonts/fonts-9644e21d.css">
+
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" id="mdbook-highlight-css" href="highlight-493f70e1.css">
+        <link rel="stylesheet" id="mdbook-tomorrow-night-css" href="tomorrow-night-4c0ae647.css">
+        <link rel="stylesheet" id="mdbook-ayu-highlight-css" href="ayu-highlight-3fdfc3ac.css">
+
+        <!-- Custom theme stylesheets -->
+        <link rel="stylesheet" href="ferris-d33b75bf.css">
+        <link rel="stylesheet" href="theme/2018-edition-4e126c62.css">
+        <link rel="stylesheet" href="theme/semantic-notes-9b5766c0.css">
+        <link rel="stylesheet" href="theme/listing-cab26221.css">
+
+
+        <!-- Provide site root and default themes to javascript -->
+        <script>
+            const path_to_root = "";
+            const default_light_theme = "light";
+            const default_dark_theme = "navy";
+            window.path_to_searchindex_js = "searchindex-e298a7a7.js";
+        </script>
+        <!-- Start loading toc.js asap -->
+        <script src="toc-8d1d8862.js"></script>
+    </head>
+    <body>
+    <div id="mdbook-help-container">
+        <div id="mdbook-help-popup">
+            <h2 class="mdbook-help-title">Keyboard shortcuts</h2>
+            <div>
+                <p>Press <kbd>←</kbd> or <kbd>→</kbd> to navigate between chapters</p>
+                <p>Press <kbd>S</kbd> or <kbd>/</kbd> to search in the book</p>
+                <p>Press <kbd>?</kbd> to show this help</p>
+                <p>Press <kbd>Esc</kbd> to hide this help</p>
+            </div>
+        </div>
+    </div>
+    <div id="mdbook-body-container">
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script>
+            try {
+                let theme = localStorage.getItem('mdbook-theme');
+                let sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script>
+            const default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? default_dark_theme : default_light_theme;
+            let theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            const html = document.documentElement;
+            html.classList.remove('light')
+            html.classList.add(theme);
+            html.classList.add("js");
+        </script>
+
+        <input type="checkbox" id="mdbook-sidebar-toggle-anchor" class="hidden">
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script>
+            let sidebar = null;
+            const sidebar_toggle = document.getElementById("mdbook-sidebar-toggle-anchor");
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            } else {
+                sidebar = 'hidden';
+                sidebar_toggle.checked = false;
+            }
+            if (sidebar === 'visible') {
+                sidebar_toggle.checked = true;
+            } else {
+                html.classList.remove('sidebar-visible');
+            }
+        </script>
+
+        <nav id="mdbook-sidebar" class="sidebar" aria-label="Table of contents">
+            <!-- populated by js -->
+            <mdbook-sidebar-scrollbox class="sidebar-scrollbox"></mdbook-sidebar-scrollbox>
+            <noscript>
+                <iframe class="sidebar-iframe-outer" src="toc.html"></iframe>
+            </noscript>
+            <div id="mdbook-sidebar-resize-handle" class="sidebar-resize-handle">
+                <div class="sidebar-resize-indicator"></div>
+            </div>
+        </nav>
+
+        <div id="mdbook-page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                <div id="mdbook-menu-bar-hover-placeholder"></div>
+                <div id="mdbook-menu-bar" class="menu-bar sticky">
+                    <div class="left-buttons">
+                        <label id="mdbook-sidebar-toggle" class="icon-button" for="mdbook-sidebar-toggle-anchor" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="mdbook-sidebar">
+                            <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M0 96C0 78.3 14.3 64 32 64H416c17.7 0 32 14.3 32 32s-14.3 32-32 32H32C14.3 128 0 113.7 0 96zM0 256c0-17.7 14.3-32 32-32H416c17.7 0 32 14.3 32 32s-14.3 32-32 32H32c-17.7 0-32-14.3-32-32zM448 416c0 17.7-14.3 32-32 32H32c-17.7 0-32-14.3-32-32s14.3-32 32-32H416c17.7 0 32 14.3 32 32z"/></svg></span>
+                        </label>
+                        <button id="mdbook-theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="mdbook-theme-list">
+                            <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M371.3 367.1c27.3-3.9 51.9-19.4 67.2-42.9L600.2 74.1c12.6-19.5 9.4-45.3-7.6-61.2S549.7-4.4 531.1 9.6L294.4 187.2c-24 18-38.2 46.1-38.4 76.1L371.3 367.1zm-19.6 25.4l-116-104.4C175.9 290.3 128 339.6 128 400c0 3.9 .2 7.8 .6 11.6c1.8 17.5-10.2 36.4-27.8 36.4H96c-17.7 0-32 14.3-32 32s14.3 32 32 32H240c61.9 0 112-50.1 112-112c0-2.5-.1-5-.2-7.5z"/></svg></span>
+                        </button>
+                        <ul id="mdbook-theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                            <li role="none"><button role="menuitem" class="theme" id="mdbook-theme-default_theme">Auto</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="mdbook-theme-light">Light</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="mdbook-theme-rust">Rust</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="mdbook-theme-coal">Coal</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="mdbook-theme-navy">Navy</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="mdbook-theme-ayu">Ayu</button></li>
+                        </ul>
+                        <button id="mdbook-search-toggle" class="icon-button" type="button" title="Search (`/`)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="/ s" aria-controls="mdbook-searchbar">
+                            <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M416 208c0 45.9-14.9 88.3-40 122.7L502.6 457.4c12.5 12.5 12.5 32.8 0 45.3s-32.8 12.5-45.3 0L330.7 376c-34.4 25.2-76.8 40-122.7 40C93.1 416 0 322.9 0 208S93.1 0 208 0S416 93.1 416 208zM208 352c79.5 0 144-64.5 144-144s-64.5-144-144-144S64 128.5 64 208s64.5 144 144 144z"/></svg></span>
+                        </button>
+                    </div>
+
+                    <h1 class="menu-title">The Rust Programming Language</h1>
+
+                    <div class="right-buttons">
+                        <a href="print.html" title="Print this book" aria-label="Print this book">
+                            <span class=fa-svg id="print-button"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M128 0C92.7 0 64 28.7 64 64v96h64V64H354.7L384 93.3V160h64V93.3c0-17-6.7-33.3-18.7-45.3L400 18.7C388 6.7 371.7 0 354.7 0H128zM384 352v32 64H128V384 368 352H384zm64 32h32c17.7 0 32-14.3 32-32V256c0-35.3-28.7-64-64-64H64c-35.3 0-64 28.7-64 64v96c0 17.7 14.3 32 32 32H64v64c0 35.3 28.7 64 64 64H384c35.3 0 64-28.7 64-64V384zm-16-88c-13.3 0-24-10.7-24-24s10.7-24 24-24s24 10.7 24 24s-10.7 24-24 24z"/></svg></span>
+                        </a>
+                        <a href="https://github.com/rust-lang/book" title="Git repository" aria-label="Git repository">
+                            <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 496 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M165.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6zm-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3zm44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9zM244.8 8C106.1 8 0 113.3 0 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C428.2 457.8 496 362.9 496 252 496 113.3 383.5 8 244.8 8zM97.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1zm-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7zm32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1zm-11.4-14.7c-1.6 1-1.6 3.6 0 5.9 1.6 2.3 4.3 3.3 5.6 2.3 1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2z"/></svg></span>
+                        </a>
+
+                    </div>
+                </div>
+
+                <div id="mdbook-search-wrapper" class="hidden">
+                    <form id="mdbook-searchbar-outer" class="searchbar-outer">
+                        <div class="search-wrapper">
+                            <input type="search" id="mdbook-searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="mdbook-searchresults-outer" aria-describedby="searchresults-header">
+                            <div class="spinner-wrapper">
+                                <span class=fa-svg id="fa-spin"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M304 48c0-26.5-21.5-48-48-48s-48 21.5-48 48s21.5 48 48 48s48-21.5 48-48zm0 416c0-26.5-21.5-48-48-48s-48 21.5-48 48s21.5 48 48 48s48-21.5 48-48zM48 304c26.5 0 48-21.5 48-48s-21.5-48-48-48s-48 21.5-48 48s21.5 48 48 48zm464-48c0-26.5-21.5-48-48-48s-48 21.5-48 48s21.5 48 48 48s48-21.5 48-48zM142.9 437c18.7-18.7 18.7-49.1 0-67.9s-49.1-18.7-67.9 0s-18.7 49.1 0 67.9s49.1 18.7 67.9 0zm0-294.2c18.7-18.7 18.7-49.1 0-67.9S93.7 56.2 75 75s-18.7 49.1 0 67.9s49.1 18.7 67.9 0zM369.1 437c18.7 18.7 49.1 18.7 67.9 0s18.7-49.1 0-67.9s-49.1-18.7-67.9 0s-18.7 49.1 0 67.9z"/></svg></span>
+                            </div>
+                        </div>
+                    </form>
+                    <div id="mdbook-searchresults-outer" class="searchresults-outer hidden">
+                        <div id="mdbook-searchresults-header" class="searchresults-header"></div>
+                        <ul id="mdbook-searchresults">
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script>
+                    document.getElementById('mdbook-sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('mdbook-sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#mdbook-sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="mdbook-content" class="content">
+                    <main>
+                        <!-- Judul lama. Jangan dihapus atau tautan bisa rusak. -->
+<p><a id="closures-anonymous-functions-that-can-capture-their-environment"></a>
+<a id="closures-anonymous-functions-that-capture-their-environment"></a></p>
+<h2 id="closure"><a class="header" href="#closure">Closure</a></h2>
+<p>Closure Rust adalah fungsi anonim yang bisa Anda simpan di variabel atau
+teruskan sebagai argumen ke fungsi lain. Anda bisa membuat closure di satu
+tempat dan kemudian memanggil closure di tempat lain untuk mengevaluasinya
+di konteks yang berbeda. Berbeda dengan fungsi, closure bisa menangkap nilai
+dari ruang lingkup di mana mereka didefinisikan. Kami akan mendemonstrasikan
+bagaimana fitur closure ini memungkinkan penggunaan kode ulang dan
+kustomisasi perilaku.</p>
+<!-- Judul lama. Jangan dihapus atau tautan bisa rusak. -->
+<p><a id="creating-an-abstraction-of-behavior-with-closures"></a>
+<a id="refactoring-using-functions"></a>
+<a id="refactoring-with-closures-to-store-code"></a>
+<a id="capturing-the-environment-with-closures"></a></p>
+<h3 id="menangkap-lingkungan"><a class="header" href="#menangkap-lingkungan">Menangkap Lingkungan</a></h3>
+<p>Kami akan pertama memeriksa bagaimana kami bisa menggunakan closure untuk
+menangkap nilai dari lingkungan di mana mereka didefinisikan untuk
+penggunaan nanti. Inilah skenarionya: Setiap saat, perusahaan kaos kami
+memberikan kaos eksklusif, edisi terbatas, kepada seseorang di mailing list
+kami sebagai promosi. Orang di mailing list bisa opsional menambahkan warna
+favorit mereka ke profil mereka. Jika orang yang dipilih untuk kaos gratis
+memiliki preferensi warna favorit, mereka mendapatkan kaos warna itu. Jika
+orang tersebut belum menentukan warna favorit, mereka mendapatkan warna
+apa pun yang saat ini paling banyak dimiliki perusahaan.</p>
+<p>Ada banyak cara mengimplementasikan ini. Untuk contoh ini, kami akan
+menggunakan enum bernama <code>ShirtColor</code> yang memiliki varian <code>Red</code> dan <code>Blue</code>
+(membatasi jumlah warna yang tersedia untuk kesederhanaan). Kami
+mewakili inventaris perusahaan dengan struct <code>Inventory</code> yang memiliki
+bidang bernama <code>shirts</code> yang berisi <code>Vec&lt;ShirtColor&gt;</code> yang mewakili warna
+kaos yang saat ini ada di stok. Metode <code>giveaway</code> yang didefinisikan pada
+<code>Inventory</code> mendapatkan preferensi warna kaos opsional dari pemenang kaos
+gratis, dan ia mengembalikan warna kaos yang akan didapat orang tersebut.
+Penyiapan ini ditampilkan di Listing 13-1.</p>
+<figure class="listing" id="listing-13-1">
+<span class="file-name">Filename: src/main.rs</span>
+<pre><code class="language-rust noplayground">#[derive(Debug, PartialEq, Copy, Clone)]
+enum ShirtColor {
+    Red,
+    Blue,
+}
+
+struct Inventory {
+    shirts: Vec&lt;ShirtColor&gt;,
+}
+
+impl Inventory {
+    fn giveaway(&amp;self, user_preference: Option&lt;ShirtColor&gt;) -&gt; ShirtColor {
+        user_preference.unwrap_or_else(|| self.most_stocked())
+    }
+
+    fn most_stocked(&amp;self) -&gt; ShirtColor {
+        let mut num_red = 0;
+        let mut num_blue = 0;
+
+        for color in &amp;self.shirts {
+            match color {
+                ShirtColor::Red =&gt; num_red += 1,
+                ShirtColor::Blue =&gt; num_blue += 1,
+            }
+        }
+        if num_red &gt; num_blue {
+            ShirtColor::Red
+        } else {
+            ShirtColor::Blue
+        }
+    }
+}
+
+fn main() {
+    let store = Inventory {
+        shirts: vec![ShirtColor::Blue, ShirtColor::Red, ShirtColor::Blue],
+    };
+
+    let user_pref1 = Some(ShirtColor::Red);
+    let giveaway1 = store.giveaway(user_pref1);
+    println!(
+        "The user with preference {:?} gets {:?}",
+        user_pref1, giveaway1
+    );
+
+    let user_pref2 = None;
+    let giveaway2 = store.giveaway(user_pref2);
+    println!(
+        "The user with preference {:?} gets {:?}",
+        user_pref2, giveaway2
+    );
+}</code></pre>
+<figcaption><a href="#listing-13-1">Listing 13-1</a>: Situasi giveaway perusahaan kaos</figcaption>
+</figure>
+<p><code>store</code> yang didefinisikan di <code>main</code> memiliki dua kaos biru dan satu kaos
+merah tersisa untuk didistribusikan untuk promosi edisi terbatas ini. Kami
+memanggil metode <code>giveaway</code> untuk pengguna dengan preferensi kaos merah dan
+pengguna tanpa preferensi apa pun.</p>
+<p>Lagi, kode ini bisa diimplementasikan dengan banyak cara, dan di sini, untuk
+fokus pada closure, kami bertahan pada konsep yang sudah Anda pelajari,
+kecuali untuk badan metode <code>giveaway</code> yang menggunakan closure. Di metode
+<code>giveaway</code>, kami mendapatkan preferensi pengguna sebagai parameter bertipe
+<code>Option&lt;ShirtColor&gt;</code> dan memanggil metode <code>unwrap_or_else</code> pada
+<code>user_preference</code>. <a href="../std/option/enum.Option.html#method.unwrap_or_else">Metode <code>unwrap_or_else</code> pada
+<code>Option&lt;T&gt;</code></a><!-- ignore --> didefinisikan oleh pustaka
+standar. Ia menerima satu argumen: closure tanpa argumen apa pun yang
+mengembalikan nilai <code>T</code> (tipe yang sama yang disimpan di varian <code>Some</code> dari
+<code>Option&lt;T&gt;</code>, dalam kasus ini <code>ShirtColor</code>). Jika <code>Option&lt;T&gt;</code> adalah varian
+<code>Some</code>, <code>unwrap_or_else</code> mengembalikan nilai dari dalam <code>Some</code>. Jika
+<code>Option&lt;T&gt;</code> adalah varian <code>None</code>, <code>unwrap_or_else</code> memanggil closure dan
+mengembalikan nilai yang dikembalikan oleh closure.</p>
+<p>Kami menentukan ekspresi closure <code>|| self.most_stocked()</code> sebagai argumen
+ke <code>unwrap_or_else</code>. Ini adalah closure yang tidak menerima parameter
+sendiri (jika closure memiliki parameter, mereka akan muncul di antara dua
+pipa vertikal). Badan closure memanggil <code>self.most_stocked()</code>. Kami
+mendefinisikan closure di sini, dan implementasi <code>unwrap_or_else</code> akan
+mengevaluasi closure nanti jika hasilnya dibutuhkan.</p>
+<p>Menjalankan kode ini mencetak berikut:</p>
+<pre><code class="language-console">$ cargo run
+   Compiling shirt-company v0.1.0 (file:///projects/shirt-company)
+    Finished `dev` profile [unoptimized + debuginfo] target(s) in 0.27s
+     Running `target/debug/shirt-company`
+The user with preference Some(Red) gets Red
+The user with preference None gets Blue
+</code></pre>
+<p>Satu aspek menarik di sini adalah bahwa kami telah meneruskan closure yang
+memanggil <code>self.most_stocked()</code> pada instance <code>Inventory</code> saat ini. Pustaka
+standar tidak perlu tahu apa pun tentang tipe <code>Inventory</code> atau <code>ShirtColor</code>
+yang kami definisikan, atau logika yang kami inginkan dalam skenario ini.
+Closure menangkap referensi immutable ke instance <code>Inventory</code> <code>self</code> dan
+meneruskannya dengan kode yang kami tentukan ke metode <code>unwrap_or_else</code>.
+Fungsi, di sisi lain, tidak mampu menangkap lingkungan mereka dengan cara
+ini.</p>
+<!-- Judul lama. Jangan dihapus atau tautan bisa rusak. -->
+<p><a id="closure-type-inference-and-annotation"></a></p>
+<h3 id="menyimpulkan-dan-menganotasi-tipe-closure"><a class="header" href="#menyimpulkan-dan-menganotasi-tipe-closure">Menyimpulkan dan Menganotasi Tipe Closure</a></h3>
+<p>Ada lebih banyak perbedaan antara fungsi dan closure. Closure biasanya
+tidak mewajibkan Anda menganotasi tipe parameter atau nilai kembalian
+seperti fungsi <code>fn</code>. Anotasi tipe diperlukan pada fungsi karena tipe adalah
+bagian dari antarmuka eksplisit yang terekspos ke pengguna Anda.
+Mendefinisikan antarmuka ini secara kaku penting untuk memastikan bahwa
+semua orang setuju tentang tipe nilai apa yang digunakan dan dikembalikan
+fungsi. Closure, di sisi lain, tidak digunakan di antarmuka terekspos seperti
+ini: Mereka disimpan di variabel, dan mereka digunakan tanpa menamakan
+mereka dan mengekspos mereka ke pengguna library kami.</p>
+<p>Closure biasanya pendek dan hanya relevan dalam konteks yang sempit bukannya
+di skenario arbitrer. Di dalam konteks terbatas ini, compiler bisa
+menyimpulkan tipe parameter dan tipe kembalian, mirip dengan bagaimana ia
+bisa menyimpulkan tipe sebagian besar variabel (ada kasus jarang di mana
+compiler butuh anotasi tipe closure juga).</p>
+<p>Seperti variabel, kami bisa menambahkan anotasi tipe jika kami ingin
+meningkatkan eksplisititas dan kejelasan dengan biaya lebih verbose dari
+yang ketat diperlukan. Menganotasi tipe untuk closure akan terlihat seperti
+definisi yang ditampilkan di Listing 13-2. Dalam contoh ini, kami
+mendefinisikan closure dan menyimpannya di variabel bukunya mendefinisikan
+closure di tempat kami meneruskannya sebagai argumen, seperti yang kami
+lakukan di Listing 13-1.</p>
+<figure class="listing" id="listing-13-2">
+<span class="file-name">Filename: src/main.rs</span>
+<pre class="playground"><code class="language-rust edition2024"><span class="boring">use std::thread;
+</span><span class="boring">use std::time::Duration;
+</span><span class="boring">
+</span><span class="boring">fn generate_workout(intensity: u32, random_number: u32) {
+</span>    let expensive_closure = |num: u32| -&gt; u32 {
+        println!("calculating slowly...");
+        thread::sleep(Duration::from_secs(2));
+        num
+    };
+<span class="boring">
+</span><span class="boring">    if intensity &lt; 25 {
+</span><span class="boring">        println!("Today, do {} pushups!", expensive_closure(intensity));
+</span><span class="boring">        println!("Next, do {} situps!", expensive_closure(intensity));
+</span><span class="boring">    } else {
+</span><span class="boring">        if random_number == 3 {
+</span><span class="boring">            println!("Take a break today! Remember to stay hydrated!");
+</span><span class="boring">        } else {
+</span><span class="boring">            println!(
+</span><span class="boring">                "Today, run for {} minutes!",
+</span><span class="boring">                expensive_closure(intensity)
+</span><span class="boring">            );
+</span><span class="boring">        }
+</span><span class="boring">    }
+</span><span class="boring">}
+</span><span class="boring">
+</span><span class="boring">fn main() {
+</span><span class="boring">    let simulated_user_specified_value = 10;
+</span><span class="boring">    let simulated_random_number = 7;
+</span><span class="boring">
+</span><span class="boring">    generate_workout(simulated_user_specified_value, simulated_random_number);
+</span><span class="boring">}</span></code></pre>
+<figcaption><a href="#listing-13-2">Listing 13-2</a>: Menambahkan anotasi tipe opsional parameter dan tipe nilai kembalian di closure</figcaption>
+</figure>
+<p>Dengan anotasi tipe ditambahkan, sintaks closure terlihat lebih mirip
+sintaks fungsi. Di sini, kami mendefinisikan fungsi yang menambahkan 1 ke
+parameternya dan closure yang memiliki perilaku yang sama, untuk
+perbandingan. Kami telah menambahkan beberapa spasi untuk menyelaraskan
+bagian yang relevan. Ini menggambarkan bagaimana sintaks closure mirip
+sintaks fungsi kecuali untuk penggunaan pipa dan jumlah sintaks yang
+opsional:</p>
+<pre><code class="language-rust ignore">fn  add_one_v1   (x: u32) -&gt; u32 { x + 1 }
+let add_one_v2 = |x: u32| -&gt; u32 { x + 1 };
+let add_one_v3 = |x|             { x + 1 };
+let add_one_v4 = |x|               x + 1  ;</code></pre>
+<p>Baris pertama menunjukkan definisi fungsi dan baris kedua menunjukkan
+definisi closure dengan anotasi penuh. Di baris ketiga, kami menghapus
+anotasi tipe dari definisi closure. Di baris keempat, kami menghapus
+tanda kurung kurawal, yang opsional karena badan closure hanya memiliki
+satu ekspresi. Ini semua definisi valid yang akan menghasilkan perilaku
+yang sama saat dipanggil. Baris <code>add_one_v3</code> dan <code>add_one_v4</code> mewajibkan
+closure dievaluasi untuk bisa kompilasi karena tipe akan disimpulkan dari
+penggunaan mereka. Ini mirip dengan <code>let v = Vec::new();</code> yang butuh
+anotasi tipe atau nilai tipe tertentu untuk disisipkan ke <code>Vec</code> agar Rust
+bisa menyimpulkan tipe.</p>
+<p>Untuk definisi closure, compiler akan menyimpulkan satu tipe konkret untuk
+masing-masing parameter mereka dan untuk nilai kembalian mereka. Misalnya,
+Listing 13-3 menunjukkan definisi closure pendek yang hanya mengembalikan
+nilai yang ia terima sebagai parameter. Closure ini tidak terlalu berguna
+kecuali untuk tujuan contoh ini. Perhatikan bahwa kami tidak menambahkan
+anotasi tipe apa pun ke definisi. Karena tidak ada anotasi tipe, kami bisa
+memanggil closure dengan tipe apa pun, yang kami lakukan di sini dengan
+<code>String</code> pertama kali. Jika kami lalu mencoba memanggil
+<code>example_closure</code> dengan integer, kami akan mendapat kesalahan.</p>
+<figure class="listing" id="listing-13-3">
+<span class="file-name">Filename: src/main.rs</span>
+<pre><code class="language-rust ignore does_not_compile"><span class="boring">fn main() {
+</span>    let example_closure = |x| x;
+
+    let s = example_closure(String::from("hello"));
+    let n = example_closure(5);
+<span class="boring">}</span></code></pre>
+<figcaption><a href="#listing-13-3">Listing 13-3</a>: Mencoba memanggil closure yang tipenya disimpulkan dengan dua tipe berbeda</figcaption>
+</figure>
+<p>Compiler memberi kami kesalahan ini:</p>
+<pre><code class="language-console">$ cargo run
+   Compiling closure-example v0.1.0 (file:///projects/closure-example)
+error[E0308]: mismatched types
+ --&gt; src/main.rs:5:29
+  |
+5 |     let n = example_closure(5);
+  |             --------------- ^ expected `String`, found integer
+  |             |
+  |             arguments to this function are incorrect
+  |
+note: expected because the closure was earlier called with an argument of type `String`
+ --&gt; src/main.rs:4:29
+  |
+4 |     let s = example_closure(String::from("hello"));
+  |             --------------- ^^^^^^^^^^^^^^^^^^^^^ expected because this argument is of type `String`
+  |             |
+  |             in this closure call
+note: closure parameter defined here
+ --&gt; src/main.rs:2:28
+  |
+2 |     let example_closure = |x| x;
+  |                            ^
+help: try using a conversion method
+  |
+5 |     let n = example_closure(5.to_string());
+  |                              ++++++++++++
+
+For more information about this error, try `rustc --explain E0308`.
+error: could not compile `closure-example` (bin "closure-example") due to 1 previous error
+</code></pre>
+<p>Pertama kali kami memanggil <code>example_closure</code> dengan nilai <code>String</code>,
+compiler menyimpulkan tipe <code>x</code> dan tipe kembalian closure menjadi <code>String</code>.
+Tipe-tipe itu kemudian terkunci di closure di <code>example_closure</code>, dan kami
+mendapat kesalahan tipe saat kami mencoba menggunakan tipe berbeda dengan
+closure yang sama.</p>
+<h3 id="menangkap-referensi-atau-memindahkan-kepemilikan"><a class="header" href="#menangkap-referensi-atau-memindahkan-kepemilikan">Menangkap Referensi atau Memindahkan Kepemilikan</a></h3>
+<p>Closure bisa menangkap nilai dari lingkungan mereka dengan tiga cara, yang
+secara langsung memetakan ke tiga cara fungsi bisa menerima parameter:
+meminjam secara immutable, meminjam secara mutable, dan mengambil
+kepemilikan. Closure akan memutuskan mana yang digunakan berdasarkan apa
+yang dilakukan badan fungsi dengan nilai yang ditangkap.</p>
+<p>Di Listing 13-4, kami mendefinisikan closure yang menangkap referensi
+immutable ke vektor bernama <code>list</code> karena ia hanya butuh referensi
+immutable untuk mencetak nilainya.</p>
+<figure class="listing" id="listing-13-4">
+<span class="file-name">Filename: src/main.rs</span>
+<pre class="playground"><code class="language-rust edition2024">fn main() {
+    let list = vec![1, 2, 3];
+    println!("Before defining closure: {list:?}");
+
+    let only_borrows = || println!("From closure: {list:?}");
+
+    println!("Before calling closure: {list:?}");
+    only_borrows();
+    println!("After calling closure: {list:?}");
+}</code></pre>
+<figcaption><a href="#listing-13-4">Listing 13-4</a>: Mendefinisikan dan memanggil closure yang menangkap referensi immutable</figcaption>
+</figure>
+<p>Contoh ini juga menggambarkan bahwa variabel bisa terikat ke definisi
+closure, dan kami bisa nanti memanggil closure dengan menggunakan nama
+variabel dan tanda kurung seolah-olah nama variabel adalah nama fungsi.</p>
+<p>Karena kami bisa memiliki referensi immutable banyak ke <code>list</code> pada waktu
+yang sama, <code>list</code> tetap dapat diakses dari kode sebelum definisi closure,
+setelah definisi closure tapi sebelum closure dipanggil, dan setelah
+closure dipanggil. Kode ini kompilasi, berjalan, dan mencetak:</p>
+<pre><code class="language-console">$ cargo run
+   Compiling closure-example v0.1.0 (file:///projects/closure-example)
+    Finished `dev` profile [unoptimized + debuginfo] target(s) in 0.43s
+     Running `target/debug/closure-example`
+Before defining closure: [1, 2, 3]
+Before calling closure: [1, 2, 3]
+From closure: [1, 2, 3]
+After calling closure: [1, 2, 3]
+</code></pre>
+<p>Selanjutnya, di Listing 13-5, kami mengubah badan closure sehingga ia
+menambahkan elemen ke vektor <code>list</code>. Closure kini menangkap referensi
+mutable.</p>
+<figure class="listing" id="listing-13-5">
+<span class="file-name">Filename: src/main.rs</span>
+<pre class="playground"><code class="language-rust edition2024">fn main() {
+    let mut list = vec![1, 2, 3];
+    println!("Before defining closure: {list:?}");
+
+    let mut borrows_mutably = || list.push(7);
+
+    borrows_mutably();
+    println!("After calling closure: {list:?}");
+}</code></pre>
+<figcaption><a href="#listing-13-5">Listing 13-5</a>: Mendefinisikan dan memanggil closure yang menangkap referensi mutable</figcaption>
+</figure>
+<p>Kode ini kompilasi, berjalan, dan mencetak:</p>
+<pre><code class="language-console">$ cargo run
+   Compiling closure-example v0.1.0 (file:///projects/closure-example)
+    Finished `dev` profile [unoptimized + debuginfo] target(s) in 0.43s
+     Running `target/debug/closure-example`
+Before defining closure: [1, 2, 3]
+After calling closure: [1, 2, 3, 7]
+</code></pre>
+<p>Perhatikan bahwa tidak lagi ada <code>println!</code> di antara definisi dan pemanggilan
+closure <code>borrows_mutably</code>: Saat <code>borrows_mutably</code> didefinisikan, ia
+menangkap referensi mutable ke <code>list</code>. Kami tidak menggunakan closure lagi
+setelah closure dipanggil, jadi peminjaman mutable berakhir. Di antara
+definisi closure dan pemanggilan closure, peminjaman immutable untuk cetak
+tidak diizinkan, karena tidak ada peminjaman lain yang diizinkan saat ada
+peminjaman mutable. Coba tambahkan <code>println!</code> di sana untuk melihat pesan
+kesalahan apa yang Anda dapatkan!</p>
+<p>Jika Anda ingin memaksa closure mengambil kepemilikan nilai yang ia gunakan
+di lingkungan bahkan badan closure tidak ketat butuh kepemilikan, Anda bisa
+menggunakan kata kunci <code>move</code> sebelum daftar parameter.</p>
+<p>Teknik ini paling berguna saat meneruskan closure ke thread baru untuk
+memindahkan data sehingga dimiliki oleh thread baru. Kami akan membahas
+thread dan mengapa Anda ingin menggunakannya detail di Bab 16 saat kami
+bicara tentang concurrency, tapi untuk sekarang, mari jelajahi singkat
+membuat thread baru menggunakan closure yang butuh kata kunci <code>move</code>.
+Listing 13-6 menunjukkan Listing 13-4 yang dimodifikasi untuk mencetak
+vektor di thread baru alih-alih di thread utama.</p>
+<figure class="listing" id="listing-13-6">
+<span class="file-name">Filename: src/main.rs</span>
+<pre class="playground"><code class="language-rust edition2024">use std::thread;
+
+fn main() {
+    let list = vec![1, 2, 3];
+    println!("Before defining closure: {list:?}");
+
+    thread::spawn(move || println!("From thread: {list:?}"))
+        .join()
+        .unwrap();
+}</code></pre>
+<figcaption><a href="#listing-13-6">Listing 13-6</a>: Menggunakan <code>move</code> untuk memaksa closure untuk thread mengambil kepemilikan <code>list</code></figcaption>
+</figure>
+<p>Kami membuat thread baru, memberikan closure untuk dijalankan thread sebagai
+argumen. Badan closure mencetak daftar. Di Listing 13-4, closure hanya
+menangkap <code>list</code> menggunakan referensi immutable karena itulah akses
+terkecil ke <code>list</code> yang dibutuhkan untuk mencetaknya. Di contoh ini, meski
+badan closure masih hanya butuh referensi immutable, kami perlu menentukan
+bahwa <code>list</code> seharusnya di-move ke dalam closure dengan meletakkan kata
+kunci <code>move</code> di awal definisi closure. Jika thread utama melakukan operasi
+lebih banyak sebelum memanggil <code>join</code> pada thread baru, thread baru mungkin
+selesai sebelum sisa thread utama selesai, atau thread utama mungkin
+selesai dulu. Jika thread utama mempertahankan kepemilikan <code>list</code> tapi
+berakhir sebelum thread baru dan me-drop <code>list</code>, referensi immutable di
+thread akan tidak valid. Oleh karena itu, compiler mewajibkan <code>list</code> di-move
+ke closure yang diberikan ke thread baru sehingga referensi akan valid.
+Coba hapus kata kunci <code>move</code> atau gunakan <code>list</code> di thread utama setelah
+closure didefinisikan untuk melihat kesalahan compiler apa yang Anda
+dapatkan!</p>
+<!-- Judul lama. Jangan dihapus atau tautan bisa rusak. -->
+<p><a id="storing-closures-using-generic-parameters-and-the-fn-traits"></a>
+<a id="limitations-of-the-cacher-implementation"></a>
+<a id="moving-captured-values-out-of-the-closure-and-the-fn-traits"></a>
+<a id="moving-captured-values-out-of-closures-and-the-fn-traits"></a></p>
+<h3 id="memindahkan-nilai-tertangkap-keluar-dari-closure"><a class="header" href="#memindahkan-nilai-tertangkap-keluar-dari-closure">Memindahkan Nilai Tertangkap Keluar dari Closure</a></h3>
+<p>Sekali closure menangkap referensi atau menangkap kepemilikan nilai dari
+lingkungan di mana closure didefinisikan (dengan demikian memengaruhi apa,
+jika ada, yang di-move <em>ke dalam</em> closure), kode di badan closure
+menentukan apa yang terjadi pada referensi atau nilai saat closure
+dievaluasi nanti (dengan demikian memengaruhi apa, jika ada, yang di-move
+<em>keluar dari</em> closure).</p>
+<p>Badan closure bisa melakukan hal berikut: Memindahkan nilai tertangkap keluar
+dari closure, memutasi nilai tertangkap, tidak memindahkan juga tidak
+memutasi nilai, atau tidak menangkap apa pun dari lingkungan untuk memulai.</p>
+<p>Cara closure menangkap dan menangani nilai dari lingkungan memengaruhi
+trait mana yang diimplementasikan closure, dan trait adalah bagaimana
+fungsi dan struct bisa menentukan jenis closure apa yang bisa mereka
+gunakan. Closure akan secara otomatis mengimplementasikan satu, dua, atau
+ketiga trait <code>Fn</code> ini, secara aditif, bergantung pada bagaimana badan
+closure menangani nilai:</p>
+<ul>
+<li><code>FnOnce</code> berlaku untuk closure yang bisa dipanggil sekali. Semua closure
+mengimplementasikan setidaknya trait ini karena semua closure bisa
+dipanggil. Closure yang memindahkan nilai tertangkap keluar dari badannya
+hanya akan mengimplementasikan <code>FnOnce</code> dan tidak satupun trait <code>Fn</code> lain
+karena ia hanya bisa dipanggil sekali.</li>
+<li><code>FnMut</code> berlaku untuk closure yang tidak memindahkan nilai tertangkap
+keluar dari badan mereka tapi mungkin memutasi nilai tertangkap. Closure
+ini bisa dipanggil lebih dari sekali.</li>
+<li><code>Fn</code> berlaku untuk closure yang tidak memindahkan nilai tertangkap keluar
+dari badan mereka dan tidak memutasi nilai tertangkap, serta closure yang
+tidak menangkap apa pun dari lingkungan mereka. Closure ini bisa
+dipanggil lebih dari sekali tanpa memutasi lingkungan mereka, yang
+penting dalam kasus seperti memanggil closure beberapa kali secara
+concurrent.</li>
+</ul>
+<p>Mari lihat definisi metode <code>unwrap_or_else</code> pada <code>Option&lt;T&gt;</code> yang kami
+gunakan di Listing 13-1:</p>
+<pre><code class="language-rust ignore">impl&lt;T&gt; Option&lt;T&gt; {
+    pub fn unwrap_or_else&lt;F&gt;(self, f: F) -&gt; T
+    where
+        F: FnOnce() -&gt; T
+    {
+        match self {
+            Some(x) =&gt; x,
+            None =&gt; f(),
+        }
+    }
+}</code></pre>
+<p>Ingat bahwa <code>T</code> adalah tipe generik yang mewakili tipe nilai di varian
+<code>Some</code> dari sebuah <code>Option</code>. Tipe <code>T</code> itu juga adalah tipe kembalian
+fungsi <code>unwrap_or_else</code>: Kode yang memanggil <code>unwrap_or_else</code> pada
+<code>Option&lt;String&gt;</code>, misalnya, akan mendapatkan <code>String</code>.</p>
+<p>Selanjutnya, perhatikan bahwa fungsi <code>unwrap_or_else</code> memiliki parameter
+tipe generik tambahan <code>F</code>. Tipe <code>F</code> adalah tipe parameter bernama <code>f</code>,
+yang adalah closure yang kami berikan saat memanggil <code>unwrap_or_else</code>.</p>
+<p>Trait bound yang dispesifikasikan pada tipe generik <code>F</code> adalah
+<code>FnOnce() -&gt; T</code>, yang berarti <code>F</code> harus bisa dipanggil sekali, tidak
+menerima argumen, dan mengembalikan <code>T</code>. Menggunakan <code>FnOnce</code> di trait
+bound mengekspresikan batasan bahwa <code>unwrap_or_else</code> tidak akan memanggil
+<code>f</code> lebih dari sekali. Di badan <code>unwrap_or_else</code>, kami bisa melihat bahwa
+jika <code>Option</code> adalah <code>Some</code>, <code>f</code> tidak akan dipanggil. Jika <code>Option</code> adalah
+<code>None</code>, <code>f</code> akan dipanggil sekali. Karena semua closure mengimplementasikan
+<code>FnOnce</code>, <code>unwrap_or_else</code> menerima ketiga jenis closure dan sefleksibel
+mungkin.</p>
+<blockquote>
+<p>Catatan: Jika apa yang kami ingin lakukan tidak butuh menangkap nilai dari
+lingkungan, kami bisa menggunakan nama fungsi bukannya closure di mana
+kami butuh sesuatu yang mengimplementasikan salah satu trait <code>Fn</code>.
+Misalnya, pada nilai <code>Option&lt;Vec&lt;T&gt;&gt;</code>, kami bisa memanggil
+<code>unwrap_or_else(Vec::new)</code> untuk mendapatkan vektor baru, kosong, jika
+nilai <code>None</code>. Compiler secara otomatis mengimplementasikan trait <code>Fn</code>
+yang mana pun yang berlaku untuk definisi fungsi.</p>
+</blockquote>
+<p>Sekarang mari lihat metode pustaka standar <code>sort_by_key</code>, yang didefinisikan
+pada slice, untuk melihat bagaimana itu berbeda dari <code>unwrap_or_else</code> dan
+mengapa <code>sort_by_key</code> menggunakan <code>FnMut</code> bukannya <code>FnOnce</code> untuk trait
+bound. Closure mendapat satu argumen dalam bentuk referensi ke item saat
+ini di slice yang dipertimbangkan, dan ia mengembalikan nilai bertipe <code>K</code>
+yang bisa diurutkan. Fungsi ini berguna saat Anda ingin mengurutkan slice
+berdasarkan atribut tertentu dari setiap item. Di Listing 13-7, kami punya
+daftar instance <code>Rectangle</code>, dan kami menggunakan <code>sort_by_key</code> untuk
+mengurutkan mereka berdasarkan atribut <code>width</code> dari rendah ke tinggi.</p>
+<figure class="listing" id="listing-13-7">
+<span class="file-name">Filename: src/main.rs</span>
+<pre class="playground"><code class="language-rust edition2024">#[derive(Debug)]
+struct Rectangle {
+    width: u32,
+    height: u32,
+}
+
+fn main() {
+    let mut list = [
+        Rectangle { width: 10, height: 1 },
+        Rectangle { width: 3, height: 5 },
+        Rectangle { width: 7, height: 12 },
+    ];
+
+    list.sort_by_key(|r| r.width);
+    println!("{list:#?}");
+}</code></pre>
+<figcaption><a href="#listing-13-7">Listing 13-7</a>: Menggunakan <code>sort_by_key</code> untuk mengurutkan persegi panjang berdasarkan lebar</figcaption>
+</figure>
+<p>Kode ini mencetak:</p>
+<pre><code class="language-console">$ cargo run
+   Compiling rectangles v0.1.0 (file:///projects/rectangles)
+    Finished `dev` profile [unoptimized + debuginfo] target(s) in 0.41s
+     Running `target/debug/rectangles`
+[
+    Rectangle {
+        width: 3,
+        height: 5,
+    },
+    Rectangle {
+        width: 7,
+        height: 12,
+    },
+    Rectangle {
+        width: 10,
+        height: 1,
+    },
+]
+</code></pre>
+<p>Alasan <code>sort_by_key</code> didefinisikan mengambil closure <code>FnMut</code> adalah ia
+memanggil closure beberapa kali: sekali untuk setiap item di slice. Closure
+<code>|r| r.width</code> tidak menangkap, memutasi, atau memindahkan apa pun keluar
+dari lingkungannya, jadi ia memenuhi persyaratan trait bound.</p>
+<p>Sebaliknya, Listing 13-8 menunjukkan contoh closure yang hanya
+mengimplementasikan trait <code>FnOnce</code>, karena ia memindahkan nilai keluar dari
+lingkungan. Compiler tidak akan biarkan kami menggunakan closure ini dengan
+<code>sort_by_key</code>.</p>
+<figure class="listing" id="listing-13-8">
+<span class="file-name">Filename: src/main.rs</span>
+<pre><code class="language-rust ignore does_not_compile">#[derive(Debug)]
+struct Rectangle {
+    width: u32,
+    height: u32,
+}
+
+fn main() {
+    let mut list = [
+        Rectangle { width: 10, height: 1 },
+        Rectangle { width: 3, height: 5 },
+        Rectangle { width: 7, height: 12 },
+    ];
+
+    let mut sort_operations = vec![];
+    let value = String::from("closure called");
+
+    list.sort_by_key(|r| {
+        sort_operations.push(value);
+        r.width
+    });
+    println!("{list:#?}");
+}</code></pre>
+<figcaption><a href="#listing-13-8">Listing 13-8</a>: Mencoba menggunakan closure <code>FnOnce</code> dengan <code>sort_by_key</code></figcaption>
+</figure>
+<p>Ini cara yang kontrived, rumit (yang tidak berhasil) untuk mencoba
+menghitung berapa kali <code>sort_by_key</code> memanggil closure saat mengurutkan
+<code>list</code>. Kode ini mencoba melakukannya dengan menghitung dengan mendorong
+<code>value</code>—sebuah <code>String</code> dari lingkungan closure—ke vektor
+<code>sort_operations</code>. Closure menangkap <code>value</code> dan lalu memindahkan <code>value</code>
+keluar dari closure dengan mentransfer kepemilikan <code>value</code> ke vektor
+<code>sort_operations</code>. Closure ini bisa dipanggil sekali; mencoba memanggilnya
+kedua kali tidak akan bekerja, karena <code>value</code> tidak akan lagi ada di
+lingkungan untuk didorong ke <code>sort_operations</code> lagi! Oleh karena itu,
+closure ini hanya mengimplementasikan <code>FnOnce</code>. Saat kami mencoba
+mengompilasi kode ini, kami mendapat kesalahan ini bahwa <code>value</code> tidak
+bisa di-move keluar dari closure karena closure harus mengimplementasikan
+<code>FnMut</code>:</p>
+<pre><code class="language-console">$ cargo run
+   Compiling rectangles v0.1.0 (file:///projects/rectangles)
+error[E0507]: cannot move out of `value`, a captured variable in an `FnMut` closure
+  --&gt; src/main.rs:18:30
+   |
+15 |     let value = String::from("closure called");
+   |         -----   ------------------------------ move occurs because `value` has type `String`, which does not implement the `Copy` trait
+   |         |
+   |         captured outer variable
+16 |
+17 |     list.sort_by_key(|r| {
+   |                      --- captured by this `FnMut` closure
+18 |         sort_operations.push(value);
+   |                              ^^^^^ `value` is moved here
+   |
+help: `Fn` and `FnMut` closures require captured values to be able to be consumed multiple times, but `FnOnce` closures may consume them only once
+  --&gt; /rustc/58cf8f9c35b355199727627d07ae34a4e2846d67/library/alloc/src/slice.rs:249:11
+help: consider cloning the value if the performance cost is acceptable
+   |
+18 |         sort_operations.push(value.clone());
+   |                                   ++++++++
+
+For more information about this error, try `rustc --explain E0507`.
+error: could not compile `rectangles` (bin "rectangles") due to 1 previous error
+</code></pre>
+<p>Kesalahan menunjuk ke baris di badan closure yang memindahkan <code>value</code> keluar
+dari lingkungan. Untuk memperbaiki ini, kami perlu mengubah badan closure
+sehingga ia tidak memindahkan nilai keluar dari lingkungan. Menjaga counter
+di lingkungan dan menaikkan nilainya di badan closure adalah cara yang
+lebih langsung untuk menghitung berapa kali closure dipanggil. Closure di
+Listing 13-9 bekerja dengan <code>sort_by_key</code> karena ia hanya menangkap
+referensi mutable ke counter <code>num_sort_operations</code> dan oleh karena itu
+bisa dipanggil lebih dari sekali.</p>
+<figure class="listing" id="listing-13-9">
+<span class="file-name">Filename: src/main.rs</span>
+<pre class="playground"><code class="language-rust edition2024">#[derive(Debug)]
+struct Rectangle {
+    width: u32,
+    height: u32,
+}
+
+fn main() {
+    let mut list = [
+        Rectangle { width: 10, height: 1 },
+        Rectangle { width: 3, height: 5 },
+        Rectangle { width: 7, height: 12 },
+    ];
+
+    let mut num_sort_operations = 0;
+    list.sort_by_key(|r| {
+        num_sort_operations += 1;
+        r.width
+    });
+    println!("{list:#?}, sorted in {num_sort_operations} operations");
+}</code></pre>
+<figcaption><a href="#listing-13-9">Listing 13-9</a>: Menggunakan closure <code>FnMut</code> dengan <code>sort_by_key</code> diizinkan.</figcaption>
+</figure>
+<p>Trait <code>Fn</code> penting saat mendefinisikan atau menggunakan fungsi atau tipe
+yang memanfaatkan closure. Di bagian selanjutnya, kami akan membahas
+iterator. Banyak metode iterator mengambil argumen closure, jadi simak
+detail closure ini saat kami melanjutkan!</p>
+
+                    </main>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+                            <a rel="prev" href="ch13-00-functional-features.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                                <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M41.4 233.4c-12.5 12.5-12.5 32.8 0 45.3l160 160c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3L109.3 256 246.6 118.6c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0l-160 160z"/></svg></span>
+                            </a>
+
+                            <a rel="next prefetch" href="ch13-02-iterators.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                                <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M278.6 233.4c12.5 12.5 12.5 32.8 0 45.3l-160 160c-12.5 12.5-32.8 12.5-45.3 0s-12.5-32.8 0-45.3L210.7 256 73.4 118.6c-12.5-12.5-12.5-32.8 0-45.3s32.8-12.5 45.3 0l160 160z"/></svg></span>
+                            </a>
+
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+                    <a rel="prev" href="ch13-00-functional-features.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                        <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M41.4 233.4c-12.5 12.5-12.5 32.8 0 45.3l160 160c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3L109.3 256 246.6 118.6c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0l-160 160z"/></svg></span>
+                    </a>
+
+                    <a rel="next prefetch" href="ch13-02-iterators.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                        <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M278.6 233.4c12.5 12.5 12.5 32.8 0 45.3l-160 160c-12.5 12.5-32.8 12.5-45.3 0s-12.5-32.8 0-45.3L210.7 256 73.4 118.6c-12.5-12.5-12.5-32.8 0-45.3s32.8-12.5 45.3 0l160 160z"/></svg></span>
+                    </a>
+            </nav>
+
+        </div>
+
+        <template id=fa-eye><span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M288 32c-80.8 0-145.5 36.8-192.6 80.6C48.6 156 17.3 208 2.5 243.7c-3.3 7.9-3.3 16.7 0 24.6C17.3 304 48.6 356 95.4 399.4C142.5 443.2 207.2 480 288 480s145.5-36.8 192.6-80.6c46.8-43.5 78.1-95.4 93-131.1c3.3-7.9 3.3-16.7 0-24.6c-14.9-35.7-46.2-87.7-93-131.1C433.5 68.8 368.8 32 288 32zM432 256c0 79.5-64.5 144-144 144s-144-64.5-144-144s64.5-144 144-144s144 64.5 144 144zM288 192c0 35.3-28.7 64-64 64c-11.5 0-22.3-3-31.6-8.4c-.2 2.8-.4 5.5-.4 8.4c0 53 43 96 96 96s96-43 96-96s-43-96-96-96c-2.8 0-5.6 .1-8.4 .4c5.3 9.3 8.4 20.1 8.4 31.6z"/></svg></span></template>
+        <template id=fa-eye-slash><span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M38.8 5.1C28.4-3.1 13.3-1.2 5.1 9.2S-1.2 34.7 9.2 42.9l592 464c10.4 8.2 25.5 6.3 33.7-4.1s6.3-25.5-4.1-33.7L525.6 386.7c39.6-40.6 66.4-86.1 79.9-118.4c3.3-7.9 3.3-16.7 0-24.6c-14.9-35.7-46.2-87.7-93-131.1C465.5 68.8 400.8 32 320 32c-68.2 0-125 26.3-169.3 60.8L38.8 5.1zM223.1 149.5C248.6 126.2 282.7 112 320 112c79.5 0 144 64.5 144 144c0 24.9-6.3 48.3-17.4 68.7L408 294.5c5.2-11.8 8-24.8 8-38.5c0-53-43-96-96-96c-2.8 0-5.6 .1-8.4 .4c5.3 9.3 8.4 20.1 8.4 31.6c0 10.2-2.4 19.8-6.6 28.3l-90.3-70.8zm223.1 298L373 389.9c-16.4 6.5-34.3 10.1-53 10.1c-79.5 0-144-64.5-144-144c0-6.9 .5-13.6 1.4-20.2L83.1 161.5C60.3 191.2 44 220.8 34.5 243.7c-3.3 7.9-3.3 16.7 0 24.6c14.9 35.7 46.2 87.7 93 131.1C174.5 443.2 239.2 480 320 480c47.8 0 89.9-12.9 126.2-32.5z"/></svg></span></template>
+        <template id=fa-copy><span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M502.6 70.63l-61.25-61.25C435.4 3.371 427.2 0 418.7 0H255.1c-35.35 0-64 28.66-64 64l.0195 256C192 355.4 220.7 384 256 384h192c35.2 0 64-28.8 64-64V93.25C512 84.77 508.6 76.63 502.6 70.63zM464 320c0 8.836-7.164 16-16 16H255.1c-8.838 0-16-7.164-16-16L239.1 64.13c0-8.836 7.164-16 16-16h128L384 96c0 17.67 14.33 32 32 32h47.1V320zM272 448c0 8.836-7.164 16-16 16H63.1c-8.838 0-16-7.164-16-16L47.98 192.1c0-8.836 7.164-16 16-16H160V128H63.99c-35.35 0-64 28.65-64 64l.0098 256C.002 483.3 28.66 512 64 512h192c35.2 0 64-28.8 64-64v-32h-47.1L272 448z"/></svg></span></template>
+        <template id=fa-play><span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 384 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M73 39c-14.8-9.1-33.4-9.4-48.5-.9S0 62.6 0 80V432c0 17.4 9.4 33.4 24.5 41.9s33.7 8.1 48.5-.9L361 297c14.3-8.7 23-24.2 23-41s-8.7-32.2-23-41L73 39z"/></svg></span></template>
+        <template id=fa-clock-rotate-left><span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M75 75L41 41C25.9 25.9 0 36.6 0 57.9V168c0 13.3 10.7 24 24 24H134.1c21.4 0 32.1-25.9 17-41l-30.8-30.8C155 85.5 203 64 256 64c106 0 192 86 192 192s-86 192-192 192c-40.8 0-78.6-12.7-109.7-34.4c-14.5-10.1-34.4-6.6-44.6 7.9s-6.6 34.4 7.9 44.6C151.2 495 201.7 512 256 512c141.4 0 256-114.6 256-256S397.4 0 256 0C185.3 0 121.3 28.7 75 75zm181 53c-13.3 0-24 10.7-24 24V256c0 6.4 2.5 12.5 7 17l72 72c9.4 9.4 24.6 9.4 33.9 0s9.4-24.6 0-33.9l-65-65V152c0-13.3-10.7-24-24-24z"/></svg></span></template>
+
+
+
+        <script>
+            window.playground_copyable = true;
+        </script>
+
+
+        <script src="elasticlunr-ef4e11c1.min.js"></script>
+        <script src="mark-09e88c2c.min.js"></script>
+        <script src="searcher-09f2665d.js"></script>
+
+        <script src="clipboard-1626706a.min.js"></script>
+        <script src="highlight-abc7f01d.js"></script>
+        <script src="book-c22b7243.js"></script>
+
+        <!-- Custom JS scripts -->
+        <script src="ferris-2317480c.js"></script>
+
+
+
+    </div>
+    </body>
+</html>

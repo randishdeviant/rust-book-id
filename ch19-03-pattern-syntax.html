@@ -1,0 +1,994 @@
+<!DOCTYPE HTML>
+<html lang="en" class="light sidebar-visible" dir="ltr">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>Sintaks Pola - The Rust Programming Language</title>
+
+
+        <!-- Custom HTML head -->
+
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff">
+
+        <link rel="icon" href="favicon-de23e50b.svg">
+        <link rel="shortcut icon" href="favicon-8114d1fc.png">
+        <link rel="stylesheet" href="css/variables-8adf115d.css">
+        <link rel="stylesheet" href="css/general-0392ca55.css">
+        <link rel="stylesheet" href="css/chrome-fc474251.css">
+        <link rel="stylesheet" href="css/print-9e4910d8.css" media="print">
+
+        <!-- Fonts -->
+        <link rel="stylesheet" href="fonts/fonts-9644e21d.css">
+
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" id="mdbook-highlight-css" href="highlight-493f70e1.css">
+        <link rel="stylesheet" id="mdbook-tomorrow-night-css" href="tomorrow-night-4c0ae647.css">
+        <link rel="stylesheet" id="mdbook-ayu-highlight-css" href="ayu-highlight-3fdfc3ac.css">
+
+        <!-- Custom theme stylesheets -->
+        <link rel="stylesheet" href="ferris-d33b75bf.css">
+        <link rel="stylesheet" href="theme/2018-edition-4e126c62.css">
+        <link rel="stylesheet" href="theme/semantic-notes-9b5766c0.css">
+        <link rel="stylesheet" href="theme/listing-cab26221.css">
+
+
+        <!-- Provide site root and default themes to javascript -->
+        <script>
+            const path_to_root = "";
+            const default_light_theme = "light";
+            const default_dark_theme = "navy";
+            window.path_to_searchindex_js = "searchindex-e298a7a7.js";
+        </script>
+        <!-- Start loading toc.js asap -->
+        <script src="toc-8d1d8862.js"></script>
+    </head>
+    <body>
+    <div id="mdbook-help-container">
+        <div id="mdbook-help-popup">
+            <h2 class="mdbook-help-title">Keyboard shortcuts</h2>
+            <div>
+                <p>Press <kbd>←</kbd> or <kbd>→</kbd> to navigate between chapters</p>
+                <p>Press <kbd>S</kbd> or <kbd>/</kbd> to search in the book</p>
+                <p>Press <kbd>?</kbd> to show this help</p>
+                <p>Press <kbd>Esc</kbd> to hide this help</p>
+            </div>
+        </div>
+    </div>
+    <div id="mdbook-body-container">
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script>
+            try {
+                let theme = localStorage.getItem('mdbook-theme');
+                let sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script>
+            const default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? default_dark_theme : default_light_theme;
+            let theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            const html = document.documentElement;
+            html.classList.remove('light')
+            html.classList.add(theme);
+            html.classList.add("js");
+        </script>
+
+        <input type="checkbox" id="mdbook-sidebar-toggle-anchor" class="hidden">
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script>
+            let sidebar = null;
+            const sidebar_toggle = document.getElementById("mdbook-sidebar-toggle-anchor");
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            } else {
+                sidebar = 'hidden';
+                sidebar_toggle.checked = false;
+            }
+            if (sidebar === 'visible') {
+                sidebar_toggle.checked = true;
+            } else {
+                html.classList.remove('sidebar-visible');
+            }
+        </script>
+
+        <nav id="mdbook-sidebar" class="sidebar" aria-label="Table of contents">
+            <!-- populated by js -->
+            <mdbook-sidebar-scrollbox class="sidebar-scrollbox"></mdbook-sidebar-scrollbox>
+            <noscript>
+                <iframe class="sidebar-iframe-outer" src="toc.html"></iframe>
+            </noscript>
+            <div id="mdbook-sidebar-resize-handle" class="sidebar-resize-handle">
+                <div class="sidebar-resize-indicator"></div>
+            </div>
+        </nav>
+
+        <div id="mdbook-page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                <div id="mdbook-menu-bar-hover-placeholder"></div>
+                <div id="mdbook-menu-bar" class="menu-bar sticky">
+                    <div class="left-buttons">
+                        <label id="mdbook-sidebar-toggle" class="icon-button" for="mdbook-sidebar-toggle-anchor" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="mdbook-sidebar">
+                            <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M0 96C0 78.3 14.3 64 32 64H416c17.7 0 32 14.3 32 32s-14.3 32-32 32H32C14.3 128 0 113.7 0 96zM0 256c0-17.7 14.3-32 32-32H416c17.7 0 32 14.3 32 32s-14.3 32-32 32H32c-17.7 0-32-14.3-32-32zM448 416c0 17.7-14.3 32-32 32H32c-17.7 0-32-14.3-32-32s14.3-32 32-32H416c17.7 0 32 14.3 32 32z"/></svg></span>
+                        </label>
+                        <button id="mdbook-theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="mdbook-theme-list">
+                            <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M371.3 367.1c27.3-3.9 51.9-19.4 67.2-42.9L600.2 74.1c12.6-19.5 9.4-45.3-7.6-61.2S549.7-4.4 531.1 9.6L294.4 187.2c-24 18-38.2 46.1-38.4 76.1L371.3 367.1zm-19.6 25.4l-116-104.4C175.9 290.3 128 339.6 128 400c0 3.9 .2 7.8 .6 11.6c1.8 17.5-10.2 36.4-27.8 36.4H96c-17.7 0-32 14.3-32 32s14.3 32 32 32H240c61.9 0 112-50.1 112-112c0-2.5-.1-5-.2-7.5z"/></svg></span>
+                        </button>
+                        <ul id="mdbook-theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                            <li role="none"><button role="menuitem" class="theme" id="mdbook-theme-default_theme">Auto</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="mdbook-theme-light">Light</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="mdbook-theme-rust">Rust</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="mdbook-theme-coal">Coal</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="mdbook-theme-navy">Navy</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="mdbook-theme-ayu">Ayu</button></li>
+                        </ul>
+                        <button id="mdbook-search-toggle" class="icon-button" type="button" title="Search (`/`)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="/ s" aria-controls="mdbook-searchbar">
+                            <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M416 208c0 45.9-14.9 88.3-40 122.7L502.6 457.4c12.5 12.5 12.5 32.8 0 45.3s-32.8 12.5-45.3 0L330.7 376c-34.4 25.2-76.8 40-122.7 40C93.1 416 0 322.9 0 208S93.1 0 208 0S416 93.1 416 208zM208 352c79.5 0 144-64.5 144-144s-64.5-144-144-144S64 128.5 64 208s64.5 144 144 144z"/></svg></span>
+                        </button>
+                    </div>
+
+                    <h1 class="menu-title">The Rust Programming Language</h1>
+
+                    <div class="right-buttons">
+                        <a href="print.html" title="Print this book" aria-label="Print this book">
+                            <span class=fa-svg id="print-button"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M128 0C92.7 0 64 28.7 64 64v96h64V64H354.7L384 93.3V160h64V93.3c0-17-6.7-33.3-18.7-45.3L400 18.7C388 6.7 371.7 0 354.7 0H128zM384 352v32 64H128V384 368 352H384zm64 32h32c17.7 0 32-14.3 32-32V256c0-35.3-28.7-64-64-64H64c-35.3 0-64 28.7-64 64v96c0 17.7 14.3 32 32 32H64v64c0 35.3 28.7 64 64 64H384c35.3 0 64-28.7 64-64V384zm-16-88c-13.3 0-24-10.7-24-24s10.7-24 24-24s24 10.7 24 24s-10.7 24-24 24z"/></svg></span>
+                        </a>
+                        <a href="https://github.com/rust-lang/book" title="Git repository" aria-label="Git repository">
+                            <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 496 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M165.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6zm-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3zm44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9zM244.8 8C106.1 8 0 113.3 0 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C428.2 457.8 496 362.9 496 252 496 113.3 383.5 8 244.8 8zM97.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1zm-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7zm32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1zm-11.4-14.7c-1.6 1-1.6 3.6 0 5.9 1.6 2.3 4.3 3.3 5.6 2.3 1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2z"/></svg></span>
+                        </a>
+
+                    </div>
+                </div>
+
+                <div id="mdbook-search-wrapper" class="hidden">
+                    <form id="mdbook-searchbar-outer" class="searchbar-outer">
+                        <div class="search-wrapper">
+                            <input type="search" id="mdbook-searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="mdbook-searchresults-outer" aria-describedby="searchresults-header">
+                            <div class="spinner-wrapper">
+                                <span class=fa-svg id="fa-spin"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M304 48c0-26.5-21.5-48-48-48s-48 21.5-48 48s21.5 48 48 48s48-21.5 48-48zm0 416c0-26.5-21.5-48-48-48s-48 21.5-48 48s21.5 48 48 48s48-21.5 48-48zM48 304c26.5 0 48-21.5 48-48s-21.5-48-48-48s-48 21.5-48 48s21.5 48 48 48zm464-48c0-26.5-21.5-48-48-48s-48 21.5-48 48s21.5 48 48 48s48-21.5 48-48zM142.9 437c18.7-18.7 18.7-49.1 0-67.9s-49.1-18.7-67.9 0s-18.7 49.1 0 67.9s49.1 18.7 67.9 0zm0-294.2c18.7-18.7 18.7-49.1 0-67.9S93.7 56.2 75 75s-18.7 49.1 0 67.9s49.1 18.7 67.9 0zM369.1 437c18.7 18.7 49.1 18.7 67.9 0s18.7-49.1 0-67.9s-49.1-18.7-67.9 0s-18.7 49.1 0 67.9z"/></svg></span>
+                            </div>
+                        </div>
+                    </form>
+                    <div id="mdbook-searchresults-outer" class="searchresults-outer hidden">
+                        <div id="mdbook-searchresults-header" class="searchresults-header"></div>
+                        <ul id="mdbook-searchresults">
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script>
+                    document.getElementById('mdbook-sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('mdbook-sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#mdbook-sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="mdbook-content" class="content">
+                    <main>
+                        <h1 id="sintaks-pola"><a class="header" href="#sintaks-pola">Sintaks Pola</a></h1>
+<p>Di bagian ini, kami mengumpulkan semua sintaks yang valid dalam pola
+dan membahas mengapa dan kapan Anda mungkin ingin menggunakan masing-masing.</p>
+<h3 id="mencocokkan-literal"><a class="header" href="#mencocokkan-literal">Mencocokkan Literal</a></h3>
+<p>Seperti yang Anda lihat di Bab 6, Anda bisa mencocokkan pola terhadap
+literal secara langsung. Kode berikut memberikan beberapa contoh:</p>
+<pre class="playground"><code class="language-rust edition2024"><span class="boring">fn main() {
+</span>    let x = 1;
+
+    match x {
+        1 =&gt; println!("one"),
+        2 =&gt; println!("two"),
+        3 =&gt; println!("three"),
+        _ =&gt; println!("anything"),
+    }
+<span class="boring">}</span></code></pre>
+<p>Kode ini mencetak <code>one</code> karena nilai di <code>x</code> adalah <code>1</code>. Sintaks ini
+berguna saat Anda ingin kode Anda melakukan tindakan jika ia
+mendapat nilai konkret tertentu.</p>
+<h3 id="mencocokkan-variabel-bernama"><a class="header" href="#mencocokkan-variabel-bernama">Mencocokkan Variabel Bernama</a></h3>
+<p>Variabel bernama adalah pola irrefutable yang cocok dengan nilai
+apa pun, dan kami telah menggunakannya berkali-kali di buku ini.
+Akan tetapi, ada komplikasi saat Anda menggunakan variabel bernama
+di ekspresi <code>match</code>, <code>if let</code>, atau <code>while let</code>. Karena masing-masing
+dari jenis ekspresi ini memulai scope baru, variabel yang dideklarasikan
+sebagai bagian dari pola di dalam ekspresi-ekspresi ini akan
+menyembunyikan (shadow) variabel dengan nama yang sama di luar
+konstruksi tersebut, seperti halnya dengan semua variabel. Di
+Listing 19-11, kami mendeklarasikan variabel bernama <code>x</code> dengan nilai
+<code>Some(5)</code> dan variabel <code>y</code> dengan nilai <code>10</code>. Kami kemudian membuat
+ekspresi <code>match</code> pada nilai <code>x</code>. Lihat pola di arm match dan
+<code>println!</code> di akhir, dan coba temukan apa yang akan dicetak kode ini
+sebelum menjalankan kode ini atau membaca lebih lanjut.</p>
+<figure class="listing" id="listing-19-11">
+<span class="file-name">Filename: src/main.rs</span>
+<pre class="playground"><code class="language-rust edition2024"><span class="boring">fn main() {
+</span>    let x = Some(5);
+    let y = 10;
+
+    match x {
+        Some(50) =&gt; println!("Got 50"),
+        Some(y) =&gt; println!("Matched, y = {y}"),
+        _ =&gt; println!("Default case, x = {x:?}"),
+    }
+
+    println!("at the end: x = {x:?}, y = {y}");
+<span class="boring">}</span></code></pre>
+<figcaption><a href="#listing-19-11">Listing 19-11</a>: Ekspresi <code>match</code> dengan arm yang memperkenalkan variabel baru yang menyembunyikan variabel <code>y</code> yang sudah ada</figcaption>
+</figure>
+<p>Mari jelajahi apa yang terjadi saat ekspresi <code>match</code> dijalankan.
+Pola di arm match pertama tidak cocok dengan nilai <code>x</code> yang
+didefinisikan, jadi kode berlanjut.</p>
+<p>Pola di arm match kedua memperkenalkan variabel baru bernama <code>y</code>
+yang akan cocok dengan nilai apa pun di dalam nilai <code>Some</code>. Karena
+kami berada di scope baru di dalam ekspresi <code>match</code>, ini adalah
+variabel <code>y</code> baru, bukan <code>y</code> yang kami deklarasikan di awal dengan
+nilai <code>10</code>. Pengikatan <code>y</code> baru ini akan cocok dengan nilai apa pun
+di dalam <code>Some</code>, yang kita miliki di <code>x</code>. Oleh karena itu, <code>y</code> baru
+ini terikat ke nilai internal <code>Some</code> di <code>x</code>. Nilai tersebut adalah
+<code>5</code>, jadi ekspresi untuk arm itu dieksekusi dan mencetak <code>Matched, y = 5</code>.</p>
+<p>Jika <code>x</code> bernilai <code>None</code> alih-alih <code>Some(5)</code>, pola di dua arm
+pertama tidak akan cocok, jadi nilai akan cocok dengan underscore.
+Kami tidak memperkenalkan variabel <code>x</code> di pola arm underscore, jadi
+<code>x</code> di ekspresi tetap <code>x</code> luar yang tidak disembunyikan. Dalam
+kasus hipotetis ini, <code>match</code> akan mencetak <code>Default case, x = None</code>.</p>
+<p>Saat ekspresi <code>match</code> selesai, scopenya berakhir, dan begitu juga
+scope <code>y</code> dalam. <code>println!</code> terakhir menghasilkan <code>at the end: x = Some(5), y = 10</code>.</p>
+<p>Untuk membuat ekspresi <code>match</code> yang membandingkan nilai <code>x</code> dan <code>y</code>
+luar, bukannya memperkenalkan variabel baru yang menyembunyikan
+<code>y</code> yang sudah ada, kami perlu menggunakan match guard kondisional
+sebagai gantinya. Kami akan membahas match guard nanti di bagian
+<a href="#adding-conditionals-with-match-guards">“Menambahkan Kondisional dengan Match Guards”</a><!-- ignore -->.</p>
+<!-- Judul lama. Jangan dihapus atau tautan bisa rusak. -->
+<p><a id="multiple-patterns"></a></p>
+<h3 id="mencocokkan-beberapa-pola"><a class="header" href="#mencocokkan-beberapa-pola">Mencocokkan Beberapa Pola</a></h3>
+<p>Di ekspresi <code>match</code>, Anda bisa mencocokkan beberapa pola menggunakan
+sintaks <code>|</code>, yang merupakan operator <em>or</em> pola. Misalnya, dalam kode
+berikut, kami mencocokkan nilai <code>x</code> terhadap arm match, yang
+pertama memiliki opsi <em>or</em>, artinya jika nilai <code>x</code> cocok dengan
+salah satu nilai di arm tersebut, kode arm itu akan dijalankan:</p>
+<pre class="playground"><code class="language-rust edition2024"><span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>{{#rustdoc_include ../listings/ch19-patterns-and-matching/no-listing-02-multiple_patterns/src/main.rs:here}}
+<span class="boring">}</span></code></pre>
+<p>Kode ini mencetak <code>one or two</code>.</p>
+<h3 id="mencocokkan-range-nilai-dengan-"><a class="header" href="#mencocokkan-range-nilai-dengan-">Mencocokkan Range Nilai dengan <code>..=</code></a></h3>
+<p>Sintaks <code>..=</code> memungkinkan kami mencocokkan range nilai inklusif.
+Dalam kode berikut, saat pola cocok dengan salah satu nilai di
+dalam range yang diberikan, arm itu akan dieksekusi:</p>
+<pre class="playground"><code class="language-rust edition2024"><span class="boring">fn main() {
+</span>    let x = 5;
+
+    match x {
+        1..=5 =&gt; println!("one through five"),
+        _ =&gt; println!("something else"),
+    }
+<span class="boring">}</span></code></pre>
+<p>Jika <code>x</code> adalah <code>1</code>, <code>2</code>, <code>3</code>, <code>4</code>, atau <code>5</code>, arm pertama akan
+cocok. Sintaks ini lebih nyaman untuk nilai match banyak dibanding
+menggunakan operator <code>|</code> untuk mengekspresikan ide yang sama; jika
+kami menggunakan <code>|</code>, kami harus menentukan <code>1 | 2 | 3 | 4 | 5</code>.
+Menentukan range jauh lebih singkat, terutama jika kami ingin
+mencocokkan, katakanlah, angka apa pun antara 1 dan 1.000!</p>
+<p>Compiler memeriksa bahwa range tidak kosong pada waktu kompilasi,
+dan karena satu-satunya tipe yang Rust bisa tentukan apakah range
+kosong atau tidak adalah <code>char</code> dan nilai numerik, range hanya
+diizinkan dengan nilai numerik atau <code>char</code>.</p>
+<p>Berikut contoh menggunakan range nilai <code>char</code>:</p>
+<pre class="playground"><code class="language-rust edition2024"><span class="boring">fn main() {
+</span>    let x = 'c';
+
+    match x {
+        'a'..='j' =&gt; println!("early ASCII letter"),
+        'k'..='z' =&gt; println!("late ASCII letter"),
+        _ =&gt; println!("something else"),
+    }
+<span class="boring">}</span></code></pre>
+<p>Rust bisa tahu bahwa <code>'c'</code> berada dalam range pola pertama dan
+mencetak <code>early ASCII letter</code>.</p>
+<h3 id="mendestrukturisasi-untuk-memecah-nilai"><a class="header" href="#mendestrukturisasi-untuk-memecah-nilai">Mendestrukturisasi untuk Memecah Nilai</a></h3>
+<p>Kami juga bisa menggunakan pola untuk mendestrukturisasi struct,
+enum, dan tuple untuk menggunakan bagian-bagian berbeda dari nilai
+ini. Mari jelajahi masing-masing nilai.</p>
+<!-- Judul lama. Jangan dihapus atau tautan bisa rusak. -->
+<p><a id="destructuring-structs"></a></p>
+<h4 id="struct"><a class="header" href="#struct">Struct</a></h4>
+<p>Listing 19-12 menunjukkan struct <code>Point</code> dengan dua field, <code>x</code> dan
+<code>y</code>, yang bisa kami pecah menggunakan pola dengan pernyataan <code>let</code>.</p>
+<figure class="listing" id="listing-19-12">
+<span class="file-name">Filename: src/main.rs</span>
+<pre class="playground"><code class="language-rust edition2024">struct Point {
+    x: i32,
+    y: i32,
+}
+
+fn main() {
+    let p = Point { x: 0, y: 7 };
+
+    let Point { x: a, y: b } = p;
+    assert_eq!(0, a);
+    assert_eq!(7, b);
+}</code></pre>
+<figcaption><a href="#listing-19-12">Listing 19-12</a>: Mendestrukturisasi field struct menjadi variabel terpisah</figcaption>
+</figure>
+<p>Kode ini membuat variabel <code>a</code> dan <code>b</code> yang cocok dengan nilai
+field <code>x</code> dan <code>y</code> dari struct <code>p</code>. Contoh ini menunjukkan bahwa
+nama variabel di pola tidak harus cocok dengan nama field struct.
+Akan tetapi, biasa mencocokkan nama variabel ke nama field untuk
+memudahkan mengingat variabel mana yang berasal dari field mana.
+Karena penggunaan ini umum, dan karena menulis <code>let Point { x: x, y: y } = p;</code> mengandung banyak duplikasi, Rust punya singkatan untuk
+pola yang cocok dengan field struct: Anda hanya perlu mencantumkan
+nama field struct, dan variabel yang dibuat dari pola akan memiliki
+nama yang sama. Listing 19-13 berperilaku sama seperti kode di
+Listing 19-12, tapi variabel yang dibuat di pola <code>let</code> adalah <code>x</code>
+dan <code>y</code> alih-alih <code>a</code> dan <code>b</code>.</p>
+<figure class="listing" id="listing-19-13">
+<span class="file-name">Filename: src/main.rs</span>
+<pre class="playground"><code class="language-rust edition2024">struct Point {
+    x: i32,
+    y: i32,
+}
+
+fn main() {
+    let p = Point { x: 0, y: 7 };
+
+    let Point { x, y } = p;
+    assert_eq!(0, x);
+    assert_eq!(7, y);
+}</code></pre>
+<figcaption><a href="#listing-19-13">Listing 19-13</a>: Mendestrukturisasi field struct menggunakan singkatan field struct</figcaption>
+</figure>
+<p>Kode ini membuat variabel <code>x</code> dan <code>y</code> yang cocok dengan field <code>x</code>
+dan <code>y</code> dari variabel <code>p</code>. Hasilnya adalah variabel <code>x</code> dan <code>y</code>
+berisi nilai dari struct <code>p</code>.</p>
+<p>Kami juga bisa mendestrukturisasi dengan nilai literal sebagai
+bagian dari pola struct bukunya membuat variabel untuk semua field.
+Melakukannya memungkinkan kami menguji beberapa field untuk nilai
+tertentu sambil membuat variabel untuk mendestrukturisasi field
+lainnya.</p>
+<p>Di Listing 19-14, kami memiliki ekspresi <code>match</code> yang memisahkan
+nilai <code>Point</code> menjadi tiga kasus: titik yang berada langsung di
+sumbu <code>x</code> (yang benar saat <code>y = 0</code>), di sumbu <code>y</code> (<code>x = 0</code>), atau
+di keduanya tidak.</p>
+<figure class="listing" id="listing-19-14">
+<span class="file-name">Filename: src/main.rs</span>
+<pre class="playground"><code class="language-rust edition2024"><span class="boring">struct Point {
+</span><span class="boring">    x: i32,
+</span><span class="boring">    y: i32,
+</span><span class="boring">}
+</span><span class="boring">
+</span>fn main() {
+    let p = Point { x: 0, y: 7 };
+
+    match p {
+        Point { x, y: 0 } =&gt; println!("On the x axis at {x}"),
+        Point { x: 0, y } =&gt; println!("On the y axis at {y}"),
+        Point { x, y } =&gt; {
+            println!("On neither axis: ({x}, {y})");
+        }
+    }
+}</code></pre>
+<figcaption><a href="#listing-19-14">Listing 19-14</a>: Mendestrukturisasi dan mencocokkan nilai literal dalam satu pola</figcaption>
+</figure>
+<p>Arm pertama akan cocok dengan titik apa pun yang berada di sumbu
+<code>x</code> dengan menentukan bahwa field <code>y</code> cocok jika nilainya cocok
+dengan literal <code>0</code>. Pola tetap membuat variabel <code>x</code> yang bisa
+kami gunakan di kode untuk arm ini.</p>
+<p>Demikian pula, arm kedua cocok dengan titik apa pun di sumbu <code>y</code>
+dengan menentukan bahwa field <code>x</code> cocok jika nilainya <code>0</code> dan
+membuat variabel <code>y</code> untuk nilai field <code>y</code>. Arm ketiga tidak
+menentukan literal apa pun, jadi ia cocok dengan <code>Point</code> manapun
+lainnya dan membuat variabel untuk field <code>x</code> dan <code>y</code> keduanya.</p>
+<p>Dalam contoh ini, nilai <code>p</code> cocok dengan arm kedua atas kebetulan
+<code>x</code> berisi <code>0</code>, jadi kode ini akan mencetak <code>On the y axis at 7</code>.</p>
+<p>Ingat bahwa ekspresi <code>match</code> berhenti memeriksa arm begitu ia
+menemukan pola yang pertama cocok, jadi meski <code>Point { x: 0, y: 0 }</code> berada di sumbu <code>x</code> dan sumbu <code>y</code>, kode ini hanya akan mencetak
+<code>On the x axis at 0</code>.</p>
+<!-- Judul lama. Jangan dihapus atau tautan bisa rusak. -->
+<p><a id="destructuring-enums"></a></p>
+<h4 id="enum"><a class="header" href="#enum">Enum</a></h4>
+<p>Kami telah mendestrukturisasi enum di buku ini (misalnya, Listing
+6-5 di Bab 6), tapi kami belum secara eksplisit membahas bahwa pola
+untuk mendestrukturisasi enum sesuai dengan cara data yang
+tersimpan di dalam enum didefinisikan. Sebagai contoh, di Listing
+19-15, kami menggunakan enum <code>Message</code> dari Listing 6-2 dan menulis
+<code>match</code> dengan pola yang akan mendestrukturisasi setiap nilai
+internal.</p>
+<figure class="listing" id="listing-19-15">
+<span class="file-name">Filename: src/main.rs</span>
+<pre class="playground"><code class="language-rust edition2024">enum Message {
+    Quit,
+    Move { x: i32, y: i32 },
+    Write(String),
+    ChangeColor(i32, i32, i32),
+}
+
+fn main() {
+    let msg = Message::ChangeColor(0, 160, 255);
+
+    match msg {
+        Message::Quit =&gt; {
+            println!("The Quit variant has no data to destructure.");
+        }
+        Message::Move { x, y } =&gt; {
+            println!("Move in the x direction {x} and in the y direction {y}");
+        }
+        Message::Write(text) =&gt; {
+            println!("Text message: {text}");
+        }
+        Message::ChangeColor(r, g, b) =&gt; {
+            println!("Change color to red {r}, green {g}, and blue {b}");
+        }
+    }
+}</code></pre>
+<figcaption><a href="#listing-19-15">Listing 19-15</a>: Mendestrukturisasi varian enum yang menampung jenis nilai berbeda</figcaption>
+</figure>
+<p>Kode ini akan mencetak <code>Change color to red 0, green 160, and blue 255</code>. Coba ubah nilai <code>msg</code> untuk melihat kode dari arm lain
+berjalan.</p>
+<p>Untuk varian enum tanpa data apa pun, seperti <code>Message::Quit</code>,
+kami tidak bisa mendestrukturisasi nilai lebih lanjut. Kami hanya
+bisa cocok pada literal <code>Message::Quit</code>, dan tidak ada variabel di
+pola tersebut.</p>
+<p>Untuk varian enum seperti struct, seperti <code>Message::Move</code>, kami
+bisa menggunakan pola mirip dengan pola yang kami tentukan untuk
+mencocokkan struct. Setelah nama varian, kami menempatkan kurung
+kurawal dan kemudian mencantumkan field dengan variabel sehingga
+kami memecah potongan-potongan untuk digunakan di kode arm ini. Di
+sini kami menggunakan bentuk singkat seperti yang kami lakukan di
+Listing 19-13.</p>
+<p>Untuk varian enum seperti tuple, seperti <code>Message::Write</code> yang
+menampung tuple dengan satu elemen dan <code>Message::ChangeColor</code> yang
+menampung tuple dengan tiga elemen, polanya mirip dengan pola yang
+kami tentukan untuk mencocokkan tuple. Jumlah variabel di pola
+harus cocok dengan jumlah elemen di varian yang kami cocokkan.</p>
+<!-- Judul lama. Jangan dihapus atau tautan bisa rusak. -->
+<p><a id="destructuring-nested-structs-and-enums"></a></p>
+<h4 id="struct-dan-enum-bersarang"><a class="header" href="#struct-dan-enum-bersarang">Struct dan Enum Bersarang</a></h4>
+<p>Sejauh ini, contoh-contoh kami semua mencocokkan struct atau enum
+satu level dalam, tapi pencocokan bisa bekerja pada item bersarang
+juga! Misalnya, kami bisa refactor kode di Listing 19-15 untuk
+mendukung warna RGB dan HSV di pesan <code>ChangeColor</code>, seperti yang
+ditampilkan di Listing 19-16.</p>
+<figure class="listing" id="listing-19-16">
+<pre class="playground"><code class="language-rust edition2024">enum Color {
+    Rgb(i32, i32, i32),
+    Hsv(i32, i32, i32),
+}
+
+enum Message {
+    Quit,
+    Move { x: i32, y: i32 },
+    Write(String),
+    ChangeColor(Color),
+}
+
+fn main() {
+    let msg = Message::ChangeColor(Color::Hsv(0, 160, 255));
+
+    match msg {
+        Message::ChangeColor(Color::Rgb(r, g, b)) =&gt; {
+            println!("Change color to red {r}, green {g}, and blue {b}");
+        }
+        Message::ChangeColor(Color::Hsv(h, s, v)) =&gt; {
+            println!("Change color to hue {h}, saturation {s}, value {v}");
+        }
+        _ =&gt; (),
+    }
+}</code></pre>
+<figcaption><a href="#listing-19-16">Listing 19-16</a>: Mencocokkan enum bersarang</figcaption>
+</figure>
+<p>Pola arm pertama di ekspresi <code>match</code> cocok dengan varian enum
+<code>Message::ChangeColor</code> yang berisi varian <code>Color::Rgb</code>; lalu, pola
+mengikat ke tiga nilai <code>i32</code> internal. Pola arm kedua juga cocok
+dengan varian enum <code>Message::ChangeColor</code>, tapi enum internal
+cocok <code>Color::Hsv</code> sebagai gantinya. Kami bisa menentukan kondisi
+kompleks ini dalam satu ekspresi <code>match</code>, meski dua enum
+terlibat.</p>
+<!-- Judul lama. Jangan dihapus atau tautan bisa rusak. -->
+<p><a id="destructuring-structs-and-tuples"></a></p>
+<h4 id="struct-dan-tuple"><a class="header" href="#struct-dan-tuple">Struct dan Tuple</a></h4>
+<p>Kami bisa mencampur, mencocokkan, dan menyingkat pola
+destrukturisasi dengan cara yang lebih kompleks lagi. Contoh
+berikut menunjukkan destrukturisasi yang rumit di mana kami
+menyingkat struct dan tuple di dalam tuple dan mendestrukturisasi
+semua nilai primitif keluar:</p>
+<pre class="playground"><code class="language-rust edition2024"><span class="boring">fn main() {
+</span><span class="boring">    struct Point {
+</span><span class="boring">        x: i32,
+</span><span class="boring">        y: i32,
+</span><span class="boring">    }
+</span><span class="boring">
+</span>    let ((feet, inches), Point { x, y }) = ((3, 10), Point { x: 3, y: -10 });
+<span class="boring">}</span></code></pre>
+<p>Kode ini memungkinkan kami memecah tipe kompleks ke bagian
+komponennya sehingga kami bisa menggunakan nilai yang kami
+minati secara terpisah.</p>
+<p>Mendestrukturisasi dengan pola adalah cara nyaman untuk
+menggunakan potongan nilai, seperti nilai dari setiap field di
+struct, secara terpisah satu sama lain.</p>
+<h3 id="mengabaikan-nilai-dalam-pola"><a class="header" href="#mengabaikan-nilai-dalam-pola">Mengabaikan Nilai dalam Pola</a></h3>
+<p>Anda telah melihat bahwa kadang berguna untuk mengabaikan nilai
+dalam pola, seperti di arm terakhir <code>match</code>, untuk mendapatkan
+catch-all yang tidak benar-benar melakukan apa pun tapi
+mengakui semua nilai mungkin yang tersisa. Ada beberapa cara
+mengabaikan seluruh nilai atau bagian nilai dalam pola: menggunakan
+pola <code>_</code> (yang sudah Anda lihat), menggunakan pola <code>_</code> di dalam
+pola lain, menggunakan nama yang diawali underscore, atau
+menggunakan <code>..</code> untuk mengabaikan sisa bagian nilai. Mari jelajahi
+bagaimana dan mengapa menggunakan masing-masing pola ini.</p>
+<!-- Judul lama. Jangan dihapus atau tautan bisa rusak. -->
+<p><a id="ignoring-an-entire-value-with-_"></a></p>
+<h4 id="seluruh-nilai-dengan-_"><a class="header" href="#seluruh-nilai-dengan-_">Seluruh Nilai dengan <code>_</code></a></h4>
+<p>Kami telah menggunakan underscore sebagai pola wildcard yang akan
+cocok dengan nilai apa pun tapi tidak mengikat ke nilai itu. Ini
+khususnya berguna sebagai arm terakhir di ekspresi <code>match</code>, tapi
+kami juga bisa menggunakannya di pola apa pun, termasuk parameter
+fungsi, seperti yang ditampilkan di Listing 19-17.</p>
+<figure class="listing" id="listing-19-17">
+<span class="file-name">Filename: src/main.rs</span>
+<pre class="playground"><code class="language-rust edition2024">fn foo(_: i32, y: i32) {
+    println!("This code only uses the y parameter: {y}");
+}
+
+fn main() {
+    foo(3, 4);
+}</code></pre>
+<figcaption><a href="#listing-19-17">Listing 19-17</a>: Menggunakan <code>_</code> di tanda tangan fungsi</figcaption>
+</figure>
+<p>Kode ini akan sepenuhnya mengabaikan nilai <code>3</code> yang diteruskan
+sebagai argumen pertama, dan akan mencetak <code>This code only uses the y parameter: 4</code>.</p>
+<p>Dalam kebanyakan kasus saat Anda tidak lagi butuh parameter fungsi
+tertentu, Anda akan mengubah tanda tangan sehingga tidak
+mencakup parameter yang tidak digunakan. Mengabaikan parameter
+fungsi bisa sangat berguna di kasus di mana, misalnya, Anda
+mengimplementasikan trait saat Anda butuh tanda tangan tipe tertentu
+tapi badan fungsi dalam implementasi Anda tidak butuh salah satu
+parameternya. Anda kemudian menghindari peringatan compiler soal
+parameter fungsi yang tidak digunakan, seperti yang akan terjadi
+jika Anda menggunakan nama sebagai gantinya.</p>
+<!-- Judul lama. Jangan dihapus atau tautan bisa rusak. -->
+<p><a id="ignoring-parts-of-a-value-with-a-nested-_"></a></p>
+<h4 id="bagian-nilai-dengan-_-bersarang"><a class="header" href="#bagian-nilai-dengan-_-bersarang">Bagian Nilai dengan <code>_</code> Bersarang</a></h4>
+<p>Kami juga bisa menggunakan <code>_</code> di dalam pola lain untuk mengabaikan
+hanya bagian dari nilai, misalnya, saat kami ingin menguji hanya
+bagian dari nilai tapi tidak butuh bagian lainnya di kode yang
+koresponden yang ingin kami jalankan. Listing 19-18 menunjukkan kode
+yang bertanggung jawab mengelola nilai setting. Persyaratan bisnis
+adalah pengguna tidak boleh menimpa kustomisasi existing dari
+setting tapi bisa unset setting dan memberinya nilai jika saat ini
+unset.</p>
+<figure class="listing" id="listing-19-18">
+<pre class="playground"><code class="language-rust edition2024"><span class="boring">fn main() {
+</span>    let mut setting_value = Some(5);
+    let new_setting_value = Some(10);
+
+    match (setting_value, new_setting_value) {
+        (Some(_), Some(_)) =&gt; {
+            println!("Can't overwrite an existing customized value");
+        }
+        _ =&gt; {
+            setting_value = new_setting_value;
+        }
+    }
+
+    println!("setting is {setting_value:?}");
+<span class="boring">}</span></code></pre>
+<figcaption><a href="#listing-19-18">Listing 19-18</a>: Menggunakan underscore dalam pola yang cocok varian <code>Some</code> saat kami tidak butuh nilai di dalam <code>Some</code></figcaption>
+</figure>
+<p>Kode ini akan mencetak <code>Can't overwrite an existing customized value</code> dan lalu <code>setting is Some(5)</code>. Di arm match pertama, kami
+tidak butuh mencocokkan atau menggunakan nilai di dalam varian
+<code>Some</code> manapun, tapi kami butuh menguji kasus saat
+<code>setting_value</code> dan <code>new_setting_value</code> keduanya varian <code>Some</code>.
+Dalam kasus itu, kami mencetak alasan tidak mengubah
+<code>setting_value</code>, dan ia tidak diubah.</p>
+<p>Di semua kasus lain (jika <code>setting_value</code> atau
+<code>new_setting_value</code> adalah <code>None</code>) diekspresikan oleh pola <code>_</code> di
+arm kedua, kami ingin mengizinkan <code>new_setting_value</code> menjadi
+<code>setting_value</code>.</p>
+<p>Kami juga bisa menggunakan underscore di beberapa tempat dalam
+satu pola untuk mengabaikan nilai khusus. Listing 19-19
+menunjukkan contoh mengabaikan nilai kedua dan keempat dalam
+tuple lima item.</p>
+<figure class="listing" id="listing-19-19">
+<pre class="playground"><code class="language-rust edition2024"><span class="boring">fn main() {
+</span>    let numbers = (2, 4, 8, 16, 32);
+
+    match numbers {
+        (first, _, third, _, fifth) =&gt; {
+            println!("Some numbers: {first}, {third}, {fifth}");
+        }
+    }
+<span class="boring">}</span></code></pre>
+<figcaption><a href="#listing-19-19">Listing 19-19</a>: Mengabaikan beberapa bagian tuple</figcaption>
+</figure>
+<p>Kode ini akan mencetak <code>Some numbers: 2, 8, 32</code>, dan nilai <code>4</code> dan
+<code>16</code> akan diabaikan.</p>
+<!-- Judul lama. Jangan dihapus atau tautan bisa rusak. -->
+<p><a id="ignoring-an-unused-variable-by-starting-its-name-with-_"></a></p>
+<h4 id="variabel-tidak-digunakan-dengan-menamainya-diawali-_"><a class="header" href="#variabel-tidak-digunakan-dengan-menamainya-diawali-_">Variabel Tidak Digunakan dengan Menamainya Diawali <code>_</code></a></h4>
+<p>Jika Anda membuat variabel tapi tidak menggunakannya di mana pun,
+Rust biasanya akan mengeluarkan peringatan karena variabel yang
+tidak digunakan bisa jadi bug. Akan tetapi, kadang berguna untuk
+bisa membuat variabel yang tidak akan Anda gunakan, misalnya saat
+Anda membuat prototipe atau baru memulai proyek. Dalam situasi
+ini, Anda bisa memberitahu Rust untuk tidak memperingatkan Anda
+soal variabel tidak digunakan dengan menamai variabel diawali
+underscore. Di Listing 19-20, kami membuat dua variabel tidak
+digunakan, tapi saat kami mengompilasi kode ini, kami seharusnya
+hanya mendapat peringatan tentang salah satunya.</p>
+<figure class="listing" id="listing-19-20">
+<span class="file-name">Filename: src/main.rs</span>
+<pre class="playground"><code class="language-rust edition2024">fn main() {
+    let _x = 5;
+    let y = 10;
+}</code></pre>
+<figcaption><a href="#listing-19-20">Listing 19-20</a>: Menamai variabel diawali underscore untuk menghindari peringatan variabel tidak digunakan</figcaption>
+</figure>
+<p>Di sini, kami mendapat peringatan soal variabel <code>y</code> yang tidak
+digunakan, tapi kami tidak mendapat peringatan soal <code>_x</code>.</p>
+<p>Perhatikan bahwa ada perbedaan halus antara menggunakan hanya <code>_</code>
+dan menggunakan nama yang diawali underscore. Sintaks <code>_x</code> tetap
+mengikat nilai ke variabel, sedangkan <code>_</code> tidak mengikat sama
+sekali. Untuk menunjukkan kasus di mana perbedaan ini penting,
+Listing 19-21 akan memberikan error.</p>
+<figure class="listing" id="listing-19-21">
+<pre><code class="language-rust ignore does_not_compile"><span class="boring">fn main() {
+</span>    let s = Some(String::from("Hello!"));
+
+    if let Some(_s) = s {
+        println!("found a string");
+    }
+
+    println!("{s:?}");
+<span class="boring">}</span></code></pre>
+<figcaption><a href="#listing-19-21">Listing 19-21</a>: Variabel tidak digunakan yang diawali underscore tetap mengikat nilai, yang mungkin mengambil kepemilikan nilai.</figcaption>
+</figure>
+<p>Kami akan menerima error karena nilai <code>s</code> akan tetap di-move ke
+<code>_s</code>, yang mencegah kami menggunakan <code>s</code> lagi. Akan tetapi,
+menggunakan underscore saja tidak pernah mengikat ke nilai. Listing
+19-22 akan kompilasi tanpa error karena <code>s</code> tidak di-move ke <code>_</code>.</p>
+<figure class="listing" id="listing-19-22">
+<pre class="playground"><code class="language-rust edition2024"><span class="boring">fn main() {
+</span>    let s = Some(String::from("Hello!"));
+
+    if let Some(_) = s {
+        println!("found a string");
+    }
+
+    println!("{s:?}");
+<span class="boring">}</span></code></pre>
+<figcaption><a href="#listing-19-22">Listing 19-22</a>: Menggunakan underscore tidak mengikat nilai.</figcaption>
+</figure>
+<p>Kode ini berfungsi dengan baik karena kami tidak pernah mengikat
+<code>s</code> ke apa pun; ia tidak di-move.</p>
+<p><a id="ignoring-remaining-parts-of-a-value-with-"></a></p>
+<h4 id="sisa-bagian-nilai-dengan-"><a class="header" href="#sisa-bagian-nilai-dengan-">Sisa Bagian Nilai dengan <code>..</code></a></h4>
+<p>Dengan nilai yang punya banyak bagian, kami bisa menggunakan sintaks
+<code>..</code> untuk menggunakan bagian-bagian spesifik dan mengabaikan
+sisanya, menghindari kebutuhan mencantumkan underscore untuk
+setiap nilai yang diabaikan. Pola <code>..</code> mengabaikan bagian-bagian
+dari nilai yang kami tidak secara eksplisit cocokkan di sisa
+pola. Di Listing 19-23, kami memiliki struct <code>Point</code> yang menampung
+koordinat dalam ruang tiga dimensi. Di ekspresi <code>match</code>, kami ingin
+beroperasi hanya pada koordinat <code>x</code> dan mengabaikan nilai di field
+<code>y</code> dan <code>z</code>.</p>
+<figure class="listing" id="listing-19-23">
+<pre class="playground"><code class="language-rust edition2024"><span class="boring">fn main() {
+</span>    struct Point {
+        x: i32,
+        y: i32,
+        z: i32,
+    }
+
+    let origin = Point { x: 0, y: 0, z: 0 };
+
+    match origin {
+        Point { x, .. } =&gt; println!("x is {x}"),
+    }
+<span class="boring">}</span></code></pre>
+<figcaption><a href="#listing-19-23">Listing 19-23</a>: Mengabaikan semua field <code>Point</code> kecuali <code>x</code> dengan menggunakan <code>..</code></figcaption>
+</figure>
+<p>Kami mencantumkan nilai <code>x</code> lalu hanya menyertakan pola <code>..</code>. Ini
+lebih cepat dari harus mencantumkan <code>y: _</code> dan <code>z: _</code>, terutama
+saat kami bekerja dengan struct yang punya banyak field di situasi
+di mana hanya satu atau dua field yang relevan.</p>
+<p>Sintaks <code>..</code> akan expand ke sebanyak nilai yang dibutuhkan. Listing
+19-24 menunjukkan cara menggunakan <code>..</code> dengan tuple.</p>
+<figure class="listing" id="listing-19-24">
+<span class="file-name">Filename: src/main.rs</span>
+<pre class="playground"><code class="language-rust edition2024">fn main() {
+    let numbers = (2, 4, 8, 16, 32);
+
+    match numbers {
+        (first, .., last) =&gt; {
+            println!("Some numbers: {first}, {last}");
+        }
+    }
+}</code></pre>
+<figcaption><a href="#listing-19-24">Listing 19-24</a>: Mencocokkan hanya nilai pertama dan terakhir di tuple dan mengabaikan semua nilai lain</figcaption>
+</figure>
+<p>Dalam kode ini, nilai pertama dan terakhir dicocokkan dengan
+<code>first</code> dan <code>last</code>. <code>..</code> akan cocok dan mengabaikan semua di
+antara mereka.</p>
+<p>Akan tetapi, penggunaan <code>..</code> harus tidak ambigu. Jika tidak jelas
+nilai mana yang dimaksudkan untuk dicocokkan dan mana yang
+seharusnya diabaikan, Rust akan memberi error. Listing 19-25
+menunjukkan contoh penggunaan <code>..</code> secara ambigu, jadi tidak akan
+kompilasi.</p>
+<figure class="listing" id="listing-19-25">
+<span class="file-name">Filename: src/main.rs</span>
+<pre><code class="language-rust ignore does_not_compile">fn main() {
+    let numbers = (2, 4, 8, 16, 32);
+
+    match numbers {
+        (.., second, ..) =&gt; {
+            println!("Some numbers: {second}")
+        },
+    }
+}</code></pre>
+<figcaption><a href="#listing-19-25">Listing 19-25</a>: Upaya menggunakan <code>..</code> secara ambigu</figcaption>
+</figure>
+<p>Saat kami mengompilasi contoh ini, kami mendapat error ini:</p>
+<pre><code class="language-console">$ cargo run
+   Compiling patterns v0.1.0 (file:///projects/patterns)
+error: `..` can only be used once per tuple pattern
+ --&gt; src/main.rs:5:22
+  |
+5 |         (.., second, ..) =&gt; {
+  |          --          ^^ can only be used once per tuple pattern
+  |          |
+  |          previously used here
+
+error: could not compile `patterns` (bin "patterns") due to 1 previous error
+</code></pre>
+<p>Rust tidak mungkin menentukan berapa banyak nilai di tuple yang
+harus diabaikan sebelum mencocokkan nilai dengan <code>second</code> dan lalu
+berapa banyak nilai lagi yang diabaikan setelahnya. Kode ini bisa
+berarti kami ingin mengabaikan <code>2</code>, mengikat <code>second</code> ke <code>4</code>, dan
+lalu mengabaikan <code>8</code>, <code>16</code>, dan <code>32</code>; atau bahwa kami ingin
+mengabaikan <code>2</code> dan <code>4</code>, mengikat <code>second</code> ke <code>8</code>, dan lalu
+mengabaikan <code>16</code> dan <code>32</code>; dan seterusnya. Nama variabel <code>second</code>
+tidak berarti apa pun khusus bagi Rust, jadi kami mendapat error
+compiler karena menggunakan <code>..</code> di dua tempat seperti ini ambigu.</p>
+<!-- Judul lama. Jangan dihapus atau tautan bisa rusak. -->
+<p><a id="extra-conditionals-with-match-guards"></a></p>
+<h3 id="menambahkan-kondisional-dengan-match-guards"><a class="header" href="#menambahkan-kondisional-dengan-match-guards">Menambahkan Kondisional dengan Match Guards</a></h3>
+<p>Sebuah <em>match guard</em> adalah kondisi <code>if</code> tambahan, yang ditentukan
+setelah pola di arm <code>match</code>, yang juga harus cocok agar arm itu
+dipilih. Match guard berguna untuk mengekspresikan ide yang lebih
+kompleks dari yang diizinkan pola saja. Perhatikan, bagaimanpun,
+bahwa mereka hanya tersedia di ekspresi <code>match</code>, bukan <code>if let</code> atau
+ekspresi <code>while let</code>.</p>
+<p>Kondisi bisa menggunakan variabel yang dibuat di pola. Listing
+19-26 menunjukkan <code>match</code> di mana arm pertama punya pola <code>Some(x)</code>
+dan juga match guard <code>if x % 2 == 0</code> (yang akan <code>true</code> jika
+angka genap).</p>
+<figure class="listing" id="listing-19-26">
+<pre class="playground"><code class="language-rust edition2024"><span class="boring">fn main() {
+</span>    let num = Some(4);
+
+    match num {
+        Some(x) if x % 2 == 0 =&gt; println!("The number {x} is even"),
+        Some(x) =&gt; println!("The number {x} is odd"),
+        None =&gt; (),
+    }
+<span class="boring">}</span></code></pre>
+<figcaption><a href="#listing-19-26">Listing 19-26</a>: Menambahkan match guard ke pola</figcaption>
+</figure>
+<p>Contoh ini akan mencetak <code>The number 4 is even</code>. Saat <code>num</code>
+dibandingkan dengan pola di arm pertama, ia cocok karena
+<code>Some(4)</code> cocok <code>Some(x)</code>. Lalu, match guard memeriksa apakah
+sisa bagi <code>x</code> dibagi 2 sama dengan 0, dan karena demikian, arm
+pertama dipilih.</p>
+<p>Jika <code>num</code> adalah <code>Some(5)</code>, match guard di arm pertama akan
+<code>false</code> karena sisa 5 dibagi 2 adalah 1, yang tidak sama dengan
+0. Rust akan lalu ke arm kedua, yang akan cocok karena arm kedua
+tidak punya match guard dan oleh karena itu cocok dengan varian
+<code>Some</code> apa pun.</p>
+<p>Tidak ada cara untuk mengekspresikan kondisi <code>if x % 2 == 0</code>
+dalam pola, jadi match guard memberi kami kemampuan mengekspresikan
+logika ini. Kelemahan ekspresivitas tambahan ini adalah compiler
+tidak mencoba memeriksa exhaustiveness saat ekspresi match guard
+terlibat.</p>
+<p>Saat membahas Listing 19-11, kami menyebutkan bahwa kami bisa
+menggunakan match guard untuk memecahkan masalah shadowing pola
+kami. Ingat bahwa kami membuat variabel baru di dalam pola di
+ekspresi <code>match</code> alih-alih menggunakan variabel di luar <code>match</code>.
+Variabel baru itu berarti kami tidak bisa menguji terhadap nilai
+variabel luar. Listing 19-27 menunjukkan bagaimana kami bisa
+menggunakan match guard untuk memperbaiki masalah ini.</p>
+<figure class="listing" id="listing-19-27">
+<span class="file-name">Filename: src/main.rs</span>
+<pre class="playground"><code class="language-rust edition2024">fn main() {
+    let x = Some(5);
+    let y = 10;
+
+    match x {
+        Some(50) =&gt; println!("Got 50"),
+        Some(n) if n == y =&gt; println!("Matched, n = {n}"),
+        _ =&gt; println!("Default case, x = {x:?}"),
+    }
+
+    println!("at the end: x = {x:?}, y = {y}");
+}</code></pre>
+<figcaption><a href="#listing-19-27">Listing 19-27</a>: Menggunakan match guard untuk menguji kesetaraan dengan variabel luar</figcaption>
+</figure>
+<p>Kode ini kini akan mencetak <code>Default case, x = Some(5)</code>. Pola di
+arm match kedua tidak memperkenalkan variabel baru <code>y</code> yang akan
+menyembunyikan <code>y</code> luar, artinya kami bisa menggunakan <code>y</code> luar
+di match guard. Alih-alih menentukan pola sebagai <code>Some(y)</code>, yang
+akan menyembunyikan <code>y</code> luar, kami menentukannya sebagai
+<code>Some(n)</code>. Ini membuat variabel baru <code>n</code> yang tidak menyembunyikan
+apa pun karena tidak ada variabel <code>n</code> di luar <code>match</code>.</p>
+<p>Match guard <code>if n == y</code> bukan pola dan oleh karena itu tidak
+memperkenalkan variabel baru. <code>y</code> <em>ini</em> adalah <code>y</code> luar bukannya
+<code>y</code> baru yang menyembunyikannya, dan kami bisa mencari nilai yang
+punya nilai sama dengan <code>y</code> luar dengan membandingkan <code>n</code> ke <code>y</code>.</p>
+<p>Anda juga bisa menggunakan operator <em>or</em> <code>|</code> di match guard untuk
+menentukan beberapa pola; kondisi match guard akan berlaku untuk
+semua pola. Listing 19-28 menunjukkan precedence saat menggabungkan
+pola yang menggunakan <code>|</code> dengan match guard. Bagian penting dari
+contoh ini adalah bahwa match guard <code>if y</code> berlaku untuk <code>4</code>, <code>5</code>,
+<em>dan</em> <code>6</code>, meski mungkin terlihat seperti <code>if y</code> hanya berlaku
+untuk <code>6</code>.</p>
+<figure class="listing" id="listing-19-28">
+<pre class="playground"><code class="language-rust edition2024"><span class="boring">fn main() {
+</span>    let x = 4;
+    let y = false;
+
+    match x {
+        4 | 5 | 6 if y =&gt; println!("yes"),
+        _ =&gt; println!("no"),
+    }
+<span class="boring">}</span></code></pre>
+<figcaption><a href="#listing-19-28">Listing 19-28</a>: Menggabungkan beberapa pola dengan match guard</figcaption>
+</figure>
+<p>Kondisi match menyatakan arm hanya cocok jika nilai <code>x</code> sama dengan
+<code>4</code>, <code>5</code>, atau <code>6</code> <em>dan</em> jika <code>y</code> adalah <code>true</code>. Saat kode ini
+dijalankan, pola arm pertama cocok karena <code>x</code> adalah <code>4</code>, tapi
+match guard <code>if y</code> adalah <code>false</code>, jadi arm pertama tidak dipilih.
+Kode berlanjut ke arm kedua, yang cocok, dan program ini mencetak
+<code>no</code>. Alasannya adalah kondisi <code>if</code> berlaku untuk seluruh pola
+<code>4 | 5 | 6</code>, bukan hanya nilai terakhir <code>6</code>. Dengan kata lain,
+precedence match guard terkait pola berperilaku seperti ini:</p>
+<pre><code class="language-text">(4 | 5 | 6) if y =&gt; ...
+</code></pre>
+<p>bukan ini:</p>
+<pre><code class="language-text">4 | 5 | (6 if y) =&gt; ...
+</code></pre>
+<p>Setelah menjalankan kode, perilaku precedence terlihat: Jika match
+guard hanya diterapkan ke nilai terakhir dalam daftar nilai yang
+dispesifikasikan menggunakan operator <code>|</code>, arm akan cocok, dan
+program akan mencetak <code>yes</code>.</p>
+<!-- Judul lama. Jangan dihapus atau tautan bisa rusak. -->
+<p><a id="-bindings"></a></p>
+<h3 id="menggunakan-binding-"><a class="header" href="#menggunakan-binding-">Menggunakan Binding <code>@</code></a></h3>
+<p>Operator <em>at</em> <code>@</code> memungkinkan kami membuat variabel yang menampung
+nilai pada saat yang sama kami menguji nilai itu untuk pencocokan
+pola. Di Listing 19-29, kami ingin menguji bahwa field <code>id</code> dari
+<code>Message::Hello</code> berada dalam range <code>3..=7</code>. Kami juga ingin
+mengikat nilai ke variabel <code>id</code> sehingga kami bisa menggunakannya
+di kode yang terkait dengan arm.</p>
+<figure class="listing" id="listing-19-29">
+<pre class="playground"><code class="language-rust edition2024"><span class="boring">fn main() {
+</span>    enum Message {
+        Hello { id: i32 },
+    }
+
+    let msg = Message::Hello { id: 5 };
+
+    match msg {
+        Message::Hello { id: id @ 3..=7 } =&gt; {
+            println!("Found an id in range: {id}")
+        }
+        Message::Hello { id: 10..=12 } =&gt; {
+            println!("Found an id in another range")
+        }
+        Message::Hello { id } =&gt; println!("Found some other id: {id}"),
+    }
+<span class="boring">}</span></code></pre>
+<figcaption><a href="#listing-19-29">Listing 19-29</a>: Menggunakan <code>@</code> untuk mengikat ke nilai dalam pola sambil mengujinya</figcaption>
+</figure>
+<p>Contoh ini akan mencetak <code>Found an id in range: 5</code>. Dengan
+menentukan <code>id @</code> sebelum range <code>3..=7</code>, kami menangkap nilai
+apa pun yang cocok dengan range dalam variabel bernama <code>id</code> sambil
+juga menguji bahwa nilai cocok dengan pola range.</p>
+<p>Di arm kedua, di mana kami hanya memiliki range yang ditentukan
+di pola, kode yang terkait dengan arm tidak punya variabel yang
+berisi nilai aktual dari field <code>id</code>. Nilai field <code>id</code> bisa jadi
+10, 11, atau 12, tapi kode yang pergi dengan pola itu tidak tahu
+mana di antaranya. Kode pola tidak bisa menggunakan nilai dari
+field <code>id</code> karena kami tidak menyimpan nilai <code>id</code> di variabel.</p>
+<p>Di arm terakhir, di mana kami menentukan variabel tanpa range,
+kami punya nilai yang tersedia untuk digunakan di kode arm dalam
+variabel bernama <code>id</code>. Alasannya adalah kami telah menggunakan
+sintaks singkat field struct. Tapi kami tidak menerapkan pengujian
+apa pun ke nilai di field <code>id</code> di arm ini, seperti yang kami
+lakukan dengan dua arm pertama: Nilai apa pun akan cocok dengan
+pola ini.</p>
+<p>Menggunakan <code>@</code> memungkinkan kami menguji nilai dan menyimpannya
+di variabel dalam satu pola.</p>
+<h2 id="ringkasan"><a class="header" href="#ringkasan">Ringkasan</a></h2>
+<p>Pola Rust sangat berguna dalam membedakan jenis data yang
+berbeda. Saat digunakan di ekspresi <code>match</code>, Rust memastikan bahwa
+pola Anda menutupi setiap nilai mungkin, atau program Anda tidak
+akan kompilasi. Pola di pernyataan <code>let</code> dan parameter fungsi
+membuat konstruksi tersebut lebih berguna, memungkinkan
+destrukturisasi nilai ke bagian-bagian lebih kecil dan menetapkan
+bagian-bagian itu ke variabel. Kami bisa membuat pola sederhana
+atau kompleks untuk memenuhi kebutuhan kami.</p>
+<p>Selanjutnya, untuk bab ke-duapuluh buku ini, kami akan melihat
+beberapa aspek lanjutan dari berbagai fitur Rust.</p>
+
+                    </main>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+                            <a rel="prev" href="ch19-02-refutability.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                                <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M41.4 233.4c-12.5 12.5-12.5 32.8 0 45.3l160 160c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3L109.3 256 246.6 118.6c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0l-160 160z"/></svg></span>
+                            </a>
+
+                            <a rel="next prefetch" href="ch20-00-advanced-features.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                                <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M278.6 233.4c12.5 12.5 12.5 32.8 0 45.3l-160 160c-12.5 12.5-32.8 12.5-45.3 0s-12.5-32.8 0-45.3L210.7 256 73.4 118.6c-12.5-12.5-12.5-32.8 0-45.3s32.8-12.5 45.3 0l160 160z"/></svg></span>
+                            </a>
+
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+                    <a rel="prev" href="ch19-02-refutability.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                        <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M41.4 233.4c-12.5 12.5-12.5 32.8 0 45.3l160 160c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3L109.3 256 246.6 118.6c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0l-160 160z"/></svg></span>
+                    </a>
+
+                    <a rel="next prefetch" href="ch20-00-advanced-features.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                        <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M278.6 233.4c12.5 12.5 12.5 32.8 0 45.3l-160 160c-12.5 12.5-32.8 12.5-45.3 0s-12.5-32.8 0-45.3L210.7 256 73.4 118.6c-12.5-12.5-12.5-32.8 0-45.3s32.8-12.5 45.3 0l160 160z"/></svg></span>
+                    </a>
+            </nav>
+
+        </div>
+
+        <template id=fa-eye><span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M288 32c-80.8 0-145.5 36.8-192.6 80.6C48.6 156 17.3 208 2.5 243.7c-3.3 7.9-3.3 16.7 0 24.6C17.3 304 48.6 356 95.4 399.4C142.5 443.2 207.2 480 288 480s145.5-36.8 192.6-80.6c46.8-43.5 78.1-95.4 93-131.1c3.3-7.9 3.3-16.7 0-24.6c-14.9-35.7-46.2-87.7-93-131.1C433.5 68.8 368.8 32 288 32zM432 256c0 79.5-64.5 144-144 144s-144-64.5-144-144s64.5-144 144-144s144 64.5 144 144zM288 192c0 35.3-28.7 64-64 64c-11.5 0-22.3-3-31.6-8.4c-.2 2.8-.4 5.5-.4 8.4c0 53 43 96 96 96s96-43 96-96s-43-96-96-96c-2.8 0-5.6 .1-8.4 .4c5.3 9.3 8.4 20.1 8.4 31.6z"/></svg></span></template>
+        <template id=fa-eye-slash><span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M38.8 5.1C28.4-3.1 13.3-1.2 5.1 9.2S-1.2 34.7 9.2 42.9l592 464c10.4 8.2 25.5 6.3 33.7-4.1s6.3-25.5-4.1-33.7L525.6 386.7c39.6-40.6 66.4-86.1 79.9-118.4c3.3-7.9 3.3-16.7 0-24.6c-14.9-35.7-46.2-87.7-93-131.1C465.5 68.8 400.8 32 320 32c-68.2 0-125 26.3-169.3 60.8L38.8 5.1zM223.1 149.5C248.6 126.2 282.7 112 320 112c79.5 0 144 64.5 144 144c0 24.9-6.3 48.3-17.4 68.7L408 294.5c5.2-11.8 8-24.8 8-38.5c0-53-43-96-96-96c-2.8 0-5.6 .1-8.4 .4c5.3 9.3 8.4 20.1 8.4 31.6c0 10.2-2.4 19.8-6.6 28.3l-90.3-70.8zm223.1 298L373 389.9c-16.4 6.5-34.3 10.1-53 10.1c-79.5 0-144-64.5-144-144c0-6.9 .5-13.6 1.4-20.2L83.1 161.5C60.3 191.2 44 220.8 34.5 243.7c-3.3 7.9-3.3 16.7 0 24.6c14.9 35.7 46.2 87.7 93 131.1C174.5 443.2 239.2 480 320 480c47.8 0 89.9-12.9 126.2-32.5z"/></svg></span></template>
+        <template id=fa-copy><span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M502.6 70.63l-61.25-61.25C435.4 3.371 427.2 0 418.7 0H255.1c-35.35 0-64 28.66-64 64l.0195 256C192 355.4 220.7 384 256 384h192c35.2 0 64-28.8 64-64V93.25C512 84.77 508.6 76.63 502.6 70.63zM464 320c0 8.836-7.164 16-16 16H255.1c-8.838 0-16-7.164-16-16L239.1 64.13c0-8.836 7.164-16 16-16h128L384 96c0 17.67 14.33 32 32 32h47.1V320zM272 448c0 8.836-7.164 16-16 16H63.1c-8.838 0-16-7.164-16-16L47.98 192.1c0-8.836 7.164-16 16-16H160V128H63.99c-35.35 0-64 28.65-64 64l.0098 256C.002 483.3 28.66 512 64 512h192c35.2 0 64-28.8 64-64v-32h-47.1L272 448z"/></svg></span></template>
+        <template id=fa-play><span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 384 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M73 39c-14.8-9.1-33.4-9.4-48.5-.9S0 62.6 0 80V432c0 17.4 9.4 33.4 24.5 41.9s33.7 8.1 48.5-.9L361 297c14.3-8.7 23-24.2 23-41s-8.7-32.2-23-41L73 39z"/></svg></span></template>
+        <template id=fa-clock-rotate-left><span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M75 75L41 41C25.9 25.9 0 36.6 0 57.9V168c0 13.3 10.7 24 24 24H134.1c21.4 0 32.1-25.9 17-41l-30.8-30.8C155 85.5 203 64 256 64c106 0 192 86 192 192s-86 192-192 192c-40.8 0-78.6-12.7-109.7-34.4c-14.5-10.1-34.4-6.6-44.6 7.9s-6.6 34.4 7.9 44.6C151.2 495 201.7 512 256 512c141.4 0 256-114.6 256-256S397.4 0 256 0C185.3 0 121.3 28.7 75 75zm181 53c-13.3 0-24 10.7-24 24V256c0 6.4 2.5 12.5 7 17l72 72c9.4 9.4 24.6 9.4 33.9 0s9.4-24.6 0-33.9l-65-65V152c0-13.3-10.7-24-24-24z"/></svg></span></template>
+
+
+
+        <script>
+            window.playground_copyable = true;
+        </script>
+
+
+        <script src="elasticlunr-ef4e11c1.min.js"></script>
+        <script src="mark-09e88c2c.min.js"></script>
+        <script src="searcher-09f2665d.js"></script>
+
+        <script src="clipboard-1626706a.min.js"></script>
+        <script src="highlight-abc7f01d.js"></script>
+        <script src="book-c22b7243.js"></script>
+
+        <!-- Custom JS scripts -->
+        <script src="ferris-2317480c.js"></script>
+
+
+
+    </div>
+    </body>
+</html>

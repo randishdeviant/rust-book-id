@@ -1,0 +1,899 @@
+<!DOCTYPE HTML>
+<html lang="en" class="light sidebar-visible" dir="ltr">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>Unsafe Rust - The Rust Programming Language</title>
+
+
+        <!-- Custom HTML head -->
+
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff">
+
+        <link rel="icon" href="favicon-de23e50b.svg">
+        <link rel="shortcut icon" href="favicon-8114d1fc.png">
+        <link rel="stylesheet" href="css/variables-8adf115d.css">
+        <link rel="stylesheet" href="css/general-0392ca55.css">
+        <link rel="stylesheet" href="css/chrome-fc474251.css">
+        <link rel="stylesheet" href="css/print-9e4910d8.css" media="print">
+
+        <!-- Fonts -->
+        <link rel="stylesheet" href="fonts/fonts-9644e21d.css">
+
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" id="mdbook-highlight-css" href="highlight-493f70e1.css">
+        <link rel="stylesheet" id="mdbook-tomorrow-night-css" href="tomorrow-night-4c0ae647.css">
+        <link rel="stylesheet" id="mdbook-ayu-highlight-css" href="ayu-highlight-3fdfc3ac.css">
+
+        <!-- Custom theme stylesheets -->
+        <link rel="stylesheet" href="ferris-d33b75bf.css">
+        <link rel="stylesheet" href="theme/2018-edition-4e126c62.css">
+        <link rel="stylesheet" href="theme/semantic-notes-9b5766c0.css">
+        <link rel="stylesheet" href="theme/listing-cab26221.css">
+
+
+        <!-- Provide site root and default themes to javascript -->
+        <script>
+            const path_to_root = "";
+            const default_light_theme = "light";
+            const default_dark_theme = "navy";
+            window.path_to_searchindex_js = "searchindex-e298a7a7.js";
+        </script>
+        <!-- Start loading toc.js asap -->
+        <script src="toc-8d1d8862.js"></script>
+    </head>
+    <body>
+    <div id="mdbook-help-container">
+        <div id="mdbook-help-popup">
+            <h2 class="mdbook-help-title">Keyboard shortcuts</h2>
+            <div>
+                <p>Press <kbd>←</kbd> or <kbd>→</kbd> to navigate between chapters</p>
+                <p>Press <kbd>S</kbd> or <kbd>/</kbd> to search in the book</p>
+                <p>Press <kbd>?</kbd> to show this help</p>
+                <p>Press <kbd>Esc</kbd> to hide this help</p>
+            </div>
+        </div>
+    </div>
+    <div id="mdbook-body-container">
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script>
+            try {
+                let theme = localStorage.getItem('mdbook-theme');
+                let sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script>
+            const default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? default_dark_theme : default_light_theme;
+            let theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            const html = document.documentElement;
+            html.classList.remove('light')
+            html.classList.add(theme);
+            html.classList.add("js");
+        </script>
+
+        <input type="checkbox" id="mdbook-sidebar-toggle-anchor" class="hidden">
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script>
+            let sidebar = null;
+            const sidebar_toggle = document.getElementById("mdbook-sidebar-toggle-anchor");
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            } else {
+                sidebar = 'hidden';
+                sidebar_toggle.checked = false;
+            }
+            if (sidebar === 'visible') {
+                sidebar_toggle.checked = true;
+            } else {
+                html.classList.remove('sidebar-visible');
+            }
+        </script>
+
+        <nav id="mdbook-sidebar" class="sidebar" aria-label="Table of contents">
+            <!-- populated by js -->
+            <mdbook-sidebar-scrollbox class="sidebar-scrollbox"></mdbook-sidebar-scrollbox>
+            <noscript>
+                <iframe class="sidebar-iframe-outer" src="toc.html"></iframe>
+            </noscript>
+            <div id="mdbook-sidebar-resize-handle" class="sidebar-resize-handle">
+                <div class="sidebar-resize-indicator"></div>
+            </div>
+        </nav>
+
+        <div id="mdbook-page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                <div id="mdbook-menu-bar-hover-placeholder"></div>
+                <div id="mdbook-menu-bar" class="menu-bar sticky">
+                    <div class="left-buttons">
+                        <label id="mdbook-sidebar-toggle" class="icon-button" for="mdbook-sidebar-toggle-anchor" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="mdbook-sidebar">
+                            <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M0 96C0 78.3 14.3 64 32 64H416c17.7 0 32 14.3 32 32s-14.3 32-32 32H32C14.3 128 0 113.7 0 96zM0 256c0-17.7 14.3-32 32-32H416c17.7 0 32 14.3 32 32s-14.3 32-32 32H32c-17.7 0-32-14.3-32-32zM448 416c0 17.7-14.3 32-32 32H32c-17.7 0-32-14.3-32-32s14.3-32 32-32H416c17.7 0 32 14.3 32 32z"/></svg></span>
+                        </label>
+                        <button id="mdbook-theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="mdbook-theme-list">
+                            <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M371.3 367.1c27.3-3.9 51.9-19.4 67.2-42.9L600.2 74.1c12.6-19.5 9.4-45.3-7.6-61.2S549.7-4.4 531.1 9.6L294.4 187.2c-24 18-38.2 46.1-38.4 76.1L371.3 367.1zm-19.6 25.4l-116-104.4C175.9 290.3 128 339.6 128 400c0 3.9 .2 7.8 .6 11.6c1.8 17.5-10.2 36.4-27.8 36.4H96c-17.7 0-32 14.3-32 32s14.3 32 32 32H240c61.9 0 112-50.1 112-112c0-2.5-.1-5-.2-7.5z"/></svg></span>
+                        </button>
+                        <ul id="mdbook-theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                            <li role="none"><button role="menuitem" class="theme" id="mdbook-theme-default_theme">Auto</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="mdbook-theme-light">Light</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="mdbook-theme-rust">Rust</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="mdbook-theme-coal">Coal</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="mdbook-theme-navy">Navy</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="mdbook-theme-ayu">Ayu</button></li>
+                        </ul>
+                        <button id="mdbook-search-toggle" class="icon-button" type="button" title="Search (`/`)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="/ s" aria-controls="mdbook-searchbar">
+                            <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M416 208c0 45.9-14.9 88.3-40 122.7L502.6 457.4c12.5 12.5 12.5 32.8 0 45.3s-32.8 12.5-45.3 0L330.7 376c-34.4 25.2-76.8 40-122.7 40C93.1 416 0 322.9 0 208S93.1 0 208 0S416 93.1 416 208zM208 352c79.5 0 144-64.5 144-144s-64.5-144-144-144S64 128.5 64 208s64.5 144 144 144z"/></svg></span>
+                        </button>
+                    </div>
+
+                    <h1 class="menu-title">The Rust Programming Language</h1>
+
+                    <div class="right-buttons">
+                        <a href="print.html" title="Print this book" aria-label="Print this book">
+                            <span class=fa-svg id="print-button"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M128 0C92.7 0 64 28.7 64 64v96h64V64H354.7L384 93.3V160h64V93.3c0-17-6.7-33.3-18.7-45.3L400 18.7C388 6.7 371.7 0 354.7 0H128zM384 352v32 64H128V384 368 352H384zm64 32h32c17.7 0 32-14.3 32-32V256c0-35.3-28.7-64-64-64H64c-35.3 0-64 28.7-64 64v96c0 17.7 14.3 32 32 32H64v64c0 35.3 28.7 64 64 64H384c35.3 0 64-28.7 64-64V384zm-16-88c-13.3 0-24-10.7-24-24s10.7-24 24-24s24 10.7 24 24s-10.7 24-24 24z"/></svg></span>
+                        </a>
+                        <a href="https://github.com/rust-lang/book" title="Git repository" aria-label="Git repository">
+                            <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 496 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M165.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6zm-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3zm44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9zM244.8 8C106.1 8 0 113.3 0 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C428.2 457.8 496 362.9 496 252 496 113.3 383.5 8 244.8 8zM97.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1zm-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7zm32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1zm-11.4-14.7c-1.6 1-1.6 3.6 0 5.9 1.6 2.3 4.3 3.3 5.6 2.3 1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2z"/></svg></span>
+                        </a>
+
+                    </div>
+                </div>
+
+                <div id="mdbook-search-wrapper" class="hidden">
+                    <form id="mdbook-searchbar-outer" class="searchbar-outer">
+                        <div class="search-wrapper">
+                            <input type="search" id="mdbook-searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="mdbook-searchresults-outer" aria-describedby="searchresults-header">
+                            <div class="spinner-wrapper">
+                                <span class=fa-svg id="fa-spin"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M304 48c0-26.5-21.5-48-48-48s-48 21.5-48 48s21.5 48 48 48s48-21.5 48-48zm0 416c0-26.5-21.5-48-48-48s-48 21.5-48 48s21.5 48 48 48s48-21.5 48-48zM48 304c26.5 0 48-21.5 48-48s-21.5-48-48-48s-48 21.5-48 48s21.5 48 48 48zm464-48c0-26.5-21.5-48-48-48s-48 21.5-48 48s21.5 48 48 48s48-21.5 48-48zM142.9 437c18.7-18.7 18.7-49.1 0-67.9s-49.1-18.7-67.9 0s-18.7 49.1 0 67.9s49.1 18.7 67.9 0zm0-294.2c18.7-18.7 18.7-49.1 0-67.9S93.7 56.2 75 75s-18.7 49.1 0 67.9s49.1 18.7 67.9 0zM369.1 437c18.7 18.7 49.1 18.7 67.9 0s18.7-49.1 0-67.9s-49.1-18.7-67.9 0s-18.7 49.1 0 67.9z"/></svg></span>
+                            </div>
+                        </div>
+                    </form>
+                    <div id="mdbook-searchresults-outer" class="searchresults-outer hidden">
+                        <div id="mdbook-searchresults-header" class="searchresults-header"></div>
+                        <ul id="mdbook-searchresults">
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script>
+                    document.getElementById('mdbook-sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('mdbook-sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#mdbook-sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="mdbook-content" class="content">
+                    <main>
+                        <h1 id="unsafe-rust"><a class="header" href="#unsafe-rust">Unsafe Rust</a></h1>
+<p>Semua kode yang telah kami bahas sejauh ini memiliki jaminan keamanan
+memori Rust yang diberlakukan pada waktu kompilasi. Akan tetapi, Rust
+punya bahasa kedua tersembunyi di dalamnya yang tidak menerapkan jaminan
+keamanan memori ini: Ia disebut <em>unsafe Rust</em> dan bekerja seperti
+Rust biasa tapi memberi kami superpower tambahan.</p>
+<p>Unsafe Rust ada karena, secara alami, analisis statis bersifat
+konservatif. Saat compiler mencoba menentukan apakah kode memenuhi
+jaminan, lebih baik untuk ia menolak beberapa program valid daripada
+menerima beberapa program tidak valid. Meskipun kode <em>mungkin</em> oke,
+jika compiler Rust tidak punya cukup informasi untuk yakin, ia akan
+menolak kode. Dalam kasus ini, Anda bisa menggunakan kode unsafe untuk
+memberitahu compiler, “Percayalah, aku tahu apa yang kulakukan.”
+Diwarnakan, bagaimanapun, bahwa Anda menggunakan unsafe Rust dengan
+risiko sendiri: Jika Anda menggunakan kode unsafe secara salah,
+masalah bisa terjadi karena ketidakamanan memori, seperti
+dereferencing pointer null.</p>
+<p>Alasan lain Rust memiliki alter ego unsafe adalah bahwa hardware
+komputer di bawahnya secara inheren unsafe. Jika Rust tidak membiarkan
+Anda melakukan operasi unsafe, Anda tidak bisa melakukan tugas-tugas
+tertentu. Rust perlu mengizinkan Anda melakukan pemrograman sistem
+low-level, seperti berinteraksi langsung dengan sistem operasi atau
+bahkan menulis sistem operasi Anda sendiri. Bekerja dengan pemrograman
+sistem low-level adalah salah satu tujuan bahasa ini. Mari jelajahi
+apa yang bisa kita lakukan dengan unsafe Rust dan cara melakukannya.</p>
+<!-- Judul lama. Jangan dihapus atau tautan bisa rusak. -->
+<p><a id="unsafe-superpowers"></a></p>
+<h3 id="melakukan-superpower-unsafe"><a class="header" href="#melakukan-superpower-unsafe">Melakukan Superpower Unsafe</a></h3>
+<p>Untuk beralih ke unsafe Rust, gunakan kata kunci <code>unsafe</code> dan lalu
+mulai blok baru yang menampung kode unsafe. Anda bisa melakukan lima
+aksi di unsafe Rust yang tidak bisa di safe Rust, yang kami sebut
+<em>unsafe superpower</em>. Superpower-superpower itu meliputi kemampuan
+untuk:</p>
+<ol>
+<li>Dereference raw pointer.</li>
+<li>Memanggil fungsi atau metode unsafe.</li>
+<li>Mengakses atau memodifikasi variabel static mutable.</li>
+<li>Mengimplementasikan trait unsafe.</li>
+<li>Mengakses field <code>union</code>.</li>
+</ol>
+<p>Penting untuk dipahami bahwa <code>unsafe</code> tidak mematikan borrow checker
+atau menonaktifkan pemeriksaan keamanan Rust lainnya: Jika Anda
+menggunakan referensi di kode unsafe, ia tetap akan diperiksa. Kata
+kunci <code>unsafe</code> hanya memberi Anda akses ke lima fitur ini yang lalu
+tidak diperiksa oleh compiler untuk keamanan memori. Anda tetap akan
+mendapat derajat keamanan tertentu di dalam blok <code>unsafe</code>.</p>
+<p>Selain itu, <code>unsafe</code> tidak berarti kode di dalam blok itu pasti
+berbahaya atau pasti akan punya masalah keamanan memori: Niatnya
+adalah sebagai programmer, Anda akan memastikan bahwa kode di dalam
+blok <code>unsafe</code> akan mengakses memori dengan cara yang valid.</p>
+<p>Manusia bisa salah dan kesalahan akan terjadi, tapi dengan mewajibkan
+lima operasi unsafe ini berada di dalam blok yang dianotasi dengan
+<code>unsafe</code>, Anda akan tahu bahwa error terkait keamanan memori pasti
+ada di dalam blok <code>unsafe</code>. Buat blok <code>unsafe</code> seminimal mungkin;
+Anda akan bersyukur nanti saat Anda menyelidiki bug memori.</p>
+<p>Untuk mengisolasi kode unsafe seminimal mungkin, praktik terbaik
+adalah mengepal kode semacam itu dalam abstraksi safe dan menyediakan
+API safe, yang akan kami bahas nanti di bab ini saat kami menelusuri
+fungsi dan metode unsafe. Bagian dari pustaka standar diimplementasikan
+sebagai abstraksi safe di atas kode unsafe yang telah diaudit. Membungkus
+kode unsafe dalam abstraksi safe mencegah penggunaan <code>unsafe</code> bocor
+ke semua tempat yang mungkin Anda atau pengguna Anda inginkan
+menggunakan fungsionalitas yang diimplementasikan dengan kode <code>unsafe</code>.</p>
+<p>Mari lihat masing-masing dari lima superpower unsafe secara berurutan.
+Kami juga akan melihat beberapa abstraksi yang menyediakan interface
+safe ke kode unsafe.</p>
+<h3 id="dereferencing-raw-pointer"><a class="header" href="#dereferencing-raw-pointer">Dereferencing Raw Pointer</a></h3>
+<p>Di Bab 4, di bagian <a href="ch04-02-references-and-borrowing.html#dangling-references">“Dangling References”</a><!-- ignore
+-->, kami menyebutkan bahwa compiler memastikan referensi selalu
+valid. Unsafe Rust punya dua tipe baru yang disebut <em>raw pointer</em> yang
+mirip dengan referensi. Seperti referensi, raw pointer bisa immutable
+atau mutable dan ditulis sebagai <code>*const T</code> dan <code>*mut T</code>, masing-masing.
+Asterisk bukan operator dereference; itu bagian dari nama tipe. Dalam
+konteks raw pointer, <em>immutable</em> berarti pointer tidak bisa
+langsung di-assign setelah di-dereference.</p>
+<p>Berbeda dengan referensi dan smart pointer, raw pointer:</p>
+<ul>
+<li>Diizinkan mengabaikan aturan borrowing dengan punya pointer immutable
+dan mutable keduanya atau multiple mutable pointer ke lokasi yang
+sama</li>
+<li>Tidak dijamin menunjuk ke memori yang valid</li>
+<li>Diizinkan menjadi null</li>
+<li>Tidak mengimplementasikan pembersihan otomatis apa pun</li>
+</ul>
+<p>Dengan memilih keluar dari penegakan Rust terhadap jaminan ini, Anda
+bisa menyerahkan keamanan terjamin sebagai tukar menukar performa
+lebih besar atau kemampuan berinterfacing dengan bahasa lain atau
+hardware di mana jaminan Rust tidak berlaku.</p>
+<p>Listing 20-1 menunjukkan cara membuat raw pointer immutable dan mutable.</p>
+<figure class="listing" id="listing-20-1">
+<pre class="playground"><code class="language-rust edition2024"><span class="boring">fn main() {
+</span>    let mut num = 5;
+
+    let r1 = &amp;raw const num;
+    let r2 = &amp;raw mut num;
+<span class="boring">}</span></code></pre>
+<figcaption><a href="#listing-20-1">Listing 20-1</a>: Membuat raw pointer dengan operator raw borrow</figcaption>
+</figure>
+<p>Perhatikan bahwa kami tidak menyertakan kata kunci <code>unsafe</code> di kode
+ini. Kami bisa membuat raw pointer di kode safe; kami hanya tidak
+bisa dereference raw pointer di luar blok <code>unsafe</code>, seperti yang
+akan Anda lihat sebentar lagi.</p>
+<p>Kami telah membuat raw pointer dengan menggunakan operator raw
+borrow: <code>&amp;raw const num</code> membuat <code>*const i32</code> raw pointer immutable,
+dan <code>&amp;raw mut num</code> membuat <code>*mut i32</code> raw pointer mutable. Karena
+kami membuatnya langsung dari variabel lokal, kami tahu raw pointer
+khusus ini valid, tapi kami tidak bisa membuat asumsi itu tentang
+raw pointer sembarangan.</p>
+<p>Untuk mendemonstrasikan ini, selanjutnya kami akan membuat raw
+pointer yang validitasnya tidak begitu pasti, menggunakan kata kunci
+<code>as</code> untuk cast nilai alih-alih menggunakan operator raw borrow.
+Listing 20-2 menunjukkan cara membuat raw pointer ke lokasi memori
+sembarangan. Mencoba menggunakan memori sembarangan adalah undefined:
+Mungkin ada data di alamat itu atau mungkin tidak, compiler mungkin
+mengoptimalkan kode sehingga tidak ada akses memori, atau program
+mungkin berhenti dengan segmentation fault. Biasanya, tidak ada
+alasan bagus menulis kode seperti ini, terutama di kasus di mana
+Anda bisa menggunakan operator raw borrow sebagai gantinya, tapi
+ini memungkinkan.</p>
+<figure class="listing" id="listing-20-2">
+<pre class="playground"><code class="language-rust edition2024"><span class="boring">fn main() {
+</span>    let address = 0x012345usize;
+    let r = address as *const i32;
+<span class="boring">}</span></code></pre>
+<figcaption><a href="#listing-20-2">Listing 20-2</a>: Membuat raw pointer ke alamat memori sembarangan</figcaption>
+</figure>
+<p>Ingat bahwa kami bisa membuat raw pointer di kode safe, tapi kami
+tidak bisa dereference raw pointer dan membaca data yang ditunjuknya.
+Di Listing 20-3, kami menggunakan operator dereference <code>*</code> pada raw
+pointer yang memerlukan blok <code>unsafe</code>.</p>
+<figure class="listing" id="listing-20-3">
+<pre class="playground"><code class="language-rust edition2024"><span class="boring">fn main() {
+</span>    let mut num = 5;
+
+    let r1 = &amp;raw const num;
+    let r2 = &amp;raw mut num;
+
+    unsafe {
+        println!("r1 is: {}", *r1);
+        println!("r2 is: {}", *r2);
+    }
+<span class="boring">}</span></code></pre>
+<figcaption><a href="#listing-20-3">Listing 20-3</a>: Mendereference raw pointer di dalam blok <code>unsafe</code></figcaption>
+</figure>
+<p>Membuat pointer tidak merugikan; baru saat kami mencoba mengakses
+nilai yang ditunjuknya kami mungkin berakhir berurusan dengan nilai
+tidak valid.</p>
+<p>Perhatikan juga bahwa di Listing 20-1 dan 20-3, kami membuat raw
+pointer <code>*const i32</code> dan <code>*mut i32</code> yang keduanya menunjuk ke lokasi
+memori yang sama, di mana <code>num</code> disimpan. Jika sebaliknya kami
+mencoba membuat referensi immutable dan mutable ke <code>num</code>, kode
+tidak akan kompilasi karena aturan kepemilikan Rust tidak mengizinkan
+referensi mutable pada saat yang sama dengan referensi immutable
+mana pun. Dengan raw pointer, kami bisa membuat pointer mutable dan
+pointer immutable ke lokasi yang sama dan mengubah data melalui
+pointer mutable, berpotensi menciptakan data race. Hati-hati!</p>
+<p>Dengan semua bahaya ini, kenapa Anda pernah akan menggunakan raw
+pointer? Salah satu kasus penggunaan utama adalah saat berinterfacing
+dengan kode C, seperti yang akan Anda lihat di bagian selanjutnya.
+Kasus lain adalah saat membangun abstraksi safe yang borrow checker
+tidak pahami. Kami akan memperkenalkan fungsi unsafe dan lalu
+melihat contoh abstraksi safe yang menggunakan kode unsafe.</p>
+<h3 id="memanggil-fungsi-atau-metode-unsafe"><a class="header" href="#memanggil-fungsi-atau-metode-unsafe">Memanggil Fungsi atau Metode Unsafe</a></h3>
+<p>Jenis operasi kedua yang bisa Anda lakukan di blok unsafe adalah
+memanggil fungsi unsafe. Fungsi dan metode unsafe terlihat persis
+sama seperti fungsi dan metode biasa, tapi mereka memiliki <code>unsafe</code>
+tambahan sebelum definisi lainnya. Kata kunci <code>unsafe</code> dalam konteks
+ini menandakan fungsi memiliki persyaratan yang perlu kami penuhi
+saat memanggil fungsi ini, karena Rust tidak bisa menjamin kami
+telah memenuhi persyaratan tersebut. Dengan memanggil fungsi unsafe
+di dalam blok <code>unsafe</code>, kami menyatakan bahwa kami telah membaca
+dokumentasi fungsi ini, kami memahami cara menggunakannya dengan
+benar, dan kami bertanggung jawab memenuhi kontrak fungsi tersebut.</p>
+<p>Berikut fungsi unsafe bernama <code>dangerous</code> yang tidak melakukan apa
+pun di badannya:</p>
+<pre class="playground"><code class="language-rust edition2024"><span class="boring">fn main() {
+</span>    unsafe fn dangerous() {}
+
+    unsafe {
+        dangerous();
+    }
+<span class="boring">}</span></code></pre>
+<p>Kami harus memanggil fungsi <code>dangerous</code> di dalam blok <code>unsafe</code>
+terpisah. Jika kami mencoba memanggil <code>dangerous</code> tanpa blok
+<code>unsafe</code>, kami akan mendapat error:</p>
+<pre><code class="language-console">$ cargo run
+   Compiling unsafe-example v0.1.0 (file:///projects/unsafe-example)
+error[E0133]: call to unsafe function `dangerous` is unsafe and requires unsafe block
+ --&gt; src/main.rs:4:5
+  |
+4 |     dangerous();
+  |     ^^^^^^^^^^^ call to unsafe function
+  |
+  = note: consult the function's documentation for information on how to avoid undefined behavior
+
+For more information about this error, try `rustc --explain E0133`.
+error: could not compile `unsafe-example` (bin "unsafe-example") due to 1 previous error
+</code></pre>
+<p>Dengan blok <code>unsafe</code>, kami menyatakan ke Rust bahwa kami telah
+membaca dokumentasi fungsi, kami memahami cara menggunakannya
+dengan benar, dan kami telah memverifikasi bahwa kami memenuhi
+kontrak fungsi.</p>
+<p>Untuk melakukan operasi unsafe di badan fungsi <code>unsafe</code>, Anda
+masih perlu menggunakan blok <code>unsafe</code>, seperti di dalam fungsi
+biasa, dan compiler akan memperingatkan Anda jika Anda lupa. Ini
+membantu kami menjaga blok <code>unsafe</code> seminimal mungkin, karena
+operasi unsafe mungkin tidak dibutuhkan di seluruh badan fungsi.</p>
+<h4 id="membuat-abstraksi-safe-di-atas-kode-unsafe"><a class="header" href="#membuat-abstraksi-safe-di-atas-kode-unsafe">Membuat Abstraksi Safe di Atas Kode Unsafe</a></h4>
+<p>Hanya karena fungsi mengandung kode unsafe tidak berarti kami
+perlu menandai seluruh fungsi sebagai unsafe. Faktanya, membungkus
+kode unsafe di fungsi safe adalah abstraksi yang umum. Sebagai
+contoh, mari pelajari fungsi <code>split_at_mut</code> dari pustaka standar,
+yang memerlukan beberapa kode unsafe. Kami akan mengeksplorasi bagaimana
+kami mungkin mengimplementasikannya. Metode safe ini didefinisikan
+pada slice mutable: Ia menerima satu slice dan membuatnya dua dengan
+memecah slice pada indeks yang diberikan sebagai argumen. Listing
+20-4 menunjukkan cara menggunakan <code>split_at_mut</code>.</p>
+<figure class="listing" id="listing-20-4">
+<pre class="playground"><code class="language-rust edition2024"><span class="boring">fn main() {
+</span>    let mut v = vec![1, 2, 3, 4, 5, 6];
+
+    let r = &amp;mut v[..];
+
+    let (a, b) = r.split_at_mut(3);
+
+    assert_eq!(a, &amp;mut [1, 2, 3]);
+    assert_eq!(b, &amp;mut [4, 5, 6]);
+<span class="boring">}</span></code></pre>
+<figcaption><a href="#listing-20-4">Listing 20-4</a>: Menggunakan fungsi safe <code>split_at_mut</code></figcaption>
+</figure>
+<p>Kami tidak bisa mengimplementasikan fungsi ini hanya menggunakan safe
+Rush. Upaya mungkin terlihat seperti Listing 20-5, yang tidak akan
+kompilasi. Untuk kesederhanaan, kami akan mengimplementasikan
+<code>split_at_mut</code> sebagai fungsi alih-alih metode dan hanya untuk slice
+nilai <code>i32</code> alih-alih tipe generik <code>T</code>.</p>
+<figure class="listing" id="listing-20-5">
+<pre><code class="language-rust ignore does_not_compile">fn split_at_mut(values: &amp;mut [i32], mid: usize) -&gt; (&amp;mut [i32], &amp;mut [i32]) {
+    let len = values.len();
+
+    assert!(mid &lt;= len);
+
+    (&amp;mut values[..mid], &amp;mut values[mid..])
+}
+<span class="boring">
+</span><span class="boring">fn main() {
+</span><span class="boring">    let mut vector = vec![1, 2, 3, 4, 5, 6];
+</span><span class="boring">    let (left, right) = split_at_mut(&amp;mut vector, 3);
+</span><span class="boring">}</span></code></pre>
+<figcaption><a href="#listing-20-5">Listing 20-5</a>: Upaya implementasi <code>split_at_mut</code> hanya menggunakan safe Rust</figcaption>
+</figure>
+<p>Fungsi ini pertama mendapatkan total panjang slice. Lalu, ia menegaskan
+bahwa indeks yang diberikan sebagai parameter berada di dalam slice
+dengan memeriksa apakah ia kurang dari atau sama dengan panjang.
+Penegasan berarti jika kami meneruskan indeks yang lebih besar dari
+panjang untuk memecah slice, fungsi akan panic sebelum ia mencoba
+menggunakan indeks itu.</p>
+<p>Lalu, kami mengembalikan dua slice mutable dalam tuple: satu dari
+awal slice asli ke indeks <code>mid</code> dan satu lagi dari <code>mid</code> ke akhir
+slice asli.</p>
+<p>Saat kami mencoba mengompilasi kode di Listing 20-5, kami akan
+mendapat error:</p>
+<pre><code class="language-console">$ cargo run
+   Compiling unsafe-example v0.1.0 (file:///projects/unsafe-example)
+error[E0499]: cannot borrow `*values` as mutable more than once at a time
+ --&gt; src/main.rs:6:31
+  |
+1 | fn split_at_mut(values: &amp;mut [i32], mid: usize) -&gt; (&amp;mut [i32], &amp;mut [i32]) {
+  |                         - let's call the lifetime of this reference `'1`
+...
+6 |     (&amp;mut values[..mid], &amp;mut values[mid..])
+  |     --------------------------^^^^^^--------
+  |     |     |                   |
+  |     |     |                   second mutable borrow occurs here
+  |     |     first mutable borrow occurs here
+  |     returning this value requires that `*values` is borrowed for `'1`
+  |
+  = help: use `.split_at_mut(position)` to obtain two mutable non-overlapping sub-slices
+
+For more information about this error, try `rustc --explain E0499`.
+error: could not compile `unsafe-example` (bin "unsafe-example") due to 1 previous error
+</code></pre>
+<p>Borrow checker Rust tidak bisa memahami bahwa kami meminjam bagian
+yang berbeda dari slice; ia hanya tahu bahwa kami meminjam dari
+slice yang sama dua kali. Meminjam bagian berbeda dari slice
+secara fundamental oke karena kedua slice tidak tumpang tindih,
+tapi Rust tidak cukup pintar untuk mengetahui ini. Saat kami tahu
+kode oke, tapi Rust tidak, saatnya menggunakan kode unsafe.</p>
+<p>Listing 20-6 menunjukkan cara menggunakan blok <code>unsafe</code>, raw pointer,
+dan beberapa pemanggilan fungsi unsafe agar implementasi
+<code>split_at_mut</code> berfungsi.</p>
+<figure class="listing" id="listing-20-6">
+<pre class="playground"><code class="language-rust edition2024">use std::slice;
+
+fn split_at_mut(values: &amp;mut [i32], mid: usize) -&gt; (&amp;mut [i32], &amp;mut [i32]) {
+    let len = values.len();
+    let ptr = values.as_mut_ptr();
+
+    assert!(mid &lt;= len);
+
+    unsafe {
+        (
+            slice::from_raw_parts_mut(ptr, mid),
+            slice::from_raw_parts_mut(ptr.add(mid), len - mid),
+        )
+    }
+}
+<span class="boring">
+</span><span class="boring">fn main() {
+</span><span class="boring">    let mut vector = vec![1, 2, 3, 4, 5, 6];
+</span><span class="boring">    let (left, right) = split_at_mut(&amp;mut vector, 3);
+</span><span class="boring">}</span></code></pre>
+<figcaption><a href="#listing-20-6">Listing 20-6</a>: Menggunakan kode unsafe di implementasi fungsi <code>split_at_mut</code></figcaption>
+</figure>
+<p>Ingat dari bagian <a href="ch04-03-slices.html#the-slice-type">“Tipe Slice”</a><!-- ignore --> Bab 4
+bahwa slice adalah pointer ke beberapa data dan panjang slice. Kami
+menggunakan metode <code>len</code> untuk mendapatkan panjang slice dan metode
+<code>as_mut_ptr</code> untuk mengakses raw pointer slice. Dalam kasus ini,
+karena kami punya slice mutable ke nilai <code>i32</code>, <code>as_mut_ptr</code>
+mengembalikan raw pointer bertipe <code>*mut i32</code>, yang kami simpan di
+variabel <code>ptr</code>.</p>
+<p>Kami pertahankan penegasan bahwa indeks <code>mid</code> berada di dalam slice.
+Lalu, kami sampai ke kode unsafe: Fungsi <code>slice::from_raw_parts_mut</code>
+menerima raw pointer dan panjang, dan ia membuat slice. Kami
+menggunakan fungsi ini untuk membuat slice yang dimulai dari <code>ptr</code>
+dan panjangnya <code>mid</code> item. Lalu, kami memanggil metode <code>add</code> pada
+<code>ptr</code> dengan <code>mid</code> sebagai argumen untuk mendapatkan raw pointer
+yang dimulai di <code>mid</code>, dan kami membuat slice menggunakan pointer
+tersebut dan jumlah item tersisa setelah <code>mid</code> sebagai panjang.</p>
+<p>Fungsi <code>slice::from_raw_parts_mut</code> unsafe karena ia menerima raw
+pointer dan harus mempercayai bahwa pointer ini valid. Metode <code>add</code>
+pada raw pointer juga unsafe karena ia harus mempercayai bahwa
+lokasi offset juga pointer valid. Oleh karena itu, kami harus meletakkan
+blok <code>unsafe</code> di sekitar pemanggilan <code>slice::from_raw_parts_mut</code> dan
+<code>add</code> agar kami bisa memanggilnya. Dengan melihat kode dan
+menambahkan penegasan bahwa <code>mid</code> harus kurang dari atau sama dengan
+<code>len</code>, kami bisa memberitahu bahwa semua raw pointer yang digunakan
+di dalam blok <code>unsafe</code> akan menjadi pointer valid ke data di dalam
+slice. Ini penggunaan <code>unsafe</code> yang dapat diterima dan tepat.</p>
+<p>Perhatikan bahwa kami tidak perlu menandai <code>split_at_mut</code> yang
+nehasil sebagai <code>unsafe</code>, dan kami bisa memanggil fungsi ini dari
+safe Rust. Kami telah menciptakan abstraksi safe ke kode unsafe
+dengan implementasi fungsi yang menggunakan kode <code>unsafe</code> dengan
+cara safe, karena ia hanya membuat pointer valid dari data yang
+fungsi ini punya akses.</p>
+<p>Sebaliknya, penggunaan <code>slice::from_raw_parts_mut</code> di Listing 20-7
+kemungkinan besar akan crash saat slice digunakan. Kode ini mengambil
+lokasi memori sembarangan dan membuat slice 10.000 item panjangnya.</p>
+<figure class="listing" id="listing-20-7">
+<pre class="playground"><code class="language-rust edition2024"><span class="boring">fn main() {
+</span>    use std::slice;
+
+    let address = 0x01234usize;
+    let r = address as *mut i32;
+
+    let values: &amp;[i32] = unsafe { slice::from_raw_parts_mut(r, 10000) };
+<span class="boring">}</span></code></pre>
+<figcaption><a href="#listing-20-7">Listing 20-7</a>: Membuat slice dari lokasi memori sembarangan</figcaption>
+</figure>
+<p>Kami tidak memiliki memori di lokasi sembarangan ini, dan tidak ada
+jaminan bahwa slice yang dibuat kode ini berisi nilai <code>i32</code> yang
+valid. Mencoba menggunakan <code>values</code> seolah-olah itu slice valid
+menghasilkan undefined behavior.</p>
+<h4 id="menggunakan-fungsi-extern-untuk-memanggil-kode-eksternal"><a class="header" href="#menggunakan-fungsi-extern-untuk-memanggil-kode-eksternal">Menggunakan Fungsi <code>extern</code> untuk Memanggil Kode Eksternal</a></h4>
+<p>Kadang kode Rust Anda perlu berinteraksi dengan kode yang ditulis
+di bahasa lain. Untuk ini, Rust punya kata kunci <code>extern</code> yang
+memfasilitasi pembuatan dan penggunaan <em>Foreign Function Interface
+(FFI)</em>, yaitu cara bagi bahasa pemrograman untuk mendefinisikan
+fungsi dan memungkinkan bahasa (asing) berbeda memanggil fungsi
+tersebut.</p>
+<p>Listing 20-8 mendemonstrasikan cara menyiapkan integrasi dengan
+fungsi <code>abs</code> dari pustaka standar C. Fungsi yang dideklarasikan
+di dalam blok <code>extern</code> umumnya unsafe untuk dipanggil dari kode
+Rust, jadi blok <code>extern</code> harus juga ditandai <code>unsafe</code>. Alasannya
+adalah bahasa lain tidak menegakkan aturan dan jaminan Rust, dan
+Rust tidak bisa memeriksanya, jadi tanggung jawab jatuh pada
+programmer untuk memastikan keamanan.</p>
+<figure class="listing" id="listing-20-8">
+<span class="file-name">Filename: src/main.rs</span>
+<pre class="playground"><code class="language-rust edition2024">unsafe extern "C" {
+    fn abs(input: i32) -&gt; i32;
+}
+
+fn main() {
+    unsafe {
+        println!("Absolute value of -3 according to C: {}", abs(-3));
+    }
+}</code></pre>
+<figcaption><a href="#listing-20-8">Listing 20-8</a>: Mendeklarasikan dan memanggil fungsi <code>extern</code> yang didefinisikan di bahasa lain</figcaption>
+</figure>
+<p>Di dalam blok <code>unsafe extern "C"</code>, kami mencantumkan nama dan
+tanda tangan fungsi eksternal dari bahasa lain yang ingin kami
+panggil. Bagian <code>"C"</code> menentukan <em>application binary interface (ABI)</em>
+yang digunakan fungsi eksternal: ABI mendefinisikan cara memanggil
+fungsi di tingkat assembly. ABI <code>"C"</code> adalah yang paling umum dan
+mengikuti ABI bahasa pemrograman C. Informasi tentang semua ABI
+yang didukung Rust tersedia di <a href="../reference/items/external-blocks.html#abi">Rust Reference</a>.</p>
+<p>Setiap item yang dideklarasikan di dalam blok <code>unsafe extern</code>
+secara implisit unsafe. Akan tetapi, beberapa fungsi FFI <em>adalah</em>
+safe untuk dipanggil. Misalnya, fungsi <code>abs</code> dari pustaka standar C
+tidak memiliki pertimbangan keamanan memori, dan kami tahu ia bisa
+dipanggil dengan <code>i32</code> apa pun. Di kasus seperti ini, kami bisa
+menggunakan kata kunci <code>safe</code> untuk mengatakan bahwa fungsi
+spesifik ini safe untuk dipanggil meski ada di blok <code>unsafe extern</code>.
+Begitu perubahan itu dibuat, memanggilnya tidak lagi memerlukan
+blok <code>unsafe</code>, seperti yang ditampilkan di Listing 20-9.</p>
+<figure class="listing" id="listing-20-9">
+<span class="file-name">Filename: src/main.rs</span>
+<pre class="playground"><code class="language-rust edition2024">unsafe extern "C" {
+    safe fn abs(input: i32) -&gt; i32;
+}
+
+fn main() {
+    println!("Absolute value of -3 according to C: {}", abs(-3));
+}</code></pre>
+<figcaption><a href="#listing-20-9">Listing 20-9</a>: Secara eksplisit menandai fungsi sebagai <code>safe</code> di dalam blok <code>unsafe extern</code> dan memanggilnya dengan aman</figcaption>
+</figure>
+<p>Menandai fungsi sebagai <code>safe</code> tidak secara inheren membuatnya safe!
+Sebagai gantinya, ini seperti janji yang Anda buat ke Rust bahwa
+ia safe. Masih tanggung jawab Anda untuk memastikan janji itu
+dipegang!</p>
+<h4 id="memanggil-fungsi-rust-dari-bahasa-lain"><a class="header" href="#memanggil-fungsi-rust-dari-bahasa-lain">Memanggil Fungsi Rust dari Bahasa Lain</a></h4>
+<p>Kami juga bisa menggunakan <code>extern</code> untuk membuat interface yang
+memungkinkan bahasa lain memanggil fungsi Rust. Alih-alih membuat
+seluruh blok <code>extern</code>, kami menambahkan kata kunci <code>extern</code> dan
+menspesifikasikan ABI yang akan digunakan tepat sebelum kata kunci
+<code>fn</code> untuk fungsi yang relevan. Kami juga perlu menambahkan anotasi
+<code>#[unsafe(no_mangle)]</code> untuk memberitahu compiler Rust untuk tidak
+mangle nama fungsi ini. <em>Mangling</em> adalah saat compiler mengubah
+nama yang kami berikan ke fungsi menjadi nama berbeda yang
+mengandung lebih banyak informasi untuk bagian kompilasi lain
+dikonsumsi tapi kurang human readable. Setiap compiler bahasa
+pemrograman mangling nama sedikit berbeda, jadi agar fungsi Rust
+bisa dinamai oleh bahasa lain, kami harus menonaktifkan name
+mangling compiler Rust. Ini unsafe karena mungkin terjadi name
+collision di seluruh library tanpa built-in mangling, jadi
+tanggung jawab kami untuk memastikan nama yang kami pilih aman
+untuk diekspor tanpa mangling.</p>
+<p>Dalam contoh berikut, kami membuat fungsi <code>call_from_c</code> dapat
+diakses dari kode C, setelah dikompilasi ke shared library dan
+di-link dari C:</p>
+<pre><code>#[unsafe(no_mangle)]
+pub extern "C" fn call_from_c() {
+    println!("Just called a Rust function from C!");
+}
+</code></pre>
+<p>Penggunaan <code>extern</code> ini memerlukan <code>unsafe</code> hanya di atribut,
+bukan pada blok <code>extern</code>.</p>
+<h3 id="mengakses-atau-memodifikasi-variabel-static-mutable"><a class="header" href="#mengakses-atau-memodifikasi-variabel-static-mutable">Mengakses atau Memodifikasi Variabel Static Mutable</a></h3>
+<p>Di buku ini, kami belum membahas variabel global, yang didukung
+Rust tapi yang bisa bermasalah dengan aturan kepemilikan Rust. Jika
+dua thread mengakses variabel global mutable yang sama, itu bisa
+menyebabkan data race.</p>
+<p>Di Rust, variabel global disebut variabel <em>static</em>. Listing 20-10
+menunjukkan contoh deklarasi dan penggunaan variabel static dengan
+string slice sebagai nilai.</p>
+<figure class="listing" id="listing-20-10">
+<span class="file-name">Filename: src/main.rs</span>
+<pre class="playground"><code class="language-rust edition2024">static HELLO_WORLD: &amp;str = "Hello, world!";
+
+fn main() {
+    println!("value is: {HELLO_WORLD}");
+}</code></pre>
+<figcaption><a href="#listing-20-10">Listing 20-10</a>: Mendefinisikan dan menggunakan variabel static immutable</figcaption>
+</figure>
+<p>Variabel static mirip dengan konstanta, yang kami bahas di bagian
+<a href="ch03-01-variables-and-mutability.html#declaring-constants">“Mendeklarasikan Konstanta”</a><!-- ignore --> Bab 3. Nama
+variabel static adalah <code>SCREAMING_SNAKE_CASE</code> berdasarkan konvensi.
+Variabel static hanya bisa menyimpan referensi dengan lifetime
+<code>'static</code>, yang berarti compiler Rust bisa mengetahui lifetime-nya
+dan kami tidak perlu menganotasi secara eksplisit. Mengakses
+variabel static immutable adalah safe.</p>
+<p>Perbedaan halus antara konstanta dan variabel static immutable
+adalah bahwa nilai di variabel static memiliki alamat memori yang
+tetap. Menggunakan nilai akan selalu mengakses data yang sama.
+Konstanta, di sisi lain, diizinkan menduplikasi datanya kapan pun
+digunakan. Perbedaan lain adalah variabel static bisa mutable.
+Mengakses dan memodifikasi variabel static mutable <em>unsafe</em>. Listing
+20-11 menunjukkan cara mendeklarasikan, mengakses, dan memodifikasi
+variabel static mutable bernama <code>COUNTER</code>.</p>
+<figure class="listing" id="listing-20-11">
+<span class="file-name">Filename: src/main.rs</span>
+<pre class="playground"><code class="language-rust edition2024">static mut COUNTER: u32 = 0;
+
+/// SAFETY: Calling this from more than a single thread at a time is undefined
+/// behavior, so you *must* guarantee you only call it from a single thread at
+/// a time.
+unsafe fn add_to_count(inc: u32) {
+    unsafe {
+        COUNTER += inc;
+    }
+}
+
+fn main() {
+    unsafe {
+        // SAFETY: This is only called from a single thread in `main`.
+        add_to_count(3);
+        println!("COUNTER: {}", *(&amp;raw const COUNTER));
+    }
+}</code></pre>
+<figcaption><a href="#listing-20-11">Listing 20-11</a>: Membaca dari atau menulis ke variabel static mutable tidak aman.</figcaption>
+</figure>
+<p>Seperti variabel biasa, kami menspesifikasikan mutability menggunakan
+kata kunci <code>mut</code>. Kode apa pun yang membaca atau menulis ke
+<code>COUNTER</code> harus berada di dalam blok <code>unsafe</code>. Kode di Listing
+20-11 kompilasi dan mencetak <code>COUNTER: 3</code> seperti yang diharapkan
+karena ini single-threaded. Memiliki multiple thread mengakses
+<code>COUNTER</code> kemungkinan besar akan menghasilkan data race, jadi
+perilaku tidak terdefinisi. Oleh karena itu, kami perlu menandai
+seluruh fungsi sebagai <code>unsafe</code> dan mendokumentasikan batasan
+keamanan sehingga siapa pun yang memanggil fungsi tahu apa yang
+mereka boleh dan tidak boleh lakukan dengan aman.</p>
+<p>Saat kami menulis fungsi unsafe, idiomatiknya menulis komentar
+yang diawali dengan <code>SAFETY</code> dan menjelaskan apa yang perlu
+dilakukan pemanggil untuk memanggil fungsi dengan aman. Demikian
+pula, saat kami melakukan operasi unsafe, idiomatiknya menulis
+komentar yang diawali <code>SAFETY</code> untuk menjelaskan bagaimana aturan
+keamanan dijaga.</p>
+<p>Di samping itu, compiler akan menolak secara default upaya
+membuat referensi ke variabel static mutable melalui compiler
+lint. Anda harus secara eksplisit opt-out dari proteksi lint
+tersebut dengan menambahkan anotasi <code>#[allow(static_mut_refs)]</code>
+atau mengakses variabel static mutable melalui raw pointer yang
+dibuat dengan salah satu operator raw borrow. Itu termasuk kasus
+di mana referensi dibuat secara tidak terlihat, seperti saat
+digunakan di <code>println!</code> di kode ini. Memerlukan referensi ke
+variabel static mutable dibuat via raw pointer membantu
+membuat persyaratan keamanan untuk menggunakannya lebih jelas.</p>
+<p>Dengan data mutable yang bisa diakses secara global, sulit
+memastikan tidak ada data race, itulah mengapa Rust menganggap
+variabel static mutable unsafe. Di mana memungkinkan, lebih
+disukai menggunakan teknik concurrency dan smart pointer thread-
+safe yang kami bahas di Bab 16 sehingga compiler memeriksa akses
+data dari thread berbeda dengan aman.</p>
+<h3 id="mengimplementasikan-trait-unsafe"><a class="header" href="#mengimplementasikan-trait-unsafe">Mengimplementasikan Trait Unsafe</a></h3>
+<p>Kami bisa menggunakan <code>unsafe</code> untuk mengimplementasikan trait
+unsafe. Trait adalah unsafe ketika setidaknya salah satu metodenya
+memiliki invariant yang tidak bisa diverifikasi compiler. Kami
+menyatakan trait adalah <code>unsafe</code> dengan menambahkan kata kunci
+<code>unsafe</code> sebelum <code>trait</code> dan menandai implementasi trait sebagai
+<code>unsafe</code> juga, seperti yang ditampilkan di Listing 20-12.</p>
+<figure class="listing" id="listing-20-12">
+<pre class="playground"><code class="language-rust edition2024">unsafe trait Foo {
+    // methods go here
+}
+
+unsafe impl Foo for i32 {
+    // method implementations go here
+}
+<span class="boring">
+</span><span class="boring">fn main() {}</span></code></pre>
+<figcaption><a href="#listing-20-12">Listing 20-12</a>: Mendefinisikan dan mengimplementasikan trait unsafe</figcaption>
+</figure>
+<p>Dengan menggunakan <code>unsafe impl</code>, kami berjanji bahwa kami akan
+menegakkan invariants yang tidak bisa diverifikasi compiler.</p>
+<p>Sebagai contoh, ingat trait marker <code>Send</code> dan <code>Sync</code> yang kami
+bahas di bagian <a href="ch16-04-extensible-concurrency-sync-and-send.html">“Concurrency Yang Dapat Diperluas dengan <code>Send</code>
+dan <code>Sync</code>”</a><!-- ignore --> Bab 16: Compiler
+mengimplementasikan trait ini secara otomatis jika tipe kami
+tersusun sepenuhnya dari tipe lain yang mengimplementasikan <code>Send</code>
+dan <code>Sync</code>. Jika kami mengimplementasikan tipe yang berisi tipe
+yang tidak mengimplementasikan <code>Send</code> atau <code>Sync</code>, seperti raw
+pointer, dan kami ingin menandai tipe itu sebagai <code>Send</code> atau
+<code>Sync</code>, kami harus menggunakan <code>unsafe</code>. Rust tidak bisa
+memverifikasi bahwa tipe kami menegakkan jaminan bahwa ia bisa
+dikirim lintas thread dengan aman atau diakses dari beberapa
+thread; oleh karena itu, kami perlu melakukan pemeriksaan itu
+secara manual dan menandainya dengan <code>unsafe</code>.</p>
+<h3 id="mengakses-field-union"><a class="header" href="#mengakses-field-union">Mengakses Field Union</a></h3>
+<p>Aksi terakhir yang hanya bisa dilakukan dengan <code>unsafe</code> adalah
+mengakses field union. Sebuah <em>union</em> mirip dengan <code>struct</code>, tapi
+hanya satu field yang dideklarasikan digunakan di instance
+tertentu pada satu waktu. Union terutama digunakan untuk berinterfacing
+dengan union di kode C. Mengakses field union unsafe karena Rust
+tidak bisa menjamin tipe data yang saat ini disimpan di instance
+union. Anda bisa mempelajari lebih lanjut tentang union di <a href="../reference/items/unions.html">Rust
+Reference</a>.</p>
+<h3 id="menggunakan-miri-untuk-memeriksa-kode-unsafe"><a class="header" href="#menggunakan-miri-untuk-memeriksa-kode-unsafe">Menggunakan Miri untuk Memeriksa Kode Unsafe</a></h3>
+<p>Saat menulis kode unsafe, Anda mungkin ingin memeriksa bahwa apa
+yang Anda tulis benar-benar safe dan benar. Salah satu cara terbaik
+untuk melakukannya adalah menggunakan Miri, tool resmi Rust untuk
+mendeteksi undefined behavior. Sedangkan borrow checker adalah tool
+<em>statis</em> yang bekerja pada waktu kompilasi, Miri adalah tool
+<em>dinamis</em> yang bekerja pada runtime. Ia memeriksa kode Anda dengan
+menjalankan program Anda, atau test suite-nya, dan mendeteksi kapan
+Anda melanggar aturan yang ia pahami tentang bagaimana Rust seharusnya
+bekerja.</p>
+<p>Menggunakan Miri memerlukan build nightly Rust (yang kami bahas
+lebih lanjut di <a href="appendix-07-nightly-rust.html">Lampiran G: Cara Rust Dibuat dan “Nightly
+Rust”</a><!-- ignore -->). Anda bisa menginstal kedua versi
+nightly Rust dan tool Miri dengan mengetik <code>rustup +nightly component add miri</code>. Ini tidak mengubah versi Rust yang digunakan
+proyek Anda; hanya menambahkan tool ke sistem Anda sehingga Anda
+bisa menggunakannya saat Anda mau. Anda bisa menjalankan Miri pada
+proyek dengan mengetik <code>cargo +nightly miri run</code> atau <code>cargo +nightly miri test</code>.</p>
+<p>Sebagai contoh betapa bermanfaatnya ini, pertimbangkan apa yang
+terjadi saat kami menjalankannya terhadap Listing 20-7.</p>
+<pre><code class="language-console">$ cargo +nightly miri run
+   Compiling unsafe-example v0.1.0 (file:///projects/unsafe-example)
+    Finished `dev` profile [unoptimized + debuginfo] target(s) in 0.17s
+     Running `file:///home/.rustup/toolchains/nightly/bin/cargo-miri runner target/miri/debug/unsafe-example`
+warning: integer-to-pointer cast
+ --&gt; src/main.rs:5:13
+  |
+5 |     let r = address as *mut i32;
+  |             ^^^^^^^^^^^^^^^^^^^ integer-to-pointer cast
+  |
+  = help: this program is using integer-to-pointer casts or (equivalently) `ptr::with_exposed_provenance`, which means that Miri might miss pointer bugs in this program
+  = help: see https://doc.rust-lang.org/nightly/std/ptr/fn.with_exposed_provenance.html for more details on that operation
+  = help: to ensure that Miri does not miss bugs in your program, use Strict Provenance APIs (https://doc.rust-lang.org/nightly/std/ptr/index.html#strict-provenance, https://crates.io/crates/sptr) instead
+  = help: you can then set `MIRIFLAGS=-Zmiri-strict-provenance` to ensure you are not relying on `with_exposed_provenance` semantics
+  = help: alternatively, `MIRIFLAGS=-Zmiri-permissive-provenance` disables this warning
+
+error: Undefined Behavior: constructing invalid value of type &amp;mut [i32]: encountered a dangling reference (0x1234[noalloc] has no provenance)
+ --&gt; src/main.rs:7:35
+  |
+7 |     let values: &amp;[i32] = unsafe { slice::from_raw_parts_mut(r, 10000) };
+  |                                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ Undefined Behavior occurred here
+  |
+  = help: this indicates a bug in the program: it performed an invalid operation, and caused Undefined Behavior
+  = help: see https://doc.rust-lang.org/nightly/reference/behavior-considered-undefined.html for further information
+
+note: some details are omitted, run with `MIRIFLAGS=-Zmiri-backtrace=full` for a verbose backtrace
+
+error: aborting due to 1 previous error; 1 warning emitted
+
+</code></pre>
+<p>Miri dengan benar memperingatkan kami bahwa kami me-cast integer
+ke pointer, yang mungkin masalah, tapi Miri tidak bisa menentukan
+apakah masalah ada karena ia tidak tahu bagaimana pointer
+berasal. Lalu, Miri mengembalikan error di mana Listing 20-7 punya
+undefined behavior karena punya dangling pointer. Berkat Miri,
+kami sekarang tahu ada risiko undefined behavior, dan kami bisa
+memikirkan cara membuat kode safe. Di beberapa kasus, Miri bahkan
+bisa membuat rekomendasi soal cara memperbaiki error.</p>
+<p>Miri tidak menangkap segalanya yang mungkin salah saat menulis
+kode unsafe. Miri adalah tool analisis dinamis, jadi ia hanya
+menangkap masalah dengan kode yang benar-benar dijalankan. Artinya
+Anda perlu menggunakannya bersamaan dengan teknik testing yang baik
+untuk meningkatkan kepercayaan diri soal kode unsafe yang Anda
+tulis. Miri juga tidak mencakup setiap cara mungkin kode Anda
+bisa unsound. Miri bisa menangkap banyak hal, tapi. Coba jalankan
+pada contoh lain kode unsafe di bab ini dan lihat apa yang ia
+bilang!</p>
+<p>Anda bisa mempelajari lebih lanjut tentang Miri di <a href="https://github.com/rust-lang/miri">repositori
+GitHub-nya</a>.</p>
+<h3 id="menggunakan-kode-unsafe-dengan-benar"><a class="header" href="#menggunakan-kode-unsafe-dengan-benar">Menggunakan Kode Unsafe dengan Benar</a></h3>
+<p>Menggunakan <code>unsafe</code> untuk menggunakan salah satu dari lima
+superpower yang baru dibahas bukanlah salah atau bahkan dikucilkan,
+tapi lebih sulit membuat kode <code>unsafe</code> yang benar karena compiler
+tidak bisa membantu menegakkan keamanan memori. Ketika Anda punya
+alasan untuk menggunakan kode <code>unsafe</code>, Anda bisa melakukannya,
+dan memiliki anotasi <code>unsafe</code> eksplisit memudahkan pelacakan sumber
+masalah saat mereka terjadi. Kapan pun Anda menulis kode unsafe,
+Anda bisa menggunakan Miri untuk membantu Anda lebih yakin bahwa
+kode yang Anda tulis menegakkan aturan Rust.</p>
+<p>Untuk eksplorasi jauh lebih dalam tentang cara bekerja secara
+efektif dengan unsafe Rust, baca panduan resmi Rust untuk
+<code>unsafe</code>, <a href="https://doc.rust-lang.org/nomicon/">The Rustonomicon</a>.</p>
+
+                    </main>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+                            <a rel="prev" href="ch20-00-advanced-features.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                                <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M41.4 233.4c-12.5 12.5-12.5 32.8 0 45.3l160 160c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3L109.3 256 246.6 118.6c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0l-160 160z"/></svg></span>
+                            </a>
+
+                            <a rel="next prefetch" href="ch20-02-advanced-traits.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                                <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M278.6 233.4c12.5 12.5 12.5 32.8 0 45.3l-160 160c-12.5 12.5-32.8 12.5-45.3 0s-12.5-32.8 0-45.3L210.7 256 73.4 118.6c-12.5-12.5-12.5-32.8 0-45.3s32.8-12.5 45.3 0l160 160z"/></svg></span>
+                            </a>
+
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+                    <a rel="prev" href="ch20-00-advanced-features.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                        <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M41.4 233.4c-12.5 12.5-12.5 32.8 0 45.3l160 160c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3L109.3 256 246.6 118.6c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0l-160 160z"/></svg></span>
+                    </a>
+
+                    <a rel="next prefetch" href="ch20-02-advanced-traits.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                        <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M278.6 233.4c12.5 12.5 12.5 32.8 0 45.3l-160 160c-12.5 12.5-32.8 12.5-45.3 0s-12.5-32.8 0-45.3L210.7 256 73.4 118.6c-12.5-12.5-12.5-32.8 0-45.3s32.8-12.5 45.3 0l160 160z"/></svg></span>
+                    </a>
+            </nav>
+
+        </div>
+
+        <template id=fa-eye><span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M288 32c-80.8 0-145.5 36.8-192.6 80.6C48.6 156 17.3 208 2.5 243.7c-3.3 7.9-3.3 16.7 0 24.6C17.3 304 48.6 356 95.4 399.4C142.5 443.2 207.2 480 288 480s145.5-36.8 192.6-80.6c46.8-43.5 78.1-95.4 93-131.1c3.3-7.9 3.3-16.7 0-24.6c-14.9-35.7-46.2-87.7-93-131.1C433.5 68.8 368.8 32 288 32zM432 256c0 79.5-64.5 144-144 144s-144-64.5-144-144s64.5-144 144-144s144 64.5 144 144zM288 192c0 35.3-28.7 64-64 64c-11.5 0-22.3-3-31.6-8.4c-.2 2.8-.4 5.5-.4 8.4c0 53 43 96 96 96s96-43 96-96s-43-96-96-96c-2.8 0-5.6 .1-8.4 .4c5.3 9.3 8.4 20.1 8.4 31.6z"/></svg></span></template>
+        <template id=fa-eye-slash><span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M38.8 5.1C28.4-3.1 13.3-1.2 5.1 9.2S-1.2 34.7 9.2 42.9l592 464c10.4 8.2 25.5 6.3 33.7-4.1s6.3-25.5-4.1-33.7L525.6 386.7c39.6-40.6 66.4-86.1 79.9-118.4c3.3-7.9 3.3-16.7 0-24.6c-14.9-35.7-46.2-87.7-93-131.1C465.5 68.8 400.8 32 320 32c-68.2 0-125 26.3-169.3 60.8L38.8 5.1zM223.1 149.5C248.6 126.2 282.7 112 320 112c79.5 0 144 64.5 144 144c0 24.9-6.3 48.3-17.4 68.7L408 294.5c5.2-11.8 8-24.8 8-38.5c0-53-43-96-96-96c-2.8 0-5.6 .1-8.4 .4c5.3 9.3 8.4 20.1 8.4 31.6c0 10.2-2.4 19.8-6.6 28.3l-90.3-70.8zm223.1 298L373 389.9c-16.4 6.5-34.3 10.1-53 10.1c-79.5 0-144-64.5-144-144c0-6.9 .5-13.6 1.4-20.2L83.1 161.5C60.3 191.2 44 220.8 34.5 243.7c-3.3 7.9-3.3 16.7 0 24.6c14.9 35.7 46.2 87.7 93 131.1C174.5 443.2 239.2 480 320 480c47.8 0 89.9-12.9 126.2-32.5z"/></svg></span></template>
+        <template id=fa-copy><span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M502.6 70.63l-61.25-61.25C435.4 3.371 427.2 0 418.7 0H255.1c-35.35 0-64 28.66-64 64l.0195 256C192 355.4 220.7 384 256 384h192c35.2 0 64-28.8 64-64V93.25C512 84.77 508.6 76.63 502.6 70.63zM464 320c0 8.836-7.164 16-16 16H255.1c-8.838 0-16-7.164-16-16L239.1 64.13c0-8.836 7.164-16 16-16h128L384 96c0 17.67 14.33 32 32 32h47.1V320zM272 448c0 8.836-7.164 16-16 16H63.1c-8.838 0-16-7.164-16-16L47.98 192.1c0-8.836 7.164-16 16-16H160V128H63.99c-35.35 0-64 28.65-64 64l.0098 256C.002 483.3 28.66 512 64 512h192c35.2 0 64-28.8 64-64v-32h-47.1L272 448z"/></svg></span></template>
+        <template id=fa-play><span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 384 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M73 39c-14.8-9.1-33.4-9.4-48.5-.9S0 62.6 0 80V432c0 17.4 9.4 33.4 24.5 41.9s33.7 8.1 48.5-.9L361 297c14.3-8.7 23-24.2 23-41s-8.7-32.2-23-41L73 39z"/></svg></span></template>
+        <template id=fa-clock-rotate-left><span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M75 75L41 41C25.9 25.9 0 36.6 0 57.9V168c0 13.3 10.7 24 24 24H134.1c21.4 0 32.1-25.9 17-41l-30.8-30.8C155 85.5 203 64 256 64c106 0 192 86 192 192s-86 192-192 192c-40.8 0-78.6-12.7-109.7-34.4c-14.5-10.1-34.4-6.6-44.6 7.9s-6.6 34.4 7.9 44.6C151.2 495 201.7 512 256 512c141.4 0 256-114.6 256-256S397.4 0 256 0C185.3 0 121.3 28.7 75 75zm181 53c-13.3 0-24 10.7-24 24V256c0 6.4 2.5 12.5 7 17l72 72c9.4 9.4 24.6 9.4 33.9 0s9.4-24.6 0-33.9l-65-65V152c0-13.3-10.7-24-24-24z"/></svg></span></template>
+
+
+
+        <script>
+            window.playground_copyable = true;
+        </script>
+
+
+        <script src="elasticlunr-ef4e11c1.min.js"></script>
+        <script src="mark-09e88c2c.min.js"></script>
+        <script src="searcher-09f2665d.js"></script>
+
+        <script src="clipboard-1626706a.min.js"></script>
+        <script src="highlight-abc7f01d.js"></script>
+        <script src="book-c22b7243.js"></script>
+
+        <!-- Custom JS scripts -->
+        <script src="ferris-2317480c.js"></script>
+
+
+
+    </div>
+    </body>
+</html>

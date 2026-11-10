@@ -1,0 +1,743 @@
+<!DOCTYPE HTML>
+<html lang="en" class="light sidebar-visible" dir="ltr">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>Menerbitkan Crate ke Crates.io - The Rust Programming Language</title>
+
+
+        <!-- Custom HTML head -->
+
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff">
+
+        <link rel="icon" href="favicon-de23e50b.svg">
+        <link rel="shortcut icon" href="favicon-8114d1fc.png">
+        <link rel="stylesheet" href="css/variables-8adf115d.css">
+        <link rel="stylesheet" href="css/general-0392ca55.css">
+        <link rel="stylesheet" href="css/chrome-fc474251.css">
+        <link rel="stylesheet" href="css/print-9e4910d8.css" media="print">
+
+        <!-- Fonts -->
+        <link rel="stylesheet" href="fonts/fonts-9644e21d.css">
+
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" id="mdbook-highlight-css" href="highlight-493f70e1.css">
+        <link rel="stylesheet" id="mdbook-tomorrow-night-css" href="tomorrow-night-4c0ae647.css">
+        <link rel="stylesheet" id="mdbook-ayu-highlight-css" href="ayu-highlight-3fdfc3ac.css">
+
+        <!-- Custom theme stylesheets -->
+        <link rel="stylesheet" href="ferris-d33b75bf.css">
+        <link rel="stylesheet" href="theme/2018-edition-4e126c62.css">
+        <link rel="stylesheet" href="theme/semantic-notes-9b5766c0.css">
+        <link rel="stylesheet" href="theme/listing-cab26221.css">
+
+
+        <!-- Provide site root and default themes to javascript -->
+        <script>
+            const path_to_root = "";
+            const default_light_theme = "light";
+            const default_dark_theme = "navy";
+            window.path_to_searchindex_js = "searchindex-e298a7a7.js";
+        </script>
+        <!-- Start loading toc.js asap -->
+        <script src="toc-8d1d8862.js"></script>
+    </head>
+    <body>
+    <div id="mdbook-help-container">
+        <div id="mdbook-help-popup">
+            <h2 class="mdbook-help-title">Keyboard shortcuts</h2>
+            <div>
+                <p>Press <kbd>←</kbd> or <kbd>→</kbd> to navigate between chapters</p>
+                <p>Press <kbd>S</kbd> or <kbd>/</kbd> to search in the book</p>
+                <p>Press <kbd>?</kbd> to show this help</p>
+                <p>Press <kbd>Esc</kbd> to hide this help</p>
+            </div>
+        </div>
+    </div>
+    <div id="mdbook-body-container">
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script>
+            try {
+                let theme = localStorage.getItem('mdbook-theme');
+                let sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script>
+            const default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? default_dark_theme : default_light_theme;
+            let theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            const html = document.documentElement;
+            html.classList.remove('light')
+            html.classList.add(theme);
+            html.classList.add("js");
+        </script>
+
+        <input type="checkbox" id="mdbook-sidebar-toggle-anchor" class="hidden">
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script>
+            let sidebar = null;
+            const sidebar_toggle = document.getElementById("mdbook-sidebar-toggle-anchor");
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            } else {
+                sidebar = 'hidden';
+                sidebar_toggle.checked = false;
+            }
+            if (sidebar === 'visible') {
+                sidebar_toggle.checked = true;
+            } else {
+                html.classList.remove('sidebar-visible');
+            }
+        </script>
+
+        <nav id="mdbook-sidebar" class="sidebar" aria-label="Table of contents">
+            <!-- populated by js -->
+            <mdbook-sidebar-scrollbox class="sidebar-scrollbox"></mdbook-sidebar-scrollbox>
+            <noscript>
+                <iframe class="sidebar-iframe-outer" src="toc.html"></iframe>
+            </noscript>
+            <div id="mdbook-sidebar-resize-handle" class="sidebar-resize-handle">
+                <div class="sidebar-resize-indicator"></div>
+            </div>
+        </nav>
+
+        <div id="mdbook-page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                <div id="mdbook-menu-bar-hover-placeholder"></div>
+                <div id="mdbook-menu-bar" class="menu-bar sticky">
+                    <div class="left-buttons">
+                        <label id="mdbook-sidebar-toggle" class="icon-button" for="mdbook-sidebar-toggle-anchor" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="mdbook-sidebar">
+                            <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M0 96C0 78.3 14.3 64 32 64H416c17.7 0 32 14.3 32 32s-14.3 32-32 32H32C14.3 128 0 113.7 0 96zM0 256c0-17.7 14.3-32 32-32H416c17.7 0 32 14.3 32 32s-14.3 32-32 32H32c-17.7 0-32-14.3-32-32zM448 416c0 17.7-14.3 32-32 32H32c-17.7 0-32-14.3-32-32s14.3-32 32-32H416c17.7 0 32 14.3 32 32z"/></svg></span>
+                        </label>
+                        <button id="mdbook-theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="mdbook-theme-list">
+                            <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M371.3 367.1c27.3-3.9 51.9-19.4 67.2-42.9L600.2 74.1c12.6-19.5 9.4-45.3-7.6-61.2S549.7-4.4 531.1 9.6L294.4 187.2c-24 18-38.2 46.1-38.4 76.1L371.3 367.1zm-19.6 25.4l-116-104.4C175.9 290.3 128 339.6 128 400c0 3.9 .2 7.8 .6 11.6c1.8 17.5-10.2 36.4-27.8 36.4H96c-17.7 0-32 14.3-32 32s14.3 32 32 32H240c61.9 0 112-50.1 112-112c0-2.5-.1-5-.2-7.5z"/></svg></span>
+                        </button>
+                        <ul id="mdbook-theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                            <li role="none"><button role="menuitem" class="theme" id="mdbook-theme-default_theme">Auto</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="mdbook-theme-light">Light</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="mdbook-theme-rust">Rust</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="mdbook-theme-coal">Coal</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="mdbook-theme-navy">Navy</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="mdbook-theme-ayu">Ayu</button></li>
+                        </ul>
+                        <button id="mdbook-search-toggle" class="icon-button" type="button" title="Search (`/`)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="/ s" aria-controls="mdbook-searchbar">
+                            <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M416 208c0 45.9-14.9 88.3-40 122.7L502.6 457.4c12.5 12.5 12.5 32.8 0 45.3s-32.8 12.5-45.3 0L330.7 376c-34.4 25.2-76.8 40-122.7 40C93.1 416 0 322.9 0 208S93.1 0 208 0S416 93.1 416 208zM208 352c79.5 0 144-64.5 144-144s-64.5-144-144-144S64 128.5 64 208s64.5 144 144 144z"/></svg></span>
+                        </button>
+                    </div>
+
+                    <h1 class="menu-title">The Rust Programming Language</h1>
+
+                    <div class="right-buttons">
+                        <a href="print.html" title="Print this book" aria-label="Print this book">
+                            <span class=fa-svg id="print-button"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M128 0C92.7 0 64 28.7 64 64v96h64V64H354.7L384 93.3V160h64V93.3c0-17-6.7-33.3-18.7-45.3L400 18.7C388 6.7 371.7 0 354.7 0H128zM384 352v32 64H128V384 368 352H384zm64 32h32c17.7 0 32-14.3 32-32V256c0-35.3-28.7-64-64-64H64c-35.3 0-64 28.7-64 64v96c0 17.7 14.3 32 32 32H64v64c0 35.3 28.7 64 64 64H384c35.3 0 64-28.7 64-64V384zm-16-88c-13.3 0-24-10.7-24-24s10.7-24 24-24s24 10.7 24 24s-10.7 24-24 24z"/></svg></span>
+                        </a>
+                        <a href="https://github.com/rust-lang/book" title="Git repository" aria-label="Git repository">
+                            <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 496 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M165.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6zm-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3zm44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9zM244.8 8C106.1 8 0 113.3 0 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C428.2 457.8 496 362.9 496 252 496 113.3 383.5 8 244.8 8zM97.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1zm-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7zm32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1zm-11.4-14.7c-1.6 1-1.6 3.6 0 5.9 1.6 2.3 4.3 3.3 5.6 2.3 1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2z"/></svg></span>
+                        </a>
+
+                    </div>
+                </div>
+
+                <div id="mdbook-search-wrapper" class="hidden">
+                    <form id="mdbook-searchbar-outer" class="searchbar-outer">
+                        <div class="search-wrapper">
+                            <input type="search" id="mdbook-searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="mdbook-searchresults-outer" aria-describedby="searchresults-header">
+                            <div class="spinner-wrapper">
+                                <span class=fa-svg id="fa-spin"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M304 48c0-26.5-21.5-48-48-48s-48 21.5-48 48s21.5 48 48 48s48-21.5 48-48zm0 416c0-26.5-21.5-48-48-48s-48 21.5-48 48s21.5 48 48 48s48-21.5 48-48zM48 304c26.5 0 48-21.5 48-48s-21.5-48-48-48s-48 21.5-48 48s21.5 48 48 48zm464-48c0-26.5-21.5-48-48-48s-48 21.5-48 48s21.5 48 48 48s48-21.5 48-48zM142.9 437c18.7-18.7 18.7-49.1 0-67.9s-49.1-18.7-67.9 0s-18.7 49.1 0 67.9s49.1 18.7 67.9 0zm0-294.2c18.7-18.7 18.7-49.1 0-67.9S93.7 56.2 75 75s-18.7 49.1 0 67.9s49.1 18.7 67.9 0zM369.1 437c18.7 18.7 49.1 18.7 67.9 0s18.7-49.1 0-67.9s-49.1-18.7-67.9 0s-18.7 49.1 0 67.9z"/></svg></span>
+                            </div>
+                        </div>
+                    </form>
+                    <div id="mdbook-searchresults-outer" class="searchresults-outer hidden">
+                        <div id="mdbook-searchresults-header" class="searchresults-header"></div>
+                        <ul id="mdbook-searchresults">
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script>
+                    document.getElementById('mdbook-sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('mdbook-sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#mdbook-sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="mdbook-content" class="content">
+                    <main>
+                        <h2 id="menerbitkan-crate-ke-cratesio"><a class="header" href="#menerbitkan-crate-ke-cratesio">Menerbitkan Crate ke Crates.io</a></h2>
+<p>Kami telah menggunakan paket dari <a href="https://crates.io/">crates.io</a><!-- ignore
+--> sebagai dependensi proyek kami, tapi Anda juga bisa berbagi kode Anda
+dengan orang lain dengan menerbitkan paket Anda sendiri. Registry crate di
+<a href="https://crates.io/">crates.io</a><!-- ignore --> mendistribusikan kode sumber
+paket Anda, jadi ia terutama menghosting kode yang open source.</p>
+<p>Rust dan Cargo memiliki fitur yang membuat paket yang diterbitkan Anda
+lebih mudah ditemukan dan digunakan orang. Kami akan membahas beberapa
+fitur ini selanjutnya dan lalu menjelaskan cara menerbitkan paket.</p>
+<h3 id="membuat-komentar-dokumentasi-yang-berguna"><a class="header" href="#membuat-komentar-dokumentasi-yang-berguna">Membuat Komentar Dokumentasi yang Berguna</a></h3>
+<p>Mendokumentasikan paket Anda dengan akurat akan membantu pengguna lain
+mengetahui bagaimana dan kapan menggunakan paket tersebut, jadi sepadan
+menginvestasikan waktu untuk menulis dokumentasi. Di Bab 3, kami membahas
+cara mengomentari kode Rust menggunakan dua garis miring, <code>//</code>. Rust juga
+memiliki jenis komentar khusus untuk dokumentasi, yang nyaman disebut
+<em>komen dokumentasi</em> (documentation comment), yang akan menghasilkan
+dokumentasi HTML. HTML menampilkan isi komentar dokumentasi untuk item
+API publik yang dimaksudkan untuk programmer yang tertahu mengetahui
+bagaimana <em>menggunakan</em> crate Anda berbanding dengan bagaimana crate Anda
+<em>diimplementasikan</em>.</p>
+<p>Komentar dokumentasi menggunakan tiga garis miring, <code>///</code>, alih-alih dua
+dan mendukung notasi Markdown untuk memformat teks. Letakkan komentar
+dokumentasi tepat sebelum item yang didokumentasikannya. Listing 14-1
+menunjukkan komentar dokumentasi untuk fungsi <code>add_one</code> di crate bernama
+<code>my_crate</code>.</p>
+<figure class="listing" id="listing-14-1">
+<span class="file-name">Filename: src/lib.rs</span>
+<pre><code class="language-rust ignore">/// Adds one to the number given.
+///
+/// # Examples
+///
+/// ```
+/// let arg = 5;
+/// let answer = my_crate::add_one(arg);
+///
+/// assert_eq!(6, answer);
+/// ```
+pub fn add_one(x: i32) -&gt; i32 {
+    x + 1
+}</code></pre>
+<figcaption><a href="#listing-14-1">Listing 14-1</a>: Komentar dokumentasi untuk fungsi</figcaption>
+</figure>
+<p>Di sini, kami memberikan deskripsi apa yang dilakukan fungsi <code>add_one</code>,
+memulai bagian dengan judul <code>Examples</code>, dan lalu menyediakan kode yang
+mendemonstrasikan cara menggunakan fungsi <code>add_one</code>. Kami bisa
+menghasilkan dokumentasi HTML dari komentar dokumentasi ini dengan
+menjalankan <code>cargo doc</code>. Perintah ini menjalankan alat <code>rustdoc</code> yang
+didistribusikan dengan Rust dan menaruh dokumentasi HTML yang dihasilkan
+di direktori <code>_target/doc_</code>.</p>
+<p>Untuk kenyamanan, menjalankan <code>cargo doc --open</code> akan membangun HTML untuk
+dokumentasi crate Anda saat ini (serta dokumentasi untuk semua dependensi
+crate Anda) dan membuka hasilnya di peramban web. Navigasikan ke fungsi
+<code>add_one</code> dan Anda akan melihat bagaimana teks di komentar dokumentasi
+dirender, seperti yang ditampilkan di Gambar 14-1.</p>
+<img alt="Rendered HTML documentation for the `add_one` function of `my_crate`" src="img/trpl14-01.png" class="center" />
+<p><span class="caption">Gambar 14-1: Dokumentasi HTML untuk fungsi <code>add_one</code></span></p>
+<h4 id="bagian-yang-sering-digunakan"><a class="header" href="#bagian-yang-sering-digunakan">Bagian yang Sering Digunakan</a></h4>
+<p>Kami menggunakan heading Markdown <code># Examples</code> di Listing 14-1 untuk
+membuat bagian di HTML dengan judul “Examples.” Berikut beberapa bagian
+lain yang penulis crate biasanya gunakan di dokumentasi mereka:</p>
+<ul>
+<li><strong>Panics</strong>: Ini adalah skenario di mana fungsi yang didokumentasikan
+bisa panic. Pemanggil fungsi yang tidak ingin program mereka panic
+seharusnya memastikan mereka tidak memanggil fungsi dalam situasi ini.</li>
+<li><strong>Errors</strong>: Jika fungsi mengembalikan <code>Result</code>, mendeskripsikan jenis
+kesalahan yang mungkin terjadi dan kondisi apa yang mungkin menyebabkan
+kesalahan tersebut dikembalikan bisa membantu pemanggil sehingga mereka
+bisa menulis kode untuk menangani berbagai jenis kesalahan dengan cara
+yang berbeda.</li>
+<li><strong>Safety</strong>: Jika fungsi <code>unsafe</code> untuk dipanggil (kami membahas
+ketidaksafetyan di Bab 20), seharusnya ada bagian yang menjelaskan
+mengapa fungsi tidak aman dan mencakup invariant yang fungsi harapkan
+pemanggil untuk dijaga.</li>
+</ul>
+<p>Kebanyakan komentar dokumentasi tidak butuh semua bagian ini, tapi ini
+checklist yang bagus untuk mengingatkan Anda aspek-aspek kode Anda yang
+pengguna akan tertahu mengetahuinya.</p>
+<h4 id="komentar-dokumentasi-sebagai-pengujian"><a class="header" href="#komentar-dokumentasi-sebagai-pengujian">Komentar Dokumentasi sebagai Pengujian</a></h4>
+<p>Menambahkan blok kode contoh di komentar dokumentasi Anda bisa membantu
+mendemonstrasikan cara menggunakan library Anda dan memiliki bonus
+tambahan: Menjalankan <code>cargo test</code> akan menjalankan contoh kode di
+komentar dokumentasi Anda sebagai pengujian! Tidak ada yang lebih baik
+dari dokumentasi dengan contoh. Tapi tidak ada yang lebih buruk dari
+contoh yang tidak berfungsi karena kode telah berubah sejak dokumentasi
+ditulis. Jika kami menjalankan <code>cargo test</code> dengan dokumentasi untuk
+fungsi <code>add_one</code> dari Listing 14-1, kami akan melihat bagian di hasil
+pengujian yang terlihat seperti ini:</p>
+<!-- manual-regeneration
+cd listings/ch14-more-about-cargo/listing-14-01/
+cargo test
+copy just the doc-tests section below
+-->
+<pre><code class="language-text">   Doc-tests my_crate
+
+running 1 test
+test src/lib.rs - add_one (line 5) ... ok
+
+test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.27s
+</code></pre>
+<p>Sekarang, jika kami mengubah baik fungsi atau contohnya sehingga
+<code>assert_eq!</code> di contoh panic, dan menjalankan <code>cargo test</code> lagi, kami
+akan melihat bahwa doc test menangkap bahwa contoh dan kode tidak
+selaras (out of sync) satu sama lain!</p>
+<!-- Judul lama. Jangan dihapus atau tautan bisa rusak. -->
+<p><a id="commenting-contained-items"></a></p>
+<h4 id="komentar-item-yang-terkandung"><a class="header" href="#komentar-item-yang-terkandung">Komentar Item yang Terkandung</a></h4>
+<p>Gaya komentar doc <code>//!</code> menambahkan dokumentasi ke item yang <em>mengandung</em>
+komentar bukannya ke item <em>yang mengikuti</em> komentar. Kami biasanya
+menggunakan komentar doc ini di dalam berkas root crate (<em>src/lib.rs</em>
+berdasarkan konvensi) atau di dalam modul untuk mendokumentasikan crate
+atau modul secara keseluruhan.</p>
+<p>Misalnya, untuk menambahkan dokumentasi yang menggambarkan tujuan crate
+<code>my_crate</code> yang berisi fungsi <code>add_one</code>, kami menambahkan komentar
+dokumentasi yang diawali dengan <code>//!</code> ke awal berkas <em>src/lib.rs</em>,
+seperti yang ditampilkan di Listing 14-2.</p>
+<figure class="listing" id="listing-14-2">
+<span class="file-name">Filename: src/lib.rs</span>
+<pre><code class="language-rust ignore">//! # My Crate
+//!
+//! `my_crate` is a collection of utilities to make performing certain
+//! calculations more convenient.
+
+/// Adds one to the number given.
+// --snip--
+<span class="boring">///
+</span><span class="boring">/// # Examples
+</span><span class="boring">///
+</span><span class="boring">/// ```
+</span><span class="boring">/// let arg = 5;
+</span><span class="boring">/// let answer = my_crate::add_one(arg);
+</span><span class="boring">///
+</span><span class="boring">/// assert_eq!(6, answer);
+</span><span class="boring">/// ```
+</span><span class="boring">pub fn add_one(x: i32) -&gt; i32 {
+</span><span class="boring">    x + 1
+</span><span class="boring">}</span></code></pre>
+<figcaption><a href="#listing-14-2">Listing 14-2</a>: Dokumentasi untuk crate <code>my_crate</code> secara keseluruhan</figcaption>
+</figure>
+<p>Perhatikan bahwa tidak ada kode apa pun setelah baris terakhir yang
+diawali dengan <code>//!</code>. Karena kami memulai komentar dengan <code>//!</code> bukan
+<code>///</code>, kami mendokumentasikan item yang mengandung komentar ini bukannya
+item yang mengikuti komentar ini. Dalam kasus ini, item tersebut adalah
+berkas <em>src/lib.rs</em>, yang adalah crate root. Komentar ini mendeskripsikan
+seluruh crate.</p>
+<p>Saat kami menjalankan <code>cargo doc --open</code>, komentar ini akan ditampilkan
+di halaman depan dokumentasi untuk <code>my_crate</code> di atas daftar item publik
+di crate, seperti yang ditampilkan di Gambar 14-2.</p>
+<img alt="Rendered HTML documentation with a comment for the crate as a whole" src="img/trpl14-02.png" class="center" />
+<p><span class="caption">Gambar 14-2: Dokumentasi ter-render untuk <code>my_crate</code>,
+termasuk komentar yang mendeskripsikan crate secara keseluruhan</span></p>
+<p>Komentar dokumentasi di dalam item berguna untuk mendeskripsikan crate
+dan modul terutama. Gunakan mereka untuk menjelaskan tujuan keseluruhan
+container untuk membantu pengguna Anda memahami organisasi crate.</p>
+<img alt="Rendered HTML documentation with a comment for the crate as a whole" src="img/trpl14-02.png" class="center" />
+<p><span class="caption">Gambar 14-2: Dokumentasi ter-render untuk <code>my_crate</code>,
+termasuk komentar yang mendeskripsikan crate secara keseluruhan</span></p>
+<!-- Judul lama. Jangan dihapus atau tautan bisa rusak. -->
+<p><a id="exporting-a-convenient-public-api-with-pub-use"></a></p>
+<h3 id="mengekspor-api-publik-yang-nyaman"><a class="header" href="#mengekspor-api-publik-yang-nyaman">Mengekspor API Publik yang Nyaman</a></h3>
+<p>Struktur API publik Anda adalah pertimbangan mayor saat menerbitkan
+crate. Orang yang menggunakan crate Anda kurang familiar dengan
+strukturnya dari Anda dan mungkin kesulitan menemukan potongan yang
+mereka ingin gunakan jika crate Anda memiliki hirarki modul yang besar.</p>
+<p>Di Bab 7, kami membahas cara membuat item publik menggunakan kata kunci
+<code>pub</code>, dan cara membawa item ke ruang lingkup dengan kata kunci <code>use</code>.
+Akan tetapi, struktur yang masuk akal bagi Anda saat mengembangkan crate
+mungkin tidak terlalu nyaman untuk pengguna Anda. Anda mungkin ingin
+mengorganisir struct Anda dalam hirarki yang berisi banyak level, tapi
+lalu orang yang ingin menggunakan tipe yang Anda definisikan jauh di dalam
+hirarki mungkin kesulitan menemukan bahwa tipe itu ada. Mereka mungkin
+juga kesal harus memasukkan <code>use my_crate::some_module::another_module::UsefulType;</code> alih-alih <code>use my_crate::UsefulType;</code>.</p>
+<p>Kabar baiknya adalah jika struktur <em>bukan</em> nyaman untuk orang lain
+menggunakan dari library lain, Anda tidak perlu mengatur ulang organisasi
+internal Anda: Sebagai gantinya, Anda bisa re-ekspor item untuk membuat
+struktur publik yang berbeda dari struktur privat Anda dengan menggunakan
+<code>pub use</code>. <em>Re-ekspor</em> (re-exporting) mengambil item publik di satu
+lokasi dan membuatnya publik di lokasi lain, seolah-olah didefinisikan di
+lokasi lain.</p>
+<p>Misalnya, katakanlah kami membuat library bernama <code>art</code> untuk
+memodelkan konsep artistik. Di dalam library ini ada dua modul: modul
+<code>kinds</code> yang berisi dua enum bernama <code>PrimaryColor</code> dan <code>SecondaryColor</code>
+dan modul <code>utils</code> yang berisi fungsi bernama <code>mix</code>, seperti yang
+ditampilkan di Listing 14-3.</p>
+<figure class="listing" id="listing-14-3">
+<span class="file-name">Filename: src/lib.rs</span>
+<pre><code class="language-rust noplayground test_harness">//! # Art
+//!
+//! A library for modeling artistic concepts.
+
+pub mod kinds {
+    /// The primary colors according to the RYB color model.
+    pub enum PrimaryColor {
+        Red,
+        Yellow,
+        Blue,
+    }
+
+    /// The secondary colors according to the RYB color model.
+    pub enum SecondaryColor {
+        Orange,
+        Green,
+        Purple,
+    }
+}
+
+pub mod utils {
+    use crate::kinds::*;
+
+    /// Combines two primary colors in equal amounts to create
+    /// a secondary color.
+    pub fn mix(c1: PrimaryColor, c2: PrimaryColor) -&gt; SecondaryColor {
+        // --snip--
+<span class="boring">        unimplemented!();
+</span>    }
+}</code></pre>
+<figcaption><a href="#listing-14-3">Listing 14-3</a>: Library <code>art</code> dengan item yang diorganisir ke modul <code>kinds</code> dan <code>utils</code></figcaption>
+</figure>
+<p>Gambar 14-3 menunjukkan seperti apa halaman depan dokumentasi untuk crate
+ini yang dihasilkan oleh <code>cargo doc</code> akan terlihat.</p>
+<img alt="Rendered documentation for the `art` crate that lists the `kinds` and `utils` modules" src="img/trpl14-03.png" class="center" />
+<p><span class="caption">Gambar 14-3: Halaman depan dokumentasi untuk <code>art</code>
+yang mencantumkan modul <code>kinds</code> dan <code>utils</code></span></p>
+<p>Perhatikan bahwa tipe <code>PrimaryColor</code> dan <code>SecondaryColor</code> tidak
+tercantum di halaman depan, begitu juga fungsi <code>mix</code>. Kami harus klik
+<code>kinds</code> dan <code>utils</code> untuk melihatnya.</p>
+<p>Crate lain yang bergantung pada library ini akan butuh pernyataan <code>use</code>
+yang membawa item dari <code>art</code> ke ruang lingkup, menentukan struktur
+modul yang saat ini didefinisikan. Listing 14-4 menunjukkan contoh crate
+yang menggunakan item <code>PrimaryColor</code> dan <code>mix</code> dari crate <code>art</code>.</p>
+<figure class="listing" id="listing-14-4">
+<span class="file-name">Filename: src/main.rs</span>
+<pre><code class="language-rust ignore">use art::kinds::PrimaryColor;
+use art::utils::mix;
+
+fn main() {
+    let red = PrimaryColor::Red;
+    let yellow = PrimaryColor::Yellow;
+    mix(red, yellow);
+}</code></pre>
+<figcaption><a href="#listing-14-4">Listing 14-4</a>: Crate yang menggunakan item crate <code>art</code> dengan struktur internalnya diekspor</figcaption>
+</figure>
+<p>Penulis kode di Listing 14-4, yang menggunakan crate <code>art</code>, harus
+menemukan bahwa <code>PrimaryColor</code> ada di modul <code>kinds</code> dan <code>mix</code> ada di
+modul <code>utils</code>. Struktur modul crate <code>art</code> lebih relevan bagi pengembang
+yang bekerja pada crate <code>art</code> daripada mereka yang menggunakannya.
+Struktur internal tidak berisi informasi berguna bagi seseorang yang
+mencoba memahami cara menggunakan crate <code>art</code>, tapi justru menimbulkan
+kebingungan karena pengembang yang menggunakannya harus mencari tahu di
+mana harus mencari, dan harus menentukan nama modul di pernyataan <code>use</code>.</p>
+<p>Untuk menghapus organisasi internal dari API publik, kami bisa memodifikasi
+kode crate <code>art</code> di Listing 14-3 untuk menambahkan pernyataan <code>pub use</code>
+untuk re-ekspor item di level atas, seperti yang ditampilkan di
+Listing 14-5.</p>
+<figure class="listing" id="listing-14-5">
+<span class="file-name">Filename: src/lib.rs</span>
+<pre><code class="language-rust ignore">//! # Art
+//!
+//! A library for modeling artistic concepts.
+
+pub use self::kinds::PrimaryColor;
+pub use self::kinds::SecondaryColor;
+pub use self::utils::mix;
+
+pub mod kinds {
+    // --snip--
+<span class="boring">    /// The primary colors according to the RYB color model.
+</span><span class="boring">    pub enum PrimaryColor {
+</span><span class="boring">        Red,
+</span><span class="boring">        Yellow,
+</span><span class="boring">        Blue,
+</span><span class="boring">    }
+</span><span class="boring">
+</span><span class="boring">    /// The secondary colors according to the RYB color model.
+</span><span class="boring">    pub enum SecondaryColor {
+</span><span class="boring">        Orange,
+</span><span class="boring">        Green,
+</span><span class="boring">        Purple,
+</span><span class="boring">    }
+</span>}
+
+pub mod utils {
+    // --snip--
+<span class="boring">    use crate::kinds::*;
+</span><span class="boring">
+</span><span class="boring">    /// Combines two primary colors in equal amounts to create
+</span><span class="boring">    /// a secondary color.
+</span><span class="boring">    pub fn mix(c1: PrimaryColor, c2: PrimaryColor) -&gt; SecondaryColor {
+</span><span class="boring">        SecondaryColor::Orange
+</span><span class="boring">    }
+</span>}</code></pre>
+<figcaption><a href="#listing-14-5">Listing 14-5</a>: Menambahkan pernyataan <code>pub use</code> untuk re-ekspor item</figcaption>
+</figure>
+<p>Dokumentasi API yang <code>cargo doc</code> hasilkan untuk crate ini kini akan
+mencantumkan dan menautkan re-ekspor di halaman depan, seperti yang
+ditampilkan di Gambar 14-4, membuat tipe <code>PrimaryColor</code> dan
+<code>SecondaryColor</code> dan fungsi <code>mix</code> lebih mudah ditemukan.</p>
+<img alt="Rendered documentation for the `art` crate with the re-exports on the front page" src="img/trpl14-04.png" class="center" />
+<p><span class="caption">Gambar 14-4: Halaman depan dokumentasi untuk <code>art</code>
+yang mencantumkan re-ekspor</span></p>
+<p>Pengguna crate <code>art</code> masih bisa melihat dan menggunakan struktur internal
+dari Listing 14-3 seperti yang didemonstrasikan di Listing 14-4, atau
+mereka bisa menggunakan struktur yang lebih nyaman di Listing 14-5,
+seperti yang ditampilkan di Listing 14-6.</p>
+<figure class="listing" id="listing-14-6">
+<span class="file-name">Filename: src/main.rs</span>
+<pre><code class="language-rust ignore">use art::PrimaryColor;
+use art::mix;
+
+fn main() {
+    // --snip--
+<span class="boring">    let red = PrimaryColor::Red;
+</span><span class="boring">    let yellow = PrimaryColor::Yellow;
+</span><span class="boring">    mix(red, yellow);
+</span>}</code></pre>
+<figcaption><a href="#listing-14-6">Listing 14-6</a>: Program yang menggunakan item yang di-re-ekspor dari crate <code>art</code></figcaption>
+</figure>
+<p>Dalam kasus di mana ada banyak modul bersarang, re-ekspor tipe di level
+atas dengan <code>pub use</code> bisa membuat perbedaan signifikan dalam pengalaman
+orang yang menggunakan crate. Penggunaan umum lain <code>pub use</code> adalah
+re-ekspor definisi dependensi di crate saat ini untuk membuat definisi
+crate itu menjadi bagian dari API publik crate Anda.</p>
+<p>Membuat struktur API publik yang berguna lebih merupakan seni dari pada
+sains, dan Anda bisa beriterasi untuk menemukan API yang paling
+bekerja untuk pengguna Anda. Memilih <code>pub use</code> memberi Anda fleksibilitas
+dalam cara Anda menstruktur crate internal Anda dan memisahkan struktur
+internal itu dari apa yang Anda presentasikan ke pengguna Anda. Lihat
+beberapa kode crate yang Anda instal untuk melihat apakah struktur
+internal mereka berbeda dari API publik mereka.</p>
+<h3 id="menyiapkan-akun-cratesio"><a class="header" href="#menyiapkan-akun-cratesio">Menyiapkan Akun Crates.io</a></h3>
+<p>Sebelum Anda bisa menerbitkan crate apa pun, Anda perlu membuat akun di
+<a href="https://crates.io/">crates.io</a><!-- ignore --> dan mendapatkan token API.
+Untuk melakukannya, kunjungi halaman utama di
+<a href="https://crates.io/">crates.io</a><!-- ignore --> dan login via akun
+GitHub. (Akun GitHub saat ini adalah persyaratan, tapi situs mungkin
+mendukung cara lain membuat akun di masa depan.) Begitu Anda login,
+kunjungi pengaturan akun Anda di
+<a href="https://crates.io/me/">https://crates.io/me/</a><!-- ignore --> dan
+ambil kunci API Anda. Lalu, jalankan perintah <code>cargo login</code> dan tempel
+kunci API Anda saat diminta, seperti ini:</p>
+<pre><code class="language-console">$ cargo login
+abcdefghijklmnopqrstuvwxyz012345
+</code></pre>
+<p>Perintah ini akan memberitahu Cargo token API Anda dan menyimpannya
+secara lokal di <em>~/.cargo/credentials.toml</em>. Perhatikan bahwa token ini
+rahasia: Jangan bagikan ke siapa pun. Jika Anda membagikannya ke siapa
+pun untuk alasan apa pun, Anda harus mencabutnya dan menghasilkan token
+baru di <a href="https://crates.io/">crates.io</a><!-- ignore -->.</p>
+<h3 id="menambahkan-metadata-ke-crate-baru"><a class="header" href="#menambahkan-metadata-ke-crate-baru">Menambahkan Metadata ke Crate Baru</a></h3>
+<p>Katakanlah Anda memiliki crate yang ingin diterbitkan. Sebelum
+menerbitkan, Anda perlu menambahkan beberapa metadata di bagian
+<code>[package]</code> dari berkas <code>_Cargo.toml_</code> crate.</p>
+<p>Crate Anda akan butuh nama unik. Selama Anda bekerja pada crate secara
+lokal, Anda bisa menamai crate apa pun yang Anda mau. Akan tetapi, nama
+crate di <a href="https://crates.io/">crates.io</a><!-- ignore --> dialokasikan
+berdasarkan first-come, first-served. Begitu nama crate diambil, tidak
+ada yang lain bisa menerbitkan crate dengan nama itu. Sebelum mencoba
+menerbitkan crate, cari nama yang ingin Anda gunakan. Jika nama sudah
+digunakan, Anda perlu menemukan nama lain dan mengedit field <code>name</code> di
+berkas <code>_Cargo.toml_</code> di bawah bagian <code>[package]</code> untuk menggunakan nama
+baru untuk penerbitan, seperti begini:</p>
+<p><span class="filename">Nama Berkas: Cargo.toml</span></p>
+<pre><code class="language-toml">[package]
+name = "guessing_game"
+</code></pre>
+<p>Bahkan jika Anda sudah memilih nama unik, saat Anda menjalankan
+<code>cargo publish</code> untuk menerbitkan crate pada titik ini, Anda akan
+mendapat peringatan dan lalu kesalahan:</p>
+<!-- manual-regeneration
+Create a new package with an unregistered name, making no further modifications
+  to the generated package, so it is missing the description and license fields.
+cargo publish
+copy just the relevant lines below
+-->
+<pre><code class="language-console">$ cargo publish
+    Updating crates.io index
+warning: manifest has no description, license, license-file, documentation, homepage or repository.
+See https://doc.rust-lang.org/cargo/reference/manifest.html#package-metadata for more info.
+--snip--
+error: failed to publish to registry at https://crates.io
+</code></pre>
+<pre><code class="language-console">Caused by:
+  the remote server responded with an error (status 400 Bad Request): missing or empty metadata fields: description, license. Please see https://doc.rust-lang.org/cargo/reference/manifest.html for more information on configuring these fields
+</code></pre>
+<p>Ini menghasilkan kesalahan karena Anda kehilangan informasi penting:
+Deskripsi dan lisensi diperlukan agar orang tahu apa yang dilakukan crate
+Anda dan di bawah ketentuan apa mereka bisa menggunakannya. Di
+<code>_Cargo.toml_</code>, tambahkan deskripsi yang hanya satu atau dua kalimat,
+karena akan muncul dengan crate Anda di hasil pencarian. Untuk field
+<code>license</code>, Anda perlu memberikan <em>nilai pengidentifikasi lisensi</em>. <a href="https://spdx.org/licenses/">Linux
+Foundation’s Software Package Data Exchange (SPDX)</a> mencantumkan
+pengidentifikasi yang bisa Anda gunakan untuk nilai ini. Misalnya, untuk
+menentukan bahwa Anda melisensikan crate Anda menggunakan Lisensi MIT,
+tambahkan pengidentifikasi <code>MIT</code>:</p>
+<p><span class="filename">Nama Berkas: Cargo.toml</span></p>
+<pre><code class="language-toml">[package]
+name = "guessing_game"
+license = "MIT"
+</code></pre>
+<p>Jika Anda ingin menggunakan lisensi yang tidak muncul di SPDX, Anda perlu
+menaruh teks lisensi itu di berkas, menyertakan berkas di proyek Anda,
+dan lalu menggunakan <code>license-file</code> untuk menentukan nama berkas itu
+alih-alih menggunakan kunci <code>license</code>.</p>
+<p>Panduan tentang lisensi mana yang tepat untuk proyek Anda di luar cakupan
+buku ini. Banyak orang di komunitas Rust melisensikan proyek mereka dengan
+cara yang sama seperti Rust dengan menggunakan lisensi dual <code>MIT OR Apache-2.0</code>. Praktik ini mendemonstrasikan bahwa Anda juga bisa
+menentukan beberapa pengidentifikasi lisensi yang dipisahkan oleh <code>OR</code>
+untuk memiliki beberapa lisensi untuk proyek Anda.</p>
+<p>Dengan nama unik, versi, deskripsi Anda, dan lisensi ditambahkan, berkas
+<code>_Cargo.toml_</code> untuk proyek yang siap diterbitkan mungkin terlihat seperti
+ini:</p>
+<p><span class="filename">Nama Berkas: Cargo.toml</span></p>
+<pre><code class="language-toml">[package]
+name = "guessing_game"
+version = "0.1.0"
+edition = "2024"
+description = "A fun game where you guess what number the computer has chosen."
+license = "MIT OR Apache-2.0"
+
+[dependencies]
+</code></pre>
+<p><a href="https://doc.rust-lang.org/cargo/">Dokumentasi Cargo</a> mendeskripsikan
+metadata lain yang bisa Anda tentukan untuk memastikan orang lain bisa
+menemukan dan menggunakan crate Anda dengan lebih mudah.</p>
+<h3 id="menerbitkan-ke-cratesio"><a class="header" href="#menerbitkan-ke-cratesio">Menerbitkan ke Crates.io</a></h3>
+<p>Sekarang setelah Anda membuat akun, menyimpan token API, memilih nama
+untuk crate Anda, dan menentukan metadata yang diperlukan, Anda siap
+menerbitkan! Menerbitkan crate mengunggah versi tertentu ke
+<a href="https://crates.io/">crates.io</a><!-- ignore --> untuk digunakan orang
+lain.</p>
+<p>Hati-hati, karena penerbitan <em>permanen</em>. Versi tidak pernah bisa
+ditimpa, dan kode tidak bisa dihapus kecuali dalam keadaan tertentu.
+Satu tujuan utama Crates.io adalah bertindak sebagai arsip permanen kode
+sehingga build semua proyek yang bergantung pada crate dari
+<a href="https://crates.io/">crates.io</a><!-- ignore --> akan terus bekerja.
+Mengizinkan penghapusan versi akan membuat memenuhi tujuan itu mustahil.
+Akan tetapi, tidak ada batas jumlah versi crate yang bisa Anda terbitkan.</p>
+<p>Jalankan perintah <code>cargo publish</code> lagi. Seharusnya sukses sekarang:</p>
+<!-- manual-regeneration
+go to some valid crate, publish a new version
+cargo publish
+copy just the relevant lines below
+-->
+<pre><code class="language-console">$ cargo publish
+    Updating crates.io index
+   Packaging guessing_game v0.1.0 (file:///projects/guessing_game)
+    Packaged 6 files, 1.2KiB (895.0B compressed)
+    Verifying guessing_game v0.1.0 (file:///projects/guessing_game)
+    Compiling guessing_game v0.1.0
+(file:///projects/guessing_game/target/package/guessing_game-0.1.0)
+     Finished `dev` profile [unoptimized + debuginfo] target(s) in 0.19s
+    Uploading guessing_game v0.1.0 (file:///projects/guessing_game)
+     Uploaded guessing_game v0.1.0 to registry `crates-io`
+note: waiting for `guessing_game v0.1.0` to be available at registry
+`crates-io`.
+You may press ctrl-c to skip waiting; the crate should be available shortly.
+    Published guessing_game v0.1.0 at registry `crates-io`
+</code></pre>
+<p>Selamat! Anda kini telah berbagi kode Anda dengan komunitas Rust, dan
+siapa pun bisa dengan mudah menambahkan crate Anda sebagai dependensi
+proyek mereka.</p>
+<h3 id="menerbitkan-versi-baru-dari-crate-yang-sudah-ada"><a class="header" href="#menerbitkan-versi-baru-dari-crate-yang-sudah-ada">Menerbitkan Versi Baru dari Crate yang Sudah Ada</a></h3>
+<p>Saat Anda telah membuat perubahan ke crate Anda dan siap merilis versi
+baru, Anda mengubah nilai <code>version</code> yang dispesifikasikan di berkas
+<code>_Cargo.toml_</code> Anda dan menerbitkan ulang. Gunakan <a href="https://semver.org/">Semantic Versioning
+rules</a> untuk memutuskan nomor versi selanjutnya yang tepat,
+berdasarkan jenis perubahan yang Anda buat. Lalu, jalankan <code>cargo publish</code> untuk mengunggah versi baru.</p>
+<!-- Judul lama. Jangan dihapus atau tautan bisa rusak. -->
+<p><a id="removing-versions-from-cratesio-with-cargo-yank"></a>
+<a id="deprecating-versions-from-cratesio-with-cargo-yank"></a></p>
+<h3 id="men-deprecate-versi-dari-cratesio"><a class="header" href="#men-deprecate-versi-dari-cratesio">Men-deprecate Versi dari Crates.io</a></h3>
+<p>Meskipun Anda tidak bisa menghapus versi sebelumnya crate, Anda bisa
+mencegah proyek masa depan menambahkannya sebagai dependensi baru. Ini
+berguna saat versi crate rusak karena alasan tertentu. Dalam situasi
+seperti itu, Cargo mendukung yanking versi crate.</p>
+<p><em>Menyangkut</em> (yanking) versi mencegah proyek baru bergantung pada versi
+itu sambil mengizinkan semua proyek yang sudah ada yang bergantung
+padanya untuk terus berjalan. Intinya, yank berarti semua proyek dengan
+<code>_Cargo.lock_</code> tidak akan rusak, dan <code>_Cargo.lock_</code> masa depan yang
+dihasilkan tidak akan menggunakan versi yang di-yank.</p>
+<p>Untuk yank versi crate, di direktori crate yang Anda terbitkan
+sebelumnya, jalankan <code>cargo yank</code> dan tentukan versi mana yang ingin Anda
+yank. Misalnya, jika kami telah menerbitkan crate bernama <code>guessing_game</code>
+versi 1.0.1 dan kami ingin yank itu, maka kami akan menjalankan yang
+berikut di direktori proyek <code>guessing_game</code>:</p>
+<!-- manual-regeneration:
+cargo yank carol-test --version 2.1.0
+cargo yank carol-test --version 2.1.0 --undo
+-->
+<pre><code class="language-console">$ cargo yank --vers 1.0.1
+    Updating crates.io index
+        Yank guessing_game@1.0.1
+</code></pre>
+<p>Dengan menambahkan <code>--undo</code> ke perintah, Anda juga bisa meng-undo yank
+dan mengizinkan proyek untuk mulai bergantung pada versi lagi:</p>
+<pre><code class="language-console">$ cargo yank --vers 1.0.1 --undo
+    Updating crates.io index
+      Unyank guessing_game@1.0.1
+</code></pre>
+<p>Sebuah yank <em>tidak</em> menghapus kode apa pun. Ia tidak bisa, misalnya,
+menghapus rahasia yang tidak sengaja diunggah. Jika itu terjadi, Anda
+harus mereset rahasia itu segera.</p>
+
+                    </main>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+                            <a rel="prev" href="ch14-01-release-profiles.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                                <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M41.4 233.4c-12.5 12.5-12.5 32.8 0 45.3l160 160c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3L109.3 256 246.6 118.6c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0l-160 160z"/></svg></span>
+                            </a>
+
+                            <a rel="next prefetch" href="ch14-03-cargo-workspaces.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                                <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M278.6 233.4c12.5 12.5 12.5 32.8 0 45.3l-160 160c-12.5 12.5-32.8 12.5-45.3 0s-12.5-32.8 0-45.3L210.7 256 73.4 118.6c-12.5-12.5-12.5-32.8 0-45.3s32.8-12.5 45.3 0l160 160z"/></svg></span>
+                            </a>
+
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+                    <a rel="prev" href="ch14-01-release-profiles.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                        <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M41.4 233.4c-12.5 12.5-12.5 32.8 0 45.3l160 160c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3L109.3 256 246.6 118.6c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0l-160 160z"/></svg></span>
+                    </a>
+
+                    <a rel="next prefetch" href="ch14-03-cargo-workspaces.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                        <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M278.6 233.4c12.5 12.5 12.5 32.8 0 45.3l-160 160c-12.5 12.5-32.8 12.5-45.3 0s-12.5-32.8 0-45.3L210.7 256 73.4 118.6c-12.5-12.5-12.5-32.8 0-45.3s32.8-12.5 45.3 0l160 160z"/></svg></span>
+                    </a>
+            </nav>
+
+        </div>
+
+        <template id=fa-eye><span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M288 32c-80.8 0-145.5 36.8-192.6 80.6C48.6 156 17.3 208 2.5 243.7c-3.3 7.9-3.3 16.7 0 24.6C17.3 304 48.6 356 95.4 399.4C142.5 443.2 207.2 480 288 480s145.5-36.8 192.6-80.6c46.8-43.5 78.1-95.4 93-131.1c3.3-7.9 3.3-16.7 0-24.6c-14.9-35.7-46.2-87.7-93-131.1C433.5 68.8 368.8 32 288 32zM432 256c0 79.5-64.5 144-144 144s-144-64.5-144-144s64.5-144 144-144s144 64.5 144 144zM288 192c0 35.3-28.7 64-64 64c-11.5 0-22.3-3-31.6-8.4c-.2 2.8-.4 5.5-.4 8.4c0 53 43 96 96 96s96-43 96-96s-43-96-96-96c-2.8 0-5.6 .1-8.4 .4c5.3 9.3 8.4 20.1 8.4 31.6z"/></svg></span></template>
+        <template id=fa-eye-slash><span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M38.8 5.1C28.4-3.1 13.3-1.2 5.1 9.2S-1.2 34.7 9.2 42.9l592 464c10.4 8.2 25.5 6.3 33.7-4.1s6.3-25.5-4.1-33.7L525.6 386.7c39.6-40.6 66.4-86.1 79.9-118.4c3.3-7.9 3.3-16.7 0-24.6c-14.9-35.7-46.2-87.7-93-131.1C465.5 68.8 400.8 32 320 32c-68.2 0-125 26.3-169.3 60.8L38.8 5.1zM223.1 149.5C248.6 126.2 282.7 112 320 112c79.5 0 144 64.5 144 144c0 24.9-6.3 48.3-17.4 68.7L408 294.5c5.2-11.8 8-24.8 8-38.5c0-53-43-96-96-96c-2.8 0-5.6 .1-8.4 .4c5.3 9.3 8.4 20.1 8.4 31.6c0 10.2-2.4 19.8-6.6 28.3l-90.3-70.8zm223.1 298L373 389.9c-16.4 6.5-34.3 10.1-53 10.1c-79.5 0-144-64.5-144-144c0-6.9 .5-13.6 1.4-20.2L83.1 161.5C60.3 191.2 44 220.8 34.5 243.7c-3.3 7.9-3.3 16.7 0 24.6c14.9 35.7 46.2 87.7 93 131.1C174.5 443.2 239.2 480 320 480c47.8 0 89.9-12.9 126.2-32.5z"/></svg></span></template>
+        <template id=fa-copy><span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M502.6 70.63l-61.25-61.25C435.4 3.371 427.2 0 418.7 0H255.1c-35.35 0-64 28.66-64 64l.0195 256C192 355.4 220.7 384 256 384h192c35.2 0 64-28.8 64-64V93.25C512 84.77 508.6 76.63 502.6 70.63zM464 320c0 8.836-7.164 16-16 16H255.1c-8.838 0-16-7.164-16-16L239.1 64.13c0-8.836 7.164-16 16-16h128L384 96c0 17.67 14.33 32 32 32h47.1V320zM272 448c0 8.836-7.164 16-16 16H63.1c-8.838 0-16-7.164-16-16L47.98 192.1c0-8.836 7.164-16 16-16H160V128H63.99c-35.35 0-64 28.65-64 64l.0098 256C.002 483.3 28.66 512 64 512h192c35.2 0 64-28.8 64-64v-32h-47.1L272 448z"/></svg></span></template>
+        <template id=fa-play><span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 384 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M73 39c-14.8-9.1-33.4-9.4-48.5-.9S0 62.6 0 80V432c0 17.4 9.4 33.4 24.5 41.9s33.7 8.1 48.5-.9L361 297c14.3-8.7 23-24.2 23-41s-8.7-32.2-23-41L73 39z"/></svg></span></template>
+        <template id=fa-clock-rotate-left><span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M75 75L41 41C25.9 25.9 0 36.6 0 57.9V168c0 13.3 10.7 24 24 24H134.1c21.4 0 32.1-25.9 17-41l-30.8-30.8C155 85.5 203 64 256 64c106 0 192 86 192 192s-86 192-192 192c-40.8 0-78.6-12.7-109.7-34.4c-14.5-10.1-34.4-6.6-44.6 7.9s-6.6 34.4 7.9 44.6C151.2 495 201.7 512 256 512c141.4 0 256-114.6 256-256S397.4 0 256 0C185.3 0 121.3 28.7 75 75zm181 53c-13.3 0-24 10.7-24 24V256c0 6.4 2.5 12.5 7 17l72 72c9.4 9.4 24.6 9.4 33.9 0s9.4-24.6 0-33.9l-65-65V152c0-13.3-10.7-24-24-24z"/></svg></span></template>
+
+
+
+        <script>
+            window.playground_copyable = true;
+        </script>
+
+
+        <script src="elasticlunr-ef4e11c1.min.js"></script>
+        <script src="mark-09e88c2c.min.js"></script>
+        <script src="searcher-09f2665d.js"></script>
+
+        <script src="clipboard-1626706a.min.js"></script>
+        <script src="highlight-abc7f01d.js"></script>
+        <script src="book-c22b7243.js"></script>
+
+        <!-- Custom JS scripts -->
+        <script src="ferris-2317480c.js"></script>
+
+
+
+    </div>
+    </body>
+</html>

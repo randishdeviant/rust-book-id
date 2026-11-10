@@ -1,0 +1,1357 @@
+<!DOCTYPE HTML>
+<html lang="en" class="light sidebar-visible" dir="ltr">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>Memprogram Permainan Tebak Angka - The Rust Programming Language</title>
+
+
+        <!-- Custom HTML head -->
+
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff">
+
+        <link rel="icon" href="favicon-de23e50b.svg">
+        <link rel="shortcut icon" href="favicon-8114d1fc.png">
+        <link rel="stylesheet" href="css/variables-8adf115d.css">
+        <link rel="stylesheet" href="css/general-0392ca55.css">
+        <link rel="stylesheet" href="css/chrome-fc474251.css">
+        <link rel="stylesheet" href="css/print-9e4910d8.css" media="print">
+
+        <!-- Fonts -->
+        <link rel="stylesheet" href="fonts/fonts-9644e21d.css">
+
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" id="mdbook-highlight-css" href="highlight-493f70e1.css">
+        <link rel="stylesheet" id="mdbook-tomorrow-night-css" href="tomorrow-night-4c0ae647.css">
+        <link rel="stylesheet" id="mdbook-ayu-highlight-css" href="ayu-highlight-3fdfc3ac.css">
+
+        <!-- Custom theme stylesheets -->
+        <link rel="stylesheet" href="ferris-d33b75bf.css">
+        <link rel="stylesheet" href="theme/2018-edition-4e126c62.css">
+        <link rel="stylesheet" href="theme/semantic-notes-9b5766c0.css">
+        <link rel="stylesheet" href="theme/listing-cab26221.css">
+
+
+        <!-- Provide site root and default themes to javascript -->
+        <script>
+            const path_to_root = "";
+            const default_light_theme = "light";
+            const default_dark_theme = "navy";
+            window.path_to_searchindex_js = "searchindex-e298a7a7.js";
+        </script>
+        <!-- Start loading toc.js asap -->
+        <script src="toc-8d1d8862.js"></script>
+    </head>
+    <body>
+    <div id="mdbook-help-container">
+        <div id="mdbook-help-popup">
+            <h2 class="mdbook-help-title">Keyboard shortcuts</h2>
+            <div>
+                <p>Press <kbd>←</kbd> or <kbd>→</kbd> to navigate between chapters</p>
+                <p>Press <kbd>S</kbd> or <kbd>/</kbd> to search in the book</p>
+                <p>Press <kbd>?</kbd> to show this help</p>
+                <p>Press <kbd>Esc</kbd> to hide this help</p>
+            </div>
+        </div>
+    </div>
+    <div id="mdbook-body-container">
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script>
+            try {
+                let theme = localStorage.getItem('mdbook-theme');
+                let sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script>
+            const default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? default_dark_theme : default_light_theme;
+            let theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            const html = document.documentElement;
+            html.classList.remove('light')
+            html.classList.add(theme);
+            html.classList.add("js");
+        </script>
+
+        <input type="checkbox" id="mdbook-sidebar-toggle-anchor" class="hidden">
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script>
+            let sidebar = null;
+            const sidebar_toggle = document.getElementById("mdbook-sidebar-toggle-anchor");
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            } else {
+                sidebar = 'hidden';
+                sidebar_toggle.checked = false;
+            }
+            if (sidebar === 'visible') {
+                sidebar_toggle.checked = true;
+            } else {
+                html.classList.remove('sidebar-visible');
+            }
+        </script>
+
+        <nav id="mdbook-sidebar" class="sidebar" aria-label="Table of contents">
+            <!-- populated by js -->
+            <mdbook-sidebar-scrollbox class="sidebar-scrollbox"></mdbook-sidebar-scrollbox>
+            <noscript>
+                <iframe class="sidebar-iframe-outer" src="toc.html"></iframe>
+            </noscript>
+            <div id="mdbook-sidebar-resize-handle" class="sidebar-resize-handle">
+                <div class="sidebar-resize-indicator"></div>
+            </div>
+        </nav>
+
+        <div id="mdbook-page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                <div id="mdbook-menu-bar-hover-placeholder"></div>
+                <div id="mdbook-menu-bar" class="menu-bar sticky">
+                    <div class="left-buttons">
+                        <label id="mdbook-sidebar-toggle" class="icon-button" for="mdbook-sidebar-toggle-anchor" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="mdbook-sidebar">
+                            <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M0 96C0 78.3 14.3 64 32 64H416c17.7 0 32 14.3 32 32s-14.3 32-32 32H32C14.3 128 0 113.7 0 96zM0 256c0-17.7 14.3-32 32-32H416c17.7 0 32 14.3 32 32s-14.3 32-32 32H32c-17.7 0-32-14.3-32-32zM448 416c0 17.7-14.3 32-32 32H32c-17.7 0-32-14.3-32-32s14.3-32 32-32H416c17.7 0 32 14.3 32 32z"/></svg></span>
+                        </label>
+                        <button id="mdbook-theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="mdbook-theme-list">
+                            <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M371.3 367.1c27.3-3.9 51.9-19.4 67.2-42.9L600.2 74.1c12.6-19.5 9.4-45.3-7.6-61.2S549.7-4.4 531.1 9.6L294.4 187.2c-24 18-38.2 46.1-38.4 76.1L371.3 367.1zm-19.6 25.4l-116-104.4C175.9 290.3 128 339.6 128 400c0 3.9 .2 7.8 .6 11.6c1.8 17.5-10.2 36.4-27.8 36.4H96c-17.7 0-32 14.3-32 32s14.3 32 32 32H240c61.9 0 112-50.1 112-112c0-2.5-.1-5-.2-7.5z"/></svg></span>
+                        </button>
+                        <ul id="mdbook-theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                            <li role="none"><button role="menuitem" class="theme" id="mdbook-theme-default_theme">Auto</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="mdbook-theme-light">Light</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="mdbook-theme-rust">Rust</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="mdbook-theme-coal">Coal</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="mdbook-theme-navy">Navy</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="mdbook-theme-ayu">Ayu</button></li>
+                        </ul>
+                        <button id="mdbook-search-toggle" class="icon-button" type="button" title="Search (`/`)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="/ s" aria-controls="mdbook-searchbar">
+                            <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M416 208c0 45.9-14.9 88.3-40 122.7L502.6 457.4c12.5 12.5 12.5 32.8 0 45.3s-32.8 12.5-45.3 0L330.7 376c-34.4 25.2-76.8 40-122.7 40C93.1 416 0 322.9 0 208S93.1 0 208 0S416 93.1 416 208zM208 352c79.5 0 144-64.5 144-144s-64.5-144-144-144S64 128.5 64 208s64.5 144 144 144z"/></svg></span>
+                        </button>
+                    </div>
+
+                    <h1 class="menu-title">The Rust Programming Language</h1>
+
+                    <div class="right-buttons">
+                        <a href="print.html" title="Print this book" aria-label="Print this book">
+                            <span class=fa-svg id="print-button"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M128 0C92.7 0 64 28.7 64 64v96h64V64H354.7L384 93.3V160h64V93.3c0-17-6.7-33.3-18.7-45.3L400 18.7C388 6.7 371.7 0 354.7 0H128zM384 352v32 64H128V384 368 352H384zm64 32h32c17.7 0 32-14.3 32-32V256c0-35.3-28.7-64-64-64H64c-35.3 0-64 28.7-64 64v96c0 17.7 14.3 32 32 32H64v64c0 35.3 28.7 64 64 64H384c35.3 0 64-28.7 64-64V384zm-16-88c-13.3 0-24-10.7-24-24s10.7-24 24-24s24 10.7 24 24s-10.7 24-24 24z"/></svg></span>
+                        </a>
+                        <a href="https://github.com/rust-lang/book" title="Git repository" aria-label="Git repository">
+                            <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 496 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M165.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6zm-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3zm44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9zM244.8 8C106.1 8 0 113.3 0 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C428.2 457.8 496 362.9 496 252 496 113.3 383.5 8 244.8 8zM97.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1zm-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7zm32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1zm-11.4-14.7c-1.6 1-1.6 3.6 0 5.9 1.6 2.3 4.3 3.3 5.6 2.3 1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2z"/></svg></span>
+                        </a>
+
+                    </div>
+                </div>
+
+                <div id="mdbook-search-wrapper" class="hidden">
+                    <form id="mdbook-searchbar-outer" class="searchbar-outer">
+                        <div class="search-wrapper">
+                            <input type="search" id="mdbook-searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="mdbook-searchresults-outer" aria-describedby="searchresults-header">
+                            <div class="spinner-wrapper">
+                                <span class=fa-svg id="fa-spin"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M304 48c0-26.5-21.5-48-48-48s-48 21.5-48 48s21.5 48 48 48s48-21.5 48-48zm0 416c0-26.5-21.5-48-48-48s-48 21.5-48 48s21.5 48 48 48s48-21.5 48-48zM48 304c26.5 0 48-21.5 48-48s-21.5-48-48-48s-48 21.5-48 48s21.5 48 48 48zm464-48c0-26.5-21.5-48-48-48s-48 21.5-48 48s21.5 48 48 48s48-21.5 48-48zM142.9 437c18.7-18.7 18.7-49.1 0-67.9s-49.1-18.7-67.9 0s-18.7 49.1 0 67.9s49.1 18.7 67.9 0zm0-294.2c18.7-18.7 18.7-49.1 0-67.9S93.7 56.2 75 75s-18.7 49.1 0 67.9s49.1 18.7 67.9 0zM369.1 437c18.7 18.7 49.1 18.7 67.9 0s18.7-49.1 0-67.9s-49.1-18.7-67.9 0s-18.7 49.1 0 67.9z"/></svg></span>
+                            </div>
+                        </div>
+                    </form>
+                    <div id="mdbook-searchresults-outer" class="searchresults-outer hidden">
+                        <div id="mdbook-searchresults-header" class="searchresults-header"></div>
+                        <ul id="mdbook-searchresults">
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script>
+                    document.getElementById('mdbook-sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('mdbook-sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#mdbook-sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="mdbook-content" class="content">
+                    <main>
+                        <h1 id="memprogram-permainan-tebak-angka"><a class="header" href="#memprogram-permainan-tebak-angka">Memprogram Permainan Tebak Angka</a></h1>
+<p>Mari terjun ke Rust dengan mengerjakan proyek langsung bersama-sama! Bab ini
+memperkenalkan Anda pada beberapa konsep Rust umum dengan menunjukkan cara
+menggunakannya dalam program nyata. Anda akan belajar tentang <code>let</code>, <code>match</code>,
+metode, fungsi terkait (associated functions), crate eksternal, dan banyak lagi!
+Di bab-bab berikutnya, kami akan mengeksplorasi ide-ide ini lebih detail. Di bab
+ini, Anda hanya akan mempraktikkan dasar-dasarnya.</p>
+<p>Kami akan mengimplementasikan masalah pemrograman pemula klasik: permainan tebak
+angka. Begini cara kerjanya: Program akan menghasilkan bilangan bulat acak antara
+1 dan 100. Kemudian program akan meminta pemain memasukkan tebakan. Setelah
+tebakan dimasukkan, program akan menunjukkan apakah tebakan terlalu rendah atau
+terlalu tinggi. Jika tebakan benar, permainan akan mencetak pesan selamat dan
+keluar.</p>
+<h2 id="menyiapkan-proyek-baru"><a class="header" href="#menyiapkan-proyek-baru">Menyiapkan Proyek Baru</a></h2>
+<p>Untuk menyiapkan proyek baru, buka direktori <code>_projects_</code> yang Anda buat di
+Bab 1 dan buat proyek baru menggunakan Cargo, seperti ini:</p>
+<pre><code class="language-console">$ cargo new guessing_game
+$ cd guessing_game
+</code></pre>
+<p>Perintah pertama, <code>cargo new</code>, mengambil nama proyek (<code>guessing_game</code>) sebagai
+argumen pertama. Perintah kedua beralih ke direktori proyek baru.</p>
+<p>Lihat berkas <code>_Cargo.toml_</code> yang dihasilkan:</p>
+<!-- manual-regeneration
+cd listings/ch02-guessing-game-tutorial
+rm -rf no-listing-01-cargo-new
+cargo new no-listing-01-cargo-new --name guessing_game
+cd no-listing-01-cargo-new
+cargo run > output.txt 2>&1
+cd ../../..
+-->
+<p><span class="filename">Nama Berkas: Cargo.toml</span></p>
+<pre><code class="language-toml">[package]
+name = "guessing_game"
+version = "0.1.0"
+edition = "2024"
+
+[dependencies]
+</code></pre>
+<p>Seperti yang Anda lihat di Bab 1, <code>cargo new</code> menghasilkan program “Halo,
+dunia!” untuk Anda. Periksa berkas <code>_src/main.rs_</code>:</p>
+<p><span class="filename">Nama Berkas: src/main.rs</span></p>
+<pre class="playground"><code class="language-rust edition2024">fn main() {
+    println!("Hello, world!");
+}</code></pre>
+<p>Sekarang mari kompilasi program “Halo, dunia!” ini dan jalankan dalam langkah
+yang sama menggunakan perintah <code>cargo run</code>:</p>
+<pre><code class="language-console">$ cargo run
+   Compiling guessing_game v0.1.0 (file:///projects/guessing_game)
+    Finished `dev` profile [unoptimized + debuginfo] target(s) in 0.08s
+     Running `target/debug/guessing_game`
+Hello, world!
+</code></pre>
+<p>Perintah <code>run</code> berguna saat Anda perlu melakukan iterasi cepat pada proyek,
+seperti yang akan kami lakukan dalam game ini, dengan menguji setiap iterasi
+sebelum melanjutkan ke yang berikutnya.</p>
+<p>Buka kembali berkas <code>_src/main.rs_</code>. Anda akan menulis semua kode di berkas ini.</p>
+<h2 id="memproses-tebakan"><a class="header" href="#memproses-tebakan">Memproses Tebakan</a></h2>
+<p>Bagian pertama program permainan tebak angka akan meminta masukan pengguna,
+memproses masukan itu, dan memeriksa apakah masukan berada dalam bentuk yang
+diharapkan. Untuk memulai, kami akan mengizinkan pemain memasukkan tebakan.
+Masukkan kode di Listing 2-1 ke <code>_src/main.rs_</code>.</p>
+<figure class="listing" id="listing-2-1">
+<span class="file-name">Filename: src/main.rs</span>
+<pre><code class="language-rust ignore">use std::io;
+
+fn main() {
+    println!("Guess the number!");
+
+    println!("Please input your guess.");
+
+    let mut guess = String::new();
+
+    io::stdin()
+        .read_line(&amp;mut guess)
+        .expect("Failed to read line");
+
+    println!("You guessed: {guess}");
+}</code></pre>
+<figcaption><a href="#listing-2-1">Listing 2-1</a>: Kode yang mendapatkan tebakan dari pengguna dan mencetaknya</figcaption>
+</figure>
+<p>Kode ini mengandung banyak informasi, jadi mari tinjau baris per baris. Untuk
+mendapatkan masukan pengguna dan kemudian mencetak hasilnya sebagai keluaran,
+kami perlu memasukkan pustaka input/output <code>io</code> ke dalam ruang lingkup (scope).
+Pustaka <code>io</code> berasal dari pustaka standar, yang dikenal sebagai <code>std</code>:</p>
+<pre><code class="language-rust ignore">use std::io;
+<span class="boring">
+</span><span class="boring">fn main() {
+</span><span class="boring">    println!("Guess the number!");
+</span><span class="boring">
+</span><span class="boring">    println!("Please input your guess.");
+</span><span class="boring">
+</span><span class="boring">    let mut guess = String::new();
+</span><span class="boring">
+</span><span class="boring">    io::stdin()
+</span><span class="boring">        .read_line(&amp;mut guess)
+</span><span class="boring">        .expect("Failed to read line");
+</span><span class="boring">
+</span><span class="boring">    println!("You guessed: {guess}");
+</span><span class="boring">}</span></code></pre>
+<p>Secara default, Rust memiliki sekumpulan item yang didefinisikan di pustaka
+standar yang dibawa ke ruang lingkup setiap program. Kumpulan ini disebut
+<em>prelude</em>, dan Anda bisa melihat semuanya <a href="../std/prelude/index.html">di dokumentasi pustaka standar</a>.</p>
+<p>Jika tipe yang ingin Anda gunakan tidak ada di prelude, Anda harus memasukkan
+tipe itu ke ruang lingkup secara eksplisit dengan pernyataan <code>use</code>. Menggunakan
+pustaka <code>std::io</code> menyediakan sejumlah fitur berguna, termasuk kemampuan
+menerima masukan pengguna.</p>
+<p>Seperti yang Anda lihat di Bab 1, fungsi <code>main</code> adalah titik masuk ke program:</p>
+<pre><code class="language-rust ignore"><span class="boring">use std::io;
+</span><span class="boring">
+</span>fn main() {
+<span class="boring">    println!("Guess the number!");
+</span><span class="boring">
+</span><span class="boring">    println!("Please input your guess.");
+</span><span class="boring">
+</span><span class="boring">    let mut guess = String::new();
+</span><span class="boring">
+</span><span class="boring">    io::stdin()
+</span><span class="boring">        .read_line(&amp;mut guess)
+</span><span class="boring">        .expect("Failed to read line");
+</span><span class="boring">
+</span><span class="boring">    println!("You guessed: {guess}");
+</span><span class="boring">}</span></code></pre>
+<p>Sintaks <code>fn</code> mendeklarasikan fungsi baru; tanda kurung, <code>()</code>, menunjukkan tidak
+ada parameter; dan tanda kurung kurawal, <code>{</code>, memulai badan fungsi.</p>
+<p>Seperti yang Anda pelajari di Bab 1, <code>println!</code> adalah makro yang mencetak string
+ke layar:</p>
+<pre><code class="language-rust ignore"><span class="boring">use std::io;
+</span><span class="boring">
+</span><span class="boring">fn main() {
+</span>    println!("Guess the number!");
+
+    println!("Please input your guess.");
+<span class="boring">
+</span><span class="boring">    let mut guess = String::new();
+</span><span class="boring">
+</span><span class="boring">    io::stdin()
+</span><span class="boring">        .read_line(&amp;mut guess)
+</span><span class="boring">        .expect("Failed to read line");
+</span><span class="boring">
+</span><span class="boring">    println!("You guessed: {guess}");
+</span><span class="boring">}</span></code></pre>
+<p>Kode ini mencetak prompt yang menyatakan permainan apa dan meminta masukan dari
+pengguna.</p>
+<h3 id="menyimpan-nilai-dengan-variabel"><a class="header" href="#menyimpan-nilai-dengan-variabel">Menyimpan Nilai dengan Variabel</a></h3>
+<p>Selanjutnya, kami akan membuat sebuah <em>variabel</em> untuk menyimpan masukan
+pengguna, seperti ini:</p>
+<pre><code class="language-rust ignore"><span class="boring">use std::io;
+</span><span class="boring">
+</span><span class="boring">fn main() {
+</span><span class="boring">    println!("Guess the number!");
+</span><span class="boring">
+</span><span class="boring">    println!("Please input your guess.");
+</span><span class="boring">
+</span>    let mut guess = String::new();
+<span class="boring">
+</span><span class="boring">    io::stdin()
+</span><span class="boring">        .read_line(&amp;mut guess)
+</span><span class="boring">        .expect("Failed to read line");
+</span><span class="boring">
+</span><span class="boring">    println!("You guessed: {guess}");
+</span><span class="boring">}</span></code></pre>
+<p>Sekarang program menjadi menarik! Banyak hal yang terjadi dalam baris kecil ini.
+Kami menggunakan pernyataan <code>let</code> untuk membuat variabel. Berikut contoh lain:</p>
+<pre><code class="language-rust ignore">let apples = 5;</code></pre>
+<p>Baris ini membuat variabel baru bernama <code>apples</code> dan mengikatnya ke nilai <code>5</code>.
+Di Rust, variabel secara default bersifat tidak dapat diubah (immutable),
+artinya setelah kita memberi variabel sebuah nilai, nilai itu tidak akan berubah.
+Kami akan membahas konsep ini secara detail di bagian
+<a href="ch03-01-variables-and-mutability.html#variables-and-mutability">“Variabel dan Ketidakberubahan”</a><!-- ignore -->
+di Bab 3. Untuk membuat variabel dapat diubah (mutable), kita tambahkan <code>mut</code>
+sebelum nama variabel:</p>
+<pre><code class="language-rust ignore">let apples = 5; // tidak dapat diubah
+let mut bananas = 5; // dapat diubah</code></pre>
+<blockquote>
+<p>Catatan: Sintaks <code>//</code> memulai komentar yang berlanjut hingga akhir baris. Rust
+mengabaikan segala sesuatu di dalam komentar. Kami akan membahas komentar
+lebih detail di <a href="ch03-04-comments.html">Bab 3</a><!-- ignore -->.</p>
+</blockquote>
+<p>Kembali ke program permainan tebak angka, Anda kini tahu bahwa <code>let mut guess</code>
+akan memperkenalkan variabel yang dapat diubah bernama <code>guess</code>. Tanda sama dengan
+(<code>=</code>) memberitahu Rust kita ingin mengikat sesuatu ke variabel sekarang. Di sebelah
+kanan tanda sama dengan adalah nilai yang <code>guess</code> ikat, yaitu hasil pemanggilan
+<code>String::new</code>, sebuah fungsi yang mengembalikan instance baru dari <code>String</code>.
+<a href="../std/string/struct.String.html"><code>String</code></a><!-- ignore --> adalah tipe string yang disediakan pustaka
+standar yang merupakan teks yang dapat berkembang, dikodekan UTF-8.</p>
+<p>Sintaks <code>::</code> di baris <code>::new</code> menunjukkan bahwa <code>new</code> adalah fungsi terkait
+(associated function) dari tipe <code>String</code>. <em>Fungsi terkait</em> adalah fungsi yang
+diimplementasikan pada sebuah tipe, dalam hal ini <code>String</code>. Fungsi <code>new</code> ini
+membuat string baru, kosong. Anda akan menemukan fungsi <code>new</code> di banyak tipe
+karena ini nama umum untuk fungsi yang membuat nilai baru dari suatu jenis.</p>
+<p>Secara lengkap, baris <code>let mut guess = String::new();</code> telah membuat variabel
+yang dapat diubah yang saat ini terikat pada instance baru, kosong, dari
+<code>String</code>. Phew!</p>
+<h3 id="menerima-masukan-pengguna"><a class="header" href="#menerima-masukan-pengguna">Menerima Masukan Pengguna</a></h3>
+<p>Ingat bahwa kami menyertakan fungsionalitas input/output dari pustaka standar
+dengan <code>use std::io;</code> di baris pertama program. Sekarang kami akan memanggil
+fungsi <code>stdin</code> dari modul <code>io</code>, yang akan memungkinkan kami menangani masukan
+pengguna:</p>
+<pre><code class="language-rust ignore"><span class="boring">use std::io;
+</span><span class="boring">
+</span><span class="boring">fn main() {
+</span><span class="boring">    println!("Guess the number!");
+</span><span class="boring">
+</span><span class="boring">    println!("Please input your guess.");
+</span><span class="boring">
+</span><span class="boring">    let mut guess = String::new();
+</span><span class="boring">
+</span>    io::stdin()
+        .read_line(&amp;mut guess)
+<span class="boring">        .expect("Failed to read line");
+</span><span class="boring">
+</span><span class="boring">    println!("You guessed: {guess}");
+</span><span class="boring">}</span></code></pre>
+<p>Jika kami tidak mengimpor modul <code>io</code> dengan <code>use std::io;</code> di awal program, kami
+masih bisa menggunakan fungsinya dengan menulis pemanggilan fungsi ini sebagai
+<code>std::io::stdin</code>. Fungsi <code>stdin</code> mengembalikan instance dari
+<a href="../std/io/struct.Stdin.html"><code>std::io::Stdin</code></a><!-- ignore -->, yang merupakan tipe yang
+mewakili handle ke input standar untuk terminal Anda.</p>
+<p>Selanjutnya, baris <code>.read_line(&amp;mut guess)</code> memanggil metode
+<a href="../std/io/struct.Stdin.html#method.read_line"><code>read_line</code></a><!-- ignore --> pada handle input standar untuk
+mendapatkan masukan dari pengguna. Kami juga meneruskan <code>&amp;mut guess</code> sebagai
+argumen ke <code>read_line</code> untuk memberitahunya string apa untuk menyimpan masukan
+pengguna. Tugas penuh <code>read_line</code> adalah mengambil apa pun yang diketik
+pengguna ke input standar dan menambahkannya ke dalam string (tanpa menimpa
+isinya), sehingga kami oleh karena itu meneruskan string tersebut sebagai
+argumen. Argumen string perlu dapat diubah agar metode dapat mengubah isi
+string.</p>
+<p><code>&amp;</code> menunjukkan bahwa argumen ini adalah <em>referensi</em>, yang memberi Anda cara
+untuk membiarkan beberapa bagian kode Anda mengakses satu potongan data tanpa
+perlu menyalin data itu ke memori beberapa kali. Referensi adalah fitur kompleks,
+dan salah satu keunggulan utama Rust adalah betapa aman dan mudahnya menggunakan
+referensi. Anda tidak perlu mengetahui banyak detail tersebut untuk menyelesaikan
+program ini. Untuk saat ini, yang perlu Anda ketahui hanyalah bahwa, seperti
+variabel, referensi secara default tidak dapat diubah (immutable). Oleh karena
+itu, Anda perlu menulis <code>&amp;mut guess</code> bukan <code>&amp;guess</code> untuk membuatnya dapat
+diubah. (Bab 4 akan menjelaskan referensi lebih menyeluruh.)</p>
+<!-- Judul lama. Jangan dihapus atau tautan bisa rusak. -->
+<p><a id="handling-potential-failure-with-the-result-type"></a></p>
+<h3 id="menangani-potensi-kegagalan-dengan-result"><a class="header" href="#menangani-potensi-kegagalan-dengan-result">Menangani Potensi Kegagalan dengan <code>Result</code></a></h3>
+<p>Kami masih bekerja pada baris kode ini. Kami sekarang membahas baris teks ketiga,
+tetapi perhatikan bahwa ini masih bagian dari satu baris kode logis tunggal.
+Bagian selanjutnya adalah metode ini:</p>
+<pre><code class="language-rust ignore"><span class="boring">use std::io;
+</span><span class="boring">
+</span><span class="boring">fn main() {
+</span><span class="boring">    println!("Guess the number!");
+</span><span class="boring">
+</span><span class="boring">    println!("Please input your guess.");
+</span><span class="boring">
+</span><span class="boring">    let mut guess = String::new();
+</span><span class="boring">
+</span><span class="boring">    io::stdin()
+</span><span class="boring">        .read_line(&amp;mut guess)
+</span>        .expect("Failed to read line");
+<span class="boring">
+</span><span class="boring">    println!("You guessed: {guess}");
+</span><span class="boring">}</span></code></pre>
+<p>Kami bisa menulis kode ini sebagai:</p>
+<pre><code class="language-rust ignore">io::stdin().read_line(&amp;mut guess).expect("Failed to read line");</code></pre>
+<p>Namun, satu baris panjang sulit dibaca, jadi lebih baik membaginya. Sering kali
+bijaksana untuk memperkenalkan baris baru dan whitespace lain untuk membantu
+memecah baris panjang saat Anda memanggil metode dengan sintaks <code>.method_name()</code>.
+Sekarang mari bahas apa yang dilakukan baris ini.</p>
+<p>Seperti yang disebutkan sebelumnya, <code>read_line</code> menaruh apa pun yang dimasukkan
+pengguna ke string yang kami teruskan kepadanya, tetapi ia juga mengembalikan
+nilai <code>Result</code>. <a href="../std/result/enum.Result.html"><code>Result</code></a><!-- ignore --> adalah <a href="ch06-00-enums.html"><em>enumeration</em></a><!-- ignore
+-->, sering disebut <em>enum</em>, yaitu tipe yang bisa berada di salah satu dari
+beberapa kemungkinan keadaan. Kami menyebut setiap kemungkinan keadaan sebagai
+<em>varian</em>.</p>
+<p><a href="ch06-00-enums.html">Bab 6</a><!-- ignore --> akan membahas enum lebih detail. Tujuan tipe
+<code>Result</code> ini adalah untuk mengodekan informasi penanganan kesalahan.</p>
+<p>Varian <code>Result</code> adalah <code>Ok</code> dan <code>Err</code>. Varian <code>Ok</code> menunjukkan operasi
+berhasil, dan berisi nilai yang berhasil dihasilkan. Varian <code>Err</code> berarti
+operasi gagal, dan berisi informasi tentang bagaimana atau mengapa operasi
+gagal.</p>
+<p>Nilai tipe <code>Result</code>, seperti nilai tipe apa pun, memiliki metode yang
+didefinisikan padanya. Instance <code>Result</code> memiliki <a href="../std/result/enum.Result.html#method.expect">metode <code>expect</code></a><!-- ignore -->
+yang bisa Anda panggil. Jika instance <code>Result</code> ini bernilai <code>Err</code>, <code>expect</code>
+akan menyebabkan program berhenti (crash) dan menampilkan pesan yang Anda
+teruskan sebagai argumen ke <code>expect</code>. Jika metode <code>read_line</code> mengembalikan
+<code>Err</code>, kemungkinan besar itu hasil kesalahan yang berasal dari sistem operasi
+yang mendasari. Jika instance <code>Result</code> ini bernilai <code>Ok</code>, <code>expect</code> akan mengambil
+nilai kembali yang dipegang <code>Ok</code> dan mengembalikan hanya nilai itu kepada Anda
+supaya Anda bisa menggunakannya. Dalam hal ini, nilai tersebut adalah jumlah
+byte dalam masukan pengguna.</p>
+<p>Jika Anda tidak memanggil <code>expect</code>, program akan kompilasi, tetapi Anda akan
+mendapat peringatan:</p>
+<pre><code class="language-console">$ cargo build
+   Compiling guessing_game v0.1.0 (file:///projects/guessing_game)
+warning: unused `Result` that must be used
+  --&gt; src/main.rs:10:5
+   |
+10 |     io::stdin().read_line(&amp;mut guess);
+   |     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+   |
+   = note: this `Result` may be an `Err` variant, which should be handled
+   = note: `#[warn(unused_must_use)]` (part of `#[warn(unused)]`) on by default
+help: use `let _ = ...` to ignore the resulting value
+   |
+10 |     let _ = io::stdin().read_line(&amp;mut guess);
+   |     +++++++
+
+warning: `guessing_game` (bin "guessing_game") generated 1 warning
+    Finished `dev` profile [unoptimized + debuginfo] target(s) in 0.59s
+</code></pre>
+<p>Rust memperingatkan bahwa Anda belum menggunakan nilai <code>Result</code> yang dikembalikan
+dari <code>read_line</code>, menandakan bahwa program belum menangani kemungkinan kesalahan.</p>
+<p>Cara yang benar untuk menekan peringatan adalah benar-benar menulis kode
+penanganan kesalahan, tetapi dalam kasus kami kami hanya ingin program ini
+berhenti saat masalah terjadi, jadi kami bisa menggunakan <code>expect</code>. Anda akan
+belajar tentang pemulihan dari kesalahan di <a href="ch09-02-recoverable-errors-with-result.html">Bab
+9</a><!-- ignore -->.</p>
+<h3 id="mencetak-nilai-dengan-placeholder-println"><a class="header" href="#mencetak-nilai-dengan-placeholder-println">Mencetak Nilai dengan Placeholder <code>println!</code></a></h3>
+<p>Selain tanda kurung kurawal penutup, hanya ada satu baris lagi untuk dibahas
+dalam kode sejauh ini:</p>
+<pre><code class="language-rust ignore"><span class="boring">use std::io;
+</span><span class="boring">
+</span><span class="boring">fn main() {
+</span><span class="boring">    println!("Guess the number!");
+</span><span class="boring">
+</span><span class="boring">    println!("Please input your guess.");
+</span><span class="boring">
+</span><span class="boring">    let mut guess = String::new();
+</span><span class="boring">
+</span><span class="boring">    io::stdin()
+</span><span class="boring">        .read_line(&amp;mut guess)
+</span><span class="boring">        .expect("Failed to read line");
+</span><span class="boring">
+</span>    println!("You guessed: {guess}");
+<span class="boring">}</span></code></pre>
+<p>Baris ini mencetak string yang kini berisi masukan pengguna. Set <code>{}</code> tanda
+kurung kurawal adalah placeholder: Anggap <code>{}</code> sebagai cengkerang kecil kepiting
+yang memegang nilai di tempatnya. Saat mencetak nilai variabel, nama variabel
+bisa masuk ke dalam tanda kurung kurawal. Saat mencetak hasil evaluasi ekspresi,
+tempatkan tanda kurung kurawal kosong di string format, lalu ikuti string format
+dengan daftar ekspresi yang dipisahkan koma untuk dicetak di setiap placeholder
+tanda kurung kurawal kosong dalam urutan yang sama. Mencetak variabel dan hasil
+ekspresi dalam satu pemanggilan <code>println!</code> akan terlihat seperti ini:</p>
+<pre class="playground"><code class="language-rust edition2024"><span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>let x = 5;
+let y = 10;
+
+println!("x = {x} and y + 2 = {}", y + 2);
+<span class="boring">}</span></code></pre>
+<p>Kode ini akan mencetak <code>x = 5 and y + 2 = 12</code>.</p>
+<h3 id="menguji-bagian-pertama"><a class="header" href="#menguji-bagian-pertama">Menguji Bagian Pertama</a></h3>
+<p>Mari uji bagian pertama permainan tebak angka. Jalankan dengan <code>cargo run</code>:</p>
+<!-- manual-regeneration
+cd listings/ch02-guessing-game-tutorial/listing-02-01/
+cargo clean
+cargo run
+input 6 -->
+<pre><code class="language-console">$ cargo run
+   Compiling guessing_game v0.1.0 (file:///projects/guessing_game)
+    Finished `dev` profile [unoptimized + debuginfo] target(s) in 6.44s
+     Running `target/debug/guessing_game`
+Tebak angka!
+Silakan masukkan tebakan Anda.
+6
+Anda menebak: 6
+</code></pre>
+<p>Pada titik ini, bagian pertama permainan sudah selesai: Kami mendapatkan masukan
+dari keyboard dan kemudian mencetaknya.</p>
+<h2 id="menghasilkan-angka-rahasia"><a class="header" href="#menghasilkan-angka-rahasia">Menghasilkan Angka Rahasia</a></h2>
+<p>Selanjutnya, kami perlu menghasilkan angka rahasia yang akan coba ditebak
+pengguna. Angka rahasia harus berbeda setiap kali agar permainan menyenangkan
+untuk dimainkan lebih dari sekali. Kami akan menggunakan angka acak antara 1 dan
+100 agar permainan tidak terlalu sulit. Rust belum menyertakan fungsionalitas
+angka acak di pustaka standarnya. Namun, tim Rust menyediakan <a href="https://crates.io/crates/rand">crate
+<code>rand</code></a> dengan fungsionalitas tersebut.</p>
+<!-- Judul lama. Jangan dihapus atau tautan bisa rusak. -->
+<p><a id="using-a-crate-to-get-more-functionality"></a></p>
+<h3 id="meningkatkan-fungsionalitas-dengan-crate"><a class="header" href="#meningkatkan-fungsionalitas-dengan-crate">Meningkatkan Fungsionalitas dengan Crate</a></h3>
+<p>Ingat bahwa crate adalah kumpulan berkas kode sumber Rust. Proyek yang kami
+bangun adalah crate biner, yaitu file yang dapat dieksekusi. Crate <code>rand</code> adalah
+crate pustaka (library crate), yang berisi kode yang dimaksudkan untuk digunakan
+di program lain dan tidak bisa dieksekusi sendiri.</p>
+<p>Koordinasi Cargo terhadap crate eksternal adalah di mana Cargo benar-benar
+bersinar. Sebelum kami bisa menulis kode yang menggunakan <code>rand</code>, kami perlu
+mengubah berkas <code>_Cargo.toml_</code> untuk menyertakan crate <code>rand</code> sebagai dependensi.
+Buka berkas itu sekarang dan tambahkan baris berikut di bagian bawah, di bawah
+header bagian <code>[dependencies]</code> yang Cargo buat untuk Anda. Pastikan untuk
+menentukan <code>rand</code> persis seperti yang kami tulis di sini, dengan nomor versi
+ini, atau contoh kode dalam tutorial ini mungkin tidak berfungsi:</p>
+<!-- When updating the version of `rand` used, also update the version of
+`rand` used in these files so they all match:
+
+* ch01-01-installation.md
+* ch07-04-bringing-paths-into-scope-with-the-use-keyword.md
+* ch14-03-cargo-workspaces.md
+-->
+<p><span class="filename">Nama Berkas: Cargo.toml</span></p>
+<pre><code class="language-toml">[dependencies]
+rand = "0.10.1"
+</code></pre>
+<p>Di berkas <code>_Cargo.toml_</code>, segala sesuatu yang mengikuti header adalah bagian
+dari bagian itu yang berlanjut hingga bagian lain dimulai. Di <code>[dependencies]</code>,
+Anda memberitahu Cargo crate eksternal apa yang menjadi dependensi proyek Anda
+dan versi crate mana yang Anda butuhkan. Dalam kasus ini, kami menentukan crate
+<code>rand</code> dengan penentu versi semantik <code>0.10.1</code>. Cargo memahami <a href="http://semver.org">Semantic
+Versioning</a><!-- ignore --> (kadang disebut <em>SemVer</em>), yaitu standar
+untuk penulisan nomor versi. Penentu <code>0.10.1</code> sebenarnya adalah singkatan untuk
+<code>^0.10.1</code>, yang berarti versi apa pun yang setidaknya 0.10.1 tetapi di bawah
+0.11.0.</p>
+<p>Cargo menganggap versi-versi ini memiliki API publik yang kompatibel dengan
+versi 0.10.1, dan spesifikasi ini memastikan Anda akan mendapatkan rilis patch
+terbaru yang tetap akan kompilasi dengan kode di bab ini. Versi 0.11.0 atau
+lebih besar tidak dijamin memiliki API yang sama dengan yang digunakan contoh
+berikutnya.</p>
+<p>Sekarang, tanpa mengubah kode apa pun, mari bangun proyek, seperti yang ditampilkan
+di Listing 2-2.</p>
+<!-- manual-regeneration
+cd listings/ch02-guessing-game-tutorial/listing-02-02/
+rm Cargo.lock
+cargo clean
+cargo build -->
+<figure class="listing" id="listing-2-2">
+<pre><code class="language-console">$ cargo build
+    Updating crates.io index
+     Locking 8 packages to latest Rust 1.96.0 compatible versions
+   Downloaded rand_core v0.10.1
+   Downloaded chacha20 v0.10.1
+   Downloaded rand v0.10.1
+   Downloaded 3 crates (162.9KiB) in 0.59s
+    Compiling libc v0.2.186
+    Compiling rand_core v0.10.1
+    Compiling getrandom v0.4.3
+    Compiling cfg-if v1.0.4
+    Compiling chacha20 v0.10.1
+    Compiling rand v0.10.1
+    Compiling guessing_game v0.1.0 (file:///projects/guessing_game)
+     Finished `dev` profile [unoptimized + debuginfo] target(s) in 2.03s
+</code></pre>
+<figcaption><a href="#listing-2-2">Listing 2-2</a>: Keluaran dari menjalankan <code>cargo build</code> setelah menambahkan crate <code>rand</code> sebagai dependensi</figcaption>
+</figure>
+<p>Anda mungkin melihat nomor versi yang berbeda (tapi semuanya akan kompatibel
+dengan kode, berkat SemVer!) dan baris yang berbeda (tergantung sistem
+operasi), dan baris-barisnya mungkin dalam urutan berbeda.</p>
+<p>Ketika kita menyertakan dependensi eksternal, Cargo mengambil versi terbaru dari
+segala sesuatu yang dibutuhkan dependensi itu dari <em>registry</em>, yaitu salinan data
+dari <a href="https://crates.io/">Crates.io</a>. Crates.io adalah tempat orang-orang di ekosistem
+Rust memposting proyek Rust sumber terbuka mereka untuk digunakan orang lain.</p>
+<p>Setelah memperbarui registry, Cargo memeriksa bagian <code>[dependencies]</code> dan
+mengunduh crate yang tercantum yang belum diunduh. Dalam kasus ini, meskipun
+kami hanya mencantumkan <code>rand</code> sebagai dependensi, Cargo juga mengambil crate
+lain yang dibutuhkan <code>rand</code> untuk berfungsi. Setelah mengunduh crate-crate
+tersebut, Rust mengompilasinya dan kemudian mengompilasi proyek dengan
+dependensi yang tersedia.</p>
+<p>Jika Anda segera menjalankan <code>cargo build</code> lagi tanpa membuat perubahan apa pun,
+Anda tidak akan mendapatkan keluaran apa pun selain baris <code>Finished</code>. Cargo tahu
+dia sudah mengunduh dan mengompilasi dependensi, dan Anda belum mengubah apa pun
+tentang mereka di berkas <code>_Cargo.toml_</code> Anda. Cargo juga tahu bahwa Anda belum
+mengubah apa pun tentang kode Anda, jadi ia tidak mengompilasi ulang itu juga.
+Tanpa ada yang harus dilakukan, ia hanya keluar.</p>
+<p>Jika Anda membuka berkas <code>_src/main.rs_</code>, membuat perubahan sekecil apa pun, dan
+lalu menyimpannya dan membangun lagi, Anda akan hanya melihat dua baris keluaran:</p>
+<!-- manual-regeneration
+cd listings/ch02-guessing-game-tutorial/listing-02-02/
+touch src/main.rs
+cargo build -->
+<pre><code class="language-console">$ cargo build
+   Compiling guessing_game v0.1.0 (file:///projects/guessing_game)
+    Finished `dev` profile [unoptimized + debuginfo] target(s) in 0.13s
+</code></pre>
+<p>Baris-baris ini menunjukkan bahwa Cargo hanya memperbarui build dengan perubahan
+kecil Anda pada berkas <code>_src/main.rs_</code>. Dependensi Anda tidak berubah, jadi
+Cargo tahu dia bisa menggunakan kembali apa yang sudah diunduh dan dikompilasi
+untuk mereka.</p>
+<!-- Judul lama. Jangan dihapus atau tautan bisa rusak. -->
+<p><a id="ensuring-reproducible-builds-with-the-cargo-lock-file"></a></p>
+<h4 id="memastikan-build-yang-dapat-direproduksi"><a class="header" href="#memastikan-build-yang-dapat-direproduksi">Memastikan Build yang Dapat Direproduksi</a></h4>
+<p>Cargo memiliki mekanisme yang memastikan Anda bisa membangun artefak yang sama
+setiap kali Anda atau siapa pun membangun kode Anda: Cargo akan hanya menggunakan
+versi dependensi yang Anda tentukan sampai Anda menunjukkan sebaliknya. Misalnya,
+katakanlah minggu depan versi 0.10.2 dari crate <code>rand</code> keluar, dan versi itu
+mengandung perbaikan bug penting, tapi juga mengandung regresi yang akan merusak
+kode Anda. Untuk menangani ini, Rust membuat berkas <code>_Cargo.lock_</code> saat pertama
+kali Anda menjalankan <code>cargo build</code>, sehingga kami sekarang memilikinya di
+direktori <code>_guessing_game_</code>.</p>
+<p>Saat Anda membangun proyek untuk pertama kalinya, Cargo mengetahui semua versi
+dependensi yang memenuhi kriteria dan kemudian menuliskannya ke berkas
+<code>_Cargo.lock_</code>. Saat Anda membangun proyek Anda di masa depan, Cargo akan
+melihat berkas <code>_Cargo.lock_</code> ada dan akan menggunakan versi yang ditentukan di
+sana alih-alih melakukan semua pekerjaan mengetahui versi lagi. Ini memungkinkan
+Anda memiliki build yang dapat direproduksi secara otomatis. Dengan kata lain,
+proyek Anda akan tetap di 0.10.1 sampai Anda secara eksplisit meningkatkan
+versinya, berkat berkas <code>_Cargo.lock_</code>. Karena berkas <code>_Cargo.lock_</code> penting
+untuk build yang dapat direproduksi, ia sering dicek ke kontrol sumber bersama
+sisa kode di proyek Anda.</p>
+<h4 id="memperbarui-crate-untuk-mendapat-versi-baru"><a class="header" href="#memperbarui-crate-untuk-mendapat-versi-baru">Memperbarui Crate untuk Mendapat Versi Baru</a></h4>
+<p>Saat Anda <em>memang</em> ingin memperbarui crate, Cargo menyediakan perintah <code>update</code>,
+yang akan mengabaikan berkas <code>_Cargo.lock_</code> dan mengetahui semua versi terbaru
+yang memenuhi spesifikasi Anda di <code>_Cargo.toml_</code>. Cargo kemudian akan menuliskan
+versi-versi tersebut ke <code>_Cargo.lock_</code>. Jika tidak, secara default, Cargo hanya
+akan mencari versi yang lebih besar dari 0.10.1 dan kurang dari 0.11.0. Jika
+crate <code>rand</code> telah merilis dua versi baru 0.10.2 dan 0.999.0, Anda akan
+melihat hal berikut jika menjalankan <code>cargo update</code>:</p>
+<!-- manual-regeneration
+cd listings/ch02-guessing-game-tutorial/listing-02-02/
+cargo update
+assuming there is a new version of rand; otherwise use another update
+as a guide to creating the hypothetical output shown here -->
+<pre><code class="language-console">$ cargo update
+    Updating crates.io index
+     Locking 1 package to latest Rust 1.96.0 compatible version
+     Updating rand v0.10.1 -&gt; v0.10.2 (available: v0.999.0)
+</code></pre>
+<p>Cargo mengabaikan rilis 0.999.0. Pada titik ini, Anda juga akan memperhatikan
+perubahan di berkas <code>_Cargo.lock_</code> Anda mencatat bahwa versi crate <code>rand</code> yang
+Anda gunakan kini adalah 0.10.2. Untuk menggunakan <code>rand</code> versi 0.999.0 atau
+versi apa pun dalam seri 0.999.<em>x</em>, Anda harus memperbarui berkas
+<code>_Cargo.toml_</code> agar terlihat seperti ini (jangan benar-benar membuat perubahan
+ini karena contoh-contoh berikut mengasumsikan Anda menggunakan <code>rand</code> 0.10):</p>
+<pre><code class="language-toml">[dependencies]
+rand = "0.999.0"
+</code></pre>
+<p>Kali berikutnya Anda menjalankan <code>cargo build</code>, Cargo akan memperbarui registry
+crate yang tersedia dan mengevaluasi ulang kebutuhan <code>rand</code> Anda sesuai versi
+baru yang Anda tentukan.</p>
+<p>Ada banyak lagi yang bisa dibahas tentang <a href="https://doc.rust-lang.org/cargo/">Cargo</a><!-- ignore --> dan
+<a href="https://doc.rust-lang.org/cargo/reference/publishing.html">ekosistemnya</a><!-- ignore -->, yang akan kami bahas di Bab 14, tapi
+untuk sekarang, itu saja yang perlu Anda ketahui. Cargo memudahkan penggunaan
+ulang pustaka, sehingga Rustacean mampu menulis proyek yang lebih kecil yang
+disusun dari sejumlah paket.</p>
+<h3 id="menghasilkan-angka-acak"><a class="header" href="#menghasilkan-angka-acak">Menghasilkan Angka Acak</a></h3>
+<p>Mari mulai menggunakan <code>rand</code> untuk menghasilkan angka untuk ditebak. Langkah
+berikutnya adalah memperbarui <code>_src/main.rs_</code>, seperti yang ditampilkan di
+Listing 2-3.</p>
+<figure class="listing" id="listing-2-3">
+<span class="file-name">Filename: src/main.rs</span>
+<pre><code class="language-rust ignore">use std::io;
+
+use rand::prelude::*;
+
+fn main() {
+    println!("Guess the number!");
+
+    let secret_number = rand::rng().random_range(1..=100);
+
+    println!("The secret number is: {secret_number}");
+
+    println!("Please input your guess.");
+
+    let mut guess = String::new();
+
+    io::stdin()
+        .read_line(&amp;mut guess)
+        .expect("Failed to read line");
+
+    println!("You guessed: {guess}");
+}</code></pre>
+<figcaption><a href="#listing-2-3">Listing 2-3</a>: Menambahkan kode untuk menghasilkan angka acak</figcaption>
+</figure>
+<p>Pertama, kami menambahkan baris <code>use rand::prelude::*;</code>. Modul <code>prelude</code>
+berisi bagian-bagian paling umum dari crate <code>rand</code>, dan <code>use</code> membuat item-item
+itu tersedia di ruang lingkup program kita.</p>
+<p>Selanjutnya, kami menambahkan dua baris di tengah. Di baris pertama, kami
+memanggil fungsi <code>rand::rng</code> yang memberi kami generator angka acak tertentu
+yang akan kami gunakan: satu yang lokal ke thread eksekusi saat ini dan di-seed
+oleh sistem operasi. Kemudian, kami memanggil metode <code>random_range</code> pada
+generator angka acak. Metode ini didefinisikan oleh trait <code>RngExt</code> yang
+merupakan bagian dari modul <code>rand::prelude</code> yang kami bawa ke ruang lingkup
+dengan pernyataan <code>use rand::prelude::*;</code>. Metode <code>random_range</code> mengambil
+ekspresi range sebagai argumen dan menghasilkan angka acak dalam range tersebut.
+Jenis ekspresi range yang kami gunakan di sini berbentuk <code>start..=end</code> dan
+inklusif pada batas bawah dan atas, jadi kami perlu menentukan <code>1..=100</code> untuk
+meminta angka antara 1 dan 100.</p>
+<blockquote>
+<p>Catatan: Anda tidak akan tahu saja apa yang harus dibawa ke ruang lingkup dan
+metode serta fungsi mana yang harus dipanggil dari crate, sehingga setiap crate
+memiliki dokumentasi dengan petunjuk untuk menggunakannya. Fitur menarik lain
+dari Cargo adalah menjalankan perintah <code>cargo doc --open</code> akan membangun
+dokumentasi yang disediakan oleh semua dependensi Anda secara lokal dan
+membukanya di peramban Anda. Jika Anda tertarik dengan fungsionalitas lain di
+crate <code>rand</code>, misalnya, jalankan <code>cargo doc --open</code> dan klik <code>rand</code> di
+bilah sisi kiri.</p>
+</blockquote>
+<p>Baris baru kedua mencetak angka rahasia. Ini berguna saat kami mengembangkan
+program untuk bisa mengujinya, tapi kami akan menghapusnya dari versi final.
+Bukan game yang menarik kalau program mencetak jawabannya begitu dimulai!</p>
+<p>Coba jalankan program beberapa kali:</p>
+<!-- manual-regeneration
+cd listings/ch02-guessing-game-tutorial/listing-02-03/
+cargo run
+4
+cargo run
+5 -->
+<pre><code class="language-console">$ cargo run
+   Compiling guessing_game v0.1.0 (file:///projects/guessing_game)
+    Finished `dev` profile [unoptimized + debuginfo] target(s) in 0.02s
+     Running `target/debug/guessing_game`
+Tebak angka!
+Angka rahasianya adalah: 7
+Silakan masukkan tebakan Anda.
+4
+Anda menebak: 4
+
+$ cargo run
+    Finished `dev` profile [unoptimized + debuginfo] target(s) in 0.02s
+     Running `target/debug/guessing_game`
+Tebak angka!
+Angka rahasianya adalah: 83
+Silakan masukkan tebakan Anda.
+5
+Anda menebak: 5
+</code></pre>
+<p>Anda seharusnya mendapatkan angka acak yang berbeda, dan semuanya seharusnya
+adalah angka antara 1 dan 100. Jika Anda mendapat peringatan, aman untuk
+diabaikan. Jika Anda mendapat kesalahan, silakan periksa bahwa Anda memiliki
+<code>rand = "0.10.1"</code> di <em>Cargo.toml</em> Anda karena versi <code>rand</code> masa depan mungkin
+memiliki API yang berbeda, tapi versi apa pun di seri <code>0.10</code> seharusnya
+bekerja dengan kode di bab ini.</p>
+<h2 id="membandingkan-tebakan-dengan-angka-rahasia"><a class="header" href="#membandingkan-tebakan-dengan-angka-rahasia">Membandingkan Tebakan dengan Angka Rahasia</a></h2>
+<p>Sekarang kami memiliki masukan pengguna dan angka acak, kami bisa membandingkan
+mereka. Langkah itu ditampilkan di Listing 2-4. Perhatikan bahwa kode ini belum
+akan kompilasi, sebagaimana akan kami jelaskan.</p>
+<figure class="listing" id="listing-2-4">
+<span class="file-name">Filename: src/main.rs</span>
+<pre><code class="language-rust ignore does_not_compile">use std::cmp::Ordering;
+use std::io;
+
+use rand::prelude::*;
+
+fn main() {
+    // --snip--
+<span class="boring">    println!("Guess the number!");
+</span><span class="boring">
+</span><span class="boring">    let secret_number = rand::rng().random_range(1..=100);
+</span><span class="boring">
+</span><span class="boring">    println!("The secret number is: {secret_number}");
+</span><span class="boring">
+</span><span class="boring">    println!("Please input your guess.");
+</span><span class="boring">
+</span><span class="boring">    let mut guess = String::new();
+</span><span class="boring">
+</span><span class="boring">    io::stdin()
+</span><span class="boring">        .read_line(&amp;mut guess)
+</span><span class="boring">        .expect("Failed to read line");
+</span>
+    println!("You guessed: {guess}");
+
+    match guess.cmp(&amp;secret_number) {
+        Ordering::Less =&gt; println!("Too small!"),
+        Ordering::Greater =&gt; println!("Too big!"),
+        Ordering::Equal =&gt; println!("You win!"),
+    }
+}</code></pre>
+<figcaption><a href="#listing-2-4">Listing 2-4</a>: Menangani kemungkinan nilai kembali dari membandingkan dua angka</figcaption>
+</figure>
+<p>Pertama, kami menambahkan pernyataan <code>use</code> lain, membawa tipe bernama
+<code>std::cmp::Ordering</code> ke ruang lingkup dari pustaka standar. Tipe <code>Ordering</code>
+adalah enum lain dan memiliki varian <code>Less</code>, <code>Greater</code>, dan <code>Equal</code>. Ini adalah
+tiga hasil yang mungkin saat Anda membandingkan dua nilai.</p>
+<p>Kemudian, kami menambahkan lima baris baru di bagian bawah yang menggunakan tipe
+<code>Ordering</code>. Metode <code>cmp</code> membandingkan dua nilai dan bisa dipanggil pada apa pun
+yang bisa dibandingkan. Ia mengambil referensi ke apa pun yang ingin Anda
+bandingkan: Di sini, ia membandingkan <code>guess</code> dengan <code>secret_number</code>. Kemudian,
+ia mengembalikan varian dari enum <code>Ordering</code> yang kami bawa ke ruang lingkup
+dengan pernyataan <code>use</code>. Kami menggunakan ekspresi
+<a href="ch06-02-match.html"><code>match</code></a><!-- ignore --> untuk memutuskan apa yang harus dilakukan
+berikutnya berdasarkan varian <code>Ordering</code> mana yang dikembalikan dari pemanggilan
+<code>cmp</code> dengan nilai-nilai di <code>guess</code> dan <code>secret_number</code>.</p>
+<p>Ekspresi <code>match</code> terdiri dari <em>arms</em> (lengan). Sebuah arm terdiri dari <em>pola</em>
+untuk dicocokkan, dan kode yang harus dijalankan jika nilai yang diberikan ke
+<code>match</code> cocok dengan pola arm tersebut. Rust mengambil nilai yang diberikan ke
+<code>match</code> dan melihat melalui pola setiap arm secara berurutan. Pola dan konstruk
+<code>match</code> adalah fitur Rust yang powerful: Mereka memungkinkan Anda mengekspresikan
+berbagai situasi yang mungkin dihadapi kode Anda, dan memastikan Anda
+menangani semuanya. Fitur-fitur ini akan dibahas detail di Bab 6 dan Bab 19,
+masing-masing.</p>
+<p>Mari jelajahi contoh dengan ekspresi <code>match</code> yang kami gunakan di sini. Katakanlah
+pengguna telah menebak 50 dan angka rahasia yang dihasilkan secara acak kali ini
+adalah 38.</p>
+<p>Saat kode membandingkan 50 dengan 38, metode <code>cmp</code> akan mengembalikan
+<code>Ordering::Greater</code> karena 50 lebih besar dari 38. Ekspresi <code>match</code> mendapat
+nilai <code>Ordering::Greater</code> dan mulai memeriksa pola setiap arm. Ia melihat pola
+arm pertama, <code>Ordering::Less</code>, dan melihat bahwa nilai <code>Ordering::Greater</code> tidak
+cocok dengan <code>Ordering::Less</code>, jadi ia mengabaikan kode di arm tersebut dan
+berpindah ke arm berikutnya. Pola arm berikutnya adalah <code>Ordering::Greater</code>,
+yang <em>memang</em> cocok dengan <code>Ordering::Greater</code>! Kode terkait di arm itu akan
+diekseskusi dan mencetak <code>Terlalu besar!</code> ke layar. Ekspresi <code>match</code> berakhir
+setelah pencocokan pertama yang berhasil, jadi ia tidak akan melihat arm terakhir
+dalam skenario ini.</p>
+<p>Namun, kode di Listing 2-4 belum akan kompilasi. Mari coba:</p>
+<!--
+The error numbers in this output should be that of the code **WITHOUT** the
+anchor or snip comments
+-->
+<pre><code class="language-console">$ cargo build
+   Compiling libc v0.2.186
+   Compiling getrandom v0.4.3
+   Compiling rand_core v0.10.1
+   Compiling cfg-if v1.0.0
+   Compiling chacha20 v0.10.1
+   Compiling rand v0.10.1
+   Compiling guessing_game v0.1.0 (file:///projects/guessing_game)
+error[E0308]: mismatched types
+  --&gt; src/main.rs:23:21
+   |
+23 |     match guess.cmp(&amp;secret_number) {
+   |                 --- ^^^^^^^^^^^^^^ expected `&amp;String`, found `&amp;{integer}`
+   |                 |
+   |                 arguments to this method are incorrect
+   |
+   = note: expected reference `&amp;String`
+              found reference `&amp;{integer}`
+note: method defined here
+  --&gt; /rustc/58cf8f9c35b355199727627d07ae34a4e2846d67/library/core/src/cmp.rs:1012:7
+
+For more information about this error, try `rustc --explain E0308`.
+error: could not compile `guessing_game` (bin "guessing_game") due to 1 previous error
+</code></pre>
+<p>Inti kesalahan menyatakan ada <em>mismatched types</em> (ketidakcocokan tipe). Rust
+memiliki sistem tipe statis yang kuat. Namun, ia juga memiliki inferensi tipe.
+Saat kami menulis <code>let mut guess = String::new()</code>, Rust bisa menyimpulkan bahwa
+<code>guess</code> seharusnya <code>String</code> dan tidak memaksa kami menulis tipenya. <code>secret_number</code>,
+di sisi lain, adalah tipe angka. Beberapa tipe angka Rust bisa memiliki nilai
+antara 1 dan 100: <code>i32</code>, angka 32-bit; <code>u32</code>, angka 32-bit tanpa tanda; <code>i64</code>,
+angka 64-bit; serta lainnya. Kecuali ditentukan lain, Rust default ke <code>i32</code>,
+yang merupakan tipe <code>secret_number</code> kecuali Anda menambahkan informasi tipe
+di tempat lain yang menyebabkan Rust menyimpulkan tipe numerik yang berbeda.
+Alasan kesalahannya adalah Rust tidak bisa membandingkan string dan tipe angka.</p>
+<p>Pada akhirnya, kami ingin mengubah <code>String</code> yang dibaca program sebagai masukan
+menjadi tipe angka sehingga kami bisa membandingkannya secara numerik dengan
+angka rahasia. Kami melakukannya dengan menambahkan baris ini ke badan fungsi
+<code>main</code>:</p>
+<p><span class="filename">Nama Berkas: src/main.rs</span></p>
+<pre><code class="language-rust ignore"><span class="boring">use std::cmp::Ordering;
+</span><span class="boring">use std::io;
+</span><span class="boring">
+</span><span class="boring">use rand::prelude::*;
+</span><span class="boring">
+</span><span class="boring">fn main() {
+</span><span class="boring">    println!("Guess the number!");
+</span><span class="boring">
+</span><span class="boring">    let secret_number = rand::rng().random_range(1..=100);
+</span><span class="boring">
+</span><span class="boring">    println!("The secret number is: {secret_number}");
+</span><span class="boring">
+</span><span class="boring">    println!("Please input your guess.");
+</span><span class="boring">
+</span>    // --snip--
+
+    let mut guess = String::new();
+
+    io::stdin()
+        .read_line(&amp;mut guess)
+        .expect("Failed to read line");
+
+    let guess: u32 = guess.trim().parse().expect("Please type a number!");
+
+    println!("You guessed: {guess}");
+
+    match guess.cmp(&amp;secret_number) {
+        Ordering::Less =&gt; println!("Too small!"),
+        Ordering::Greater =&gt; println!("Too big!"),
+        Ordering::Equal =&gt; println!("You win!"),
+    }
+<span class="boring">}</span></code></pre>
+<p>Barisnya adalah:</p>
+<pre><code class="language-rust ignore">let guess: u32 = guess.trim().parse().expect("Please type a number!");</code></pre>
+<p>Kami membuat variabel bernama <code>guess</code>. Tunggu, bukankah program sudah punya
+variabel bernama <code>guess</code>? Memang, tapi Rust dengan membantu memungkinkan kami
+menybarkan (shadow) nilai sebelumnya <code>guess</code> dengan yang baru. <em>Shadowing</em>
+memungkinkan kami menggunakan kembali nama variabel <code>guess</code> alih-alih memaksa
+kami membuat dua variabel unik, seperti <code>guess_str</code> dan <code>guess</code>, misalnya.
+Kami akan membahas ini lebih detail di <a href="ch03-01-variables-and-mutability.html#shadowing">Bab 3</a><!-- ignore -->,
+tapi untuk sekarang, ketahui bahwa fitur ini sering digunakan saat Anda ingin
+mengubah nilai dari satu tipe ke tipe lain.</p>
+<p>Kami mengikat variabel baru ini ke ekspresi <code>guess.trim().parse()</code>. <code>guess</code> di
+ekspresi merujuk ke variabel <code>guess</code> asli yang berisi masukan sebagai string.
+Metode <code>trim</code> pada instance <code>String</code> akan menghapus whitespace di awal dan
+akhir, yang harus kami lakukan sebelum bisa mengubah string ke <code>u32</code>, yang hanya
+bisa berisi data numerik. Pengguna harus menekan <kbd>enter</kbd> untuk
+memenuhi <code>read_line</code> dan memasukkan tebakan mereka, yang menambahkan karakter
+newline ke string. Misalnya, jika pengguna mengetik <kbd>5</kbd> dan menekan
+<kbd>enter</kbd>, <code>guess</code> terlihat seperti ini: <code>5\n</code>. <code>\n</code> mewakili “newline.”
+(Di Windows, menekan <kbd>enter</kbd> menghasilkan carriage return dan newline,
+<code>\r\n</code>.) Metode <code>trim</code> menghilangkan <code>\n</code> atau <code>\r\n</code>, menghasilkan hanya <code>5</code>.</p>
+<p><a href="../std/primitive.str.html#method.parse">Metode <code>parse</code> pada string</a><!-- ignore --> mengubah string ke tipe
+lain. Di sini, kami menggunakannya untuk mengubah dari string ke angka. Kami
+perlu memberitahu Rust tipe angka pasti yang kami inginkan dengan menggunakan
+<code>let guess: u32</code>. Titik dua (<code>:</code>) setelah <code>guess</code> memberitahu Rust kami akan
+mengannotasi tipe variabel. Rust memiliki beberapa tipe angka built-in; <code>u32</code>
+yang terlihat di sini adalah integer 32-bit tanpa tanda. Ini pilihan default
+yang baik untuk angka positif kecil. Anda akan belajar tipe angka lain di
+<a href="ch03-02-data-types.html#integer-types">Bab 3</a><!-- ignore -->.</p>
+<p>Selain itu, anotasi <code>u32</code> dalam program contoh ini dan perbandingan dengan
+<code>secret_number</code> berarti Rust akan menyimpulkan bahwa <code>secret_number</code> juga
+seharusnya <code>u32</code>. Jadi, sekarang perbandingan akan antara dua nilai dengan tipe
+yang sama!</p>
+<p>Metode <code>parse</code> hanya akan bekerja pada karakter yang secara logis bisa diubah
+menjadi angka dan jadi bisa dengan mudah menyebabkan kesalahan. Jika, misalnya,
+string berisi <code>A👍%</code>, tidak akan ada cara untuk mengubah itu ke angka. Karena
+bisa gagal, metode <code>parse</code> mengembalikan tipe <code>Result</code>, seperti yang dilakukan
+metode <code>read_line</code> (dibahas sebelumnya di <a href="#handling-potential-failure-with-result">“Menangani Potensi Kegagalan dengan
+<code>Result</code>”</a><!-- ignore -->). Kami akan
+beperlakukan <code>Result</code> ini sama dengan menggunakan metode <code>expect</code> lagi. Jika
+<code>parse</code> mengembalikan varian <code>Err</code> <code>Result</code> karena tidak bisa membuat angka dari
+string, pemanggilan <code>expect</code> akan menghentikan game dan mencetak pesan yang kami
+berikan. Jika <code>parse</code> berhasil mengubah string ke angka, ia akan mengembalikan
+varian <code>Ok</code> dari <code>Result</code>, dan <code>expect</code> akan mengembalikan angka yang kami
+inginkan dari nilai <code>Ok</code>.</p>
+<p>Mari jalankan program sekarang:</p>
+<!-- manual-regeneration
+cd listings/ch02-guessing-game-tutorial/no-listing-03-convert-string-to-number/
+touch src/main.rs
+cargo run
+  76 -->
+<pre><code class="language-console">$ cargo run
+   Compiling guessing_game v0.1.0 (file:///projects/guessing_game)
+    Finished `dev` profile [unoptimized + debuginfo] target(s) in 0.26s
+     Running `target/debug/guessing_game`
+Tebak angka!
+Angka rahasianya adalah: 58
+Silakan masukkan tebakan Anda.
+  76
+Anda menebak: 76
+Terlalu besar!
+</code></pre>
+<p>Bagus! Meskipun spasi ditambahkan sebelum tebakan, program tetap paham bahwa
+pengguna menebak 76. Jalankan program beberapa kali untuk memverifikasi perilaku
+berbeda dengan berbagai jenis masukan: Tebak angka dengan benar, tebak angka
+terlalu tinggi, dan tebak angka terlalu rendah.</p>
+<p>Kami sudah memiliki sebagian besar game yang berfungsi, tapi pengguna hanya bisa
+membuat satu tebakan. Mari ubah itu dengan menambahkan loop!</p>
+<h2 id="mengizinkan-beberapa-tebakan-dengan-perulangan"><a class="header" href="#mengizinkan-beberapa-tebakan-dengan-perulangan">Mengizinkan Beberapa Tebakan dengan Perulangan</a></h2>
+<p>Kata kunci <code>loop</code> menciptakan loop tak terbatas. Kami akan menambahkan loop
+untuk memberi pengguna lebih banyak kesempatan menebak angkanya:</p>
+<p><span class="filename">Nama Berkas: src/main.rs</span></p>
+<pre><code class="language-rust ignore"><span class="boring">use std::cmp::Ordering;
+</span><span class="boring">use std::io;
+</span><span class="boring">
+</span><span class="boring">use rand::prelude::*;
+</span><span class="boring">
+</span><span class="boring">fn main() {
+</span><span class="boring">    println!("Guess the number!");
+</span><span class="boring">
+</span><span class="boring">    let secret_number = rand::rng().random_range(1..=100);
+</span><span class="boring">
+</span>    // --snip--
+
+    println!("The secret number is: {secret_number}");
+
+    loop {
+        println!("Please input your guess.");
+
+        // --snip--
+
+<span class="boring">
+</span><span class="boring">        let mut guess = String::new();
+</span><span class="boring">
+</span><span class="boring">        io::stdin()
+</span><span class="boring">            .read_line(&amp;mut guess)
+</span><span class="boring">            .expect("Failed to read line");
+</span><span class="boring">
+</span><span class="boring">        let guess: u32 = guess.trim().parse().expect("Please type a number!");
+</span><span class="boring">
+</span><span class="boring">        println!("You guessed: {guess}");
+</span><span class="boring">
+</span>        match guess.cmp(&amp;secret_number) {
+            Ordering::Less =&gt; println!("Too small!"),
+            Ordering::Greater =&gt; println!("Too big!"),
+            Ordering::Equal =&gt; println!("You win!"),
+        }
+    }
+}</code></pre>
+<p>Seperti yang Anda lihat, kami memindahkan semuanya dari prompt masukan tebakan
+ke dalam loop. Pastikan untuk menambahkan indent empat spasi ke setiap baris di
+dalam loop dan jalankan program lagi. Program sekarang akan meminta tebakan lain
+selamanya, yang sebenarnya memperkenalkan masalah baru. Sepertinya pengguna tidak
+bisa keluar!</p>
+<p>Pengguna selalu bisa menghentikan program dengan pintasan keyboard
+<kbd>ctrl</kbd>-<kbd>C</kbd>. Tapi ada cara lain untuk melarikan diri dari
+monster yang tak kenal puas ini, seperti yang disebutkan dalam diskusi <code>parse</code> di
+<a href="#comparing-the-guess-to-the-secret-number">“Membandingkan Tebakan dengan Angka Rahasia”</a><!--
+ignore -->: Jika pengguna memasukkan jawaban non-angka, program akan berhenti
+(crash). Kami bisa memanfaatkan itu untuk mengizinkan pengguna keluar, seperti
+ditunjukkan di sini:</p>
+<!-- manual-regeneration
+cd listings/ch02-guessing-game-tutorial/no-listing-04-looping/
+touch src/main.rs
+cargo run
+(too small guess)
+(too big guess)
+(correct guess)
+quit -->
+<pre><code class="language-console">$ cargo run
+   Compiling guessing_game v0.1.0 (file:///projects/guessing_game)
+    Finished `dev` profile [unoptimized + debuginfo] target(s) in 0.23s
+     Running `target/debug/guessing_game`
+Tebak angka!
+Angka rahasianya adalah: 59
+Silakan masukkan tebakan Anda.
+45
+Anda menebak: 45
+Terlalu kecil!
+Silakan masukkan tebakan Anda.
+60
+Anda menebak: 60
+Terlalu besar!
+Silakan masukkan tebakan Anda.
+59
+Anda menebak: 59
+Anda menang!
+Silakan masukkan tebakan Anda.
+quit
+
+thread 'main' (6694925) panicked at src/main.rs:28:47:
+Please type a number!: ParseIntError { kind: InvalidDigit }
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+</code></pre>
+<p>Mengetik <code>quit</code> akan keluar dari game, tapi seperti yang Anda perhatikan, memasukkan
+input non-angka lain juga akan keluar. Ini kurang optimal, untuk bilang yang
+ringan; kami ingin game juga berhenti saat angka yang benar ditebak.</p>
+<h3 id="keluar-setelah-tebakan-benar"><a class="header" href="#keluar-setelah-tebakan-benar">Keluar Setelah Tebakan Benar</a></h3>
+<p>Mari program game untuk keluar saat pengguna menang dengan menambahkan pernyataan
+<code>break</code>:</p>
+<p><span class="filename">Nama Berkas: src/main.rs</span></p>
+<pre><code class="language-rust ignore"><span class="boring">use std::cmp::Ordering;
+</span><span class="boring">use std::io;
+</span><span class="boring">
+</span><span class="boring">use rand::prelude::*;
+</span><span class="boring">
+</span><span class="boring">fn main() {
+</span><span class="boring">    println!("Guess the number!");
+</span><span class="boring">
+</span><span class="boring">    let secret_number = rand::rng().random_range(1..=100);
+</span><span class="boring">
+</span><span class="boring">    println!("The secret number is: {secret_number}");
+</span><span class="boring">
+</span><span class="boring">    loop {
+</span><span class="boring">        println!("Please input your guess.");
+</span><span class="boring">
+</span><span class="boring">        let mut guess = String::new();
+</span><span class="boring">
+</span><span class="boring">        io::stdin()
+</span><span class="boring">            .read_line(&amp;mut guess)
+</span><span class="boring">            .expect("Failed to read line");
+</span><span class="boring">
+</span><span class="boring">        let guess: u32 = guess.trim().parse().expect("Please type a number!");
+</span><span class="boring">
+</span><span class="boring">        println!("You guessed: {guess}");
+</span><span class="boring">
+</span>        // --snip--
+
+        match guess.cmp(&amp;secret_number) {
+            Ordering::Less =&gt; println!("Too small!"),
+            Ordering::Greater =&gt; println!("Too big!"),
+            Ordering::Equal =&gt; {
+                println!("You win!");
+                break;
+            }
+        }
+    }
+}</code></pre>
+<p>Menambahkan baris <code>break</code> setelah <code>Anda menang!</code> membuat program keluar dari
+loop saat pengguna menebak angka rahasia dengan benar. Keluar dari loop juga
+berarti keluar dari program, karena loop adalah bagian terakhir dari <code>main</code>.</p>
+<h3 id="menangani-masukan-tidak-valid"><a class="header" href="#menangani-masukan-tidak-valid">Menangani Masukan Tidak Valid</a></h3>
+<p>Untuk lebih menyempurnakan perilaku game, alih-alih membuat program berhenti
+(crash) saat pengguna memasukkan non-angka, mari buat game mengabaikan non-angka
+sehingga pengguna bisa terus menebak. Kami bisa melakukannya dengan mengubah
+baris di mana <code>guess</code> diubah dari <code>String</code> ke <code>u32</code>, seperti yang ditampilkan di
+Listing 2-5.</p>
+<figure class="listing" id="listing-2-5">
+<span class="file-name">Filename: src/main.rs</span>
+<pre><code class="language-rust ignore"><span class="boring">use std::cmp::Ordering;
+</span><span class="boring">use std::io;
+</span><span class="boring">
+</span><span class="boring">use rand::prelude::*;
+</span><span class="boring">
+</span><span class="boring">fn main() {
+</span><span class="boring">    println!("Guess the number!");
+</span><span class="boring">
+</span><span class="boring">    let secret_number = rand::rng().random_range(1..=100);
+</span><span class="boring">
+</span><span class="boring">    println!("The secret number is: {secret_number}");
+</span><span class="boring">
+</span><span class="boring">    loop {
+</span><span class="boring">        println!("Please input your guess.");
+</span><span class="boring">
+</span><span class="boring">        let mut guess = String::new();
+</span><span class="boring">
+</span>        // --snip--
+
+        io::stdin()
+            .read_line(&amp;mut guess)
+            .expect("Failed to read line");
+
+        let guess: u32 = match guess.trim().parse() {
+            Ok(num) =&gt; num,
+            Err(_) =&gt; continue,
+        };
+
+        println!("You guessed: {guess}");
+
+        // --snip--
+<span class="boring">
+</span><span class="boring">        match guess.cmp(&amp;secret_number) {
+</span><span class="boring">            Ordering::Less =&gt; println!("Too small!"),
+</span><span class="boring">            Ordering::Greater =&gt; println!("Too big!"),
+</span><span class="boring">            Ordering::Equal =&gt; {
+</span><span class="boring">                println!("You win!");
+</span><span class="boring">                break;
+</span><span class="boring">            }
+</span><span class="boring">        }
+</span><span class="boring">    }
+</span><span class="boring">}</span></code></pre>
+<figcaption><a href="#listing-2-5">Listing 2-5</a>: Mengabaikan tebakan non-angka dan meminta tebakan lain alih-alih menghentikan program</figcaption>
+</figure>
+<p>Kami beralih dari pemanggilan <code>expect</code> ke ekspresi <code>match</code> untuk beralih dari
+menghentikan program pada kesalahan ke menangani kesalahan. Ingat bahwa <code>parse</code>
+mengembalikan tipe <code>Result</code> dan <code>Result</code> adalah enum yang memiliki varian <code>Ok</code>
+dan <code>Err</code>. Kami menggunakan ekspresi <code>match</code> di sini, seperti yang kami lakukan
+dengan hasil <code>Ordering</code> dari metode <code>cmp</code>.</p>
+<p>Jika <code>parse</code> mampu mengubah string ke angka dengan sukses, ia akan mengembalikan
+nilai <code>Ok</code> yang berisi angka hasilnya. Nilai <code>Ok</code> itu akan cocok dengan pola
+arm pertama, dan ekspresi <code>match</code> akan hanya mengembalikan nilai <code>num</code> yang
+dihasilkan <code>parse</code> dan ditempatkan di dalam nilai <code>Ok</code>. Angka itu akan berakhir
+tepat di tempat yang kami inginkan di variabel <code>guess</code> baru yang kami buat.</p>
+<p>Jika <code>parse</code> <em>tidak</em> mampu mengubah string ke angka, ia akan mengembalikan nilai
+<code>Err</code> yang berisi lebih banyak informasi tentang kesalahan. Nilai <code>Err</code> tidak
+cocok dengan pola <code>Ok(num)</code> di arm pertama <code>match</code>, tapi cocok dengan pola
+<code>Err(_)</code> di arm kedua. Garis bawah, <code>_</code>, adalah nilai catch-all; dalam contoh
+ini, kami berkata kami ingin mencocokkan semua nilai <code>Err</code>, tidak peduli
+informasi apa yang mereka simpan di dalamnya. Jadi, program akan mengeksekusi
+kode arm kedua, <code>continue</code>, yang memberitahu program untuk pergi ke iterasi
+berikutnya dari <code>loop</code> dan meminta tebakan lain. Jadi, secara efektif, program
+mengabaikan semua kesalahan yang mungkin dihadapi <code>parse</code>!</p>
+<p>Sekarang semuanya di program seharusnya berfungsi seperti yang diharapkan. Mari
+coba:</p>
+<!-- manual-regeneration
+cd listings/ch02-guessing-game-tutorial/listing-02-05/
+cargo run
+(too small guess)
+(too big guess)
+foo
+(correct guess) -->
+<pre><code class="language-console">$ cargo run
+   Compiling guessing_game v0.1.0 (file:///projects/guessing_game)
+    Finished `dev` profile [unoptimized + debuginfo] target(s) in 0.13s
+     Running `target/debug/guessing_game`
+Tebak angka!
+Angka rahasianya adalah: 61
+Silakan masukkan tebakan Anda.
+10
+Anda menebak: 10
+Terlalu kecil!
+Silakan masukkan tebakan Anda.
+99
+Anda menebak: 99
+Terlalu besar!
+Silakan masukkan tebakan Anda.
+foo
+Silakan masukkan tebakan Anda.
+61
+Anda menebak: 61
+Anda menang!
+</code></pre>
+<p>Luar biasa! Dengan satu penyesuaian kecil terakhir, kami akan menyelesaikan
+permainan tebak angka. Ingat bahwa program masih mencetak angka rahasia. Itu
+berfungsi bagus untuk pengujian, tapi merusak game. Mari hapus <code>println!</code> yang
+mengeluarkan angka rahasia. Listing 2-6 menunjukkan kode final.</p>
+<figure class="listing" id="listing-2-6">
+<span class="file-name">Filename: src/main.rs</span>
+<pre><code class="language-rust ignore">use std::cmp::Ordering;
+use std::io;
+
+use rand::prelude::*;
+
+fn main() {
+    println!("Guess the number!");
+
+    let secret_number = rand::rng().random_range(1..=100);
+
+    loop {
+        println!("Please input your guess.");
+
+        let mut guess = String::new();
+
+        io::stdin()
+            .read_line(&amp;mut guess)
+            .expect("Failed to read line");
+
+        let guess: u32 = match guess.trim().parse() {
+            Ok(num) =&gt; num,
+            Err(_) =&gt; continue,
+        };
+
+        println!("You guessed: {guess}");
+
+        match guess.cmp(&amp;secret_number) {
+            Ordering::Less =&gt; println!("Too small!"),
+            Ordering::Greater =&gt; println!("Too big!"),
+            Ordering::Equal =&gt; {
+                println!("You win!");
+                break;
+            }
+        }
+    }
+}</code></pre>
+<figcaption><a href="#listing-2-6">Listing 2-6</a>: Kode lengkap permainan tebak angka</figcaption>
+</figure>
+<p>Pada titik ini, Anda telah berhasil membangun permainan tebak angka. Selamat!</p>
+<h2 id="ringkasan"><a class="header" href="#ringkasan">Ringkasan</a></h2>
+<p>Proyek ini adalah cara langsung untuk memperkenalkan Anda pada banyak konsep
+Rust baru: <code>let</code>, <code>match</code>, fungsi, penggunaan crate eksternal, dan lain-lain.
+Di beberapa bab ke depan, Anda akan belajar konsep-konsep ini lebih detail. Bab 3
+membahas konsep yang dimiliki kebanyakan bahasa pemrograman, seperti variabel,
+tipe data, dan fungsi, dan menunjukkan cara menggunakannya di Rust. Bab 4
+mengeksplorasi kepemilikan (ownership), fitur yang membuat Rust berbeda dari
+bahasa lain. Bab 5 membahas struct dan sintaks metode, dan Bab 6 menjelaskan
+cara kerja enum.</p>
+
+                    </main>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+                            <a rel="prev" href="ch01-03-hello-cargo.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                                <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M41.4 233.4c-12.5 12.5-12.5 32.8 0 45.3l160 160c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3L109.3 256 246.6 118.6c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0l-160 160z"/></svg></span>
+                            </a>
+
+                            <a rel="next prefetch" href="ch03-00-common-programming-concepts.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                                <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M278.6 233.4c12.5 12.5 12.5 32.8 0 45.3l-160 160c-12.5 12.5-32.8 12.5-45.3 0s-12.5-32.8 0-45.3L210.7 256 73.4 118.6c-12.5-12.5-12.5-32.8 0-45.3s32.8-12.5 45.3 0l160 160z"/></svg></span>
+                            </a>
+
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+                    <a rel="prev" href="ch01-03-hello-cargo.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                        <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M41.4 233.4c-12.5 12.5-12.5 32.8 0 45.3l160 160c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3L109.3 256 246.6 118.6c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0l-160 160z"/></svg></span>
+                    </a>
+
+                    <a rel="next prefetch" href="ch03-00-common-programming-concepts.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                        <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M278.6 233.4c12.5 12.5 12.5 32.8 0 45.3l-160 160c-12.5 12.5-32.8 12.5-45.3 0s-12.5-32.8 0-45.3L210.7 256 73.4 118.6c-12.5-12.5-12.5-32.8 0-45.3s32.8-12.5 45.3 0l160 160z"/></svg></span>
+                    </a>
+            </nav>
+
+        </div>
+
+        <template id=fa-eye><span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M288 32c-80.8 0-145.5 36.8-192.6 80.6C48.6 156 17.3 208 2.5 243.7c-3.3 7.9-3.3 16.7 0 24.6C17.3 304 48.6 356 95.4 399.4C142.5 443.2 207.2 480 288 480s145.5-36.8 192.6-80.6c46.8-43.5 78.1-95.4 93-131.1c3.3-7.9 3.3-16.7 0-24.6c-14.9-35.7-46.2-87.7-93-131.1C433.5 68.8 368.8 32 288 32zM432 256c0 79.5-64.5 144-144 144s-144-64.5-144-144s64.5-144 144-144s144 64.5 144 144zM288 192c0 35.3-28.7 64-64 64c-11.5 0-22.3-3-31.6-8.4c-.2 2.8-.4 5.5-.4 8.4c0 53 43 96 96 96s96-43 96-96s-43-96-96-96c-2.8 0-5.6 .1-8.4 .4c5.3 9.3 8.4 20.1 8.4 31.6z"/></svg></span></template>
+        <template id=fa-eye-slash><span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M38.8 5.1C28.4-3.1 13.3-1.2 5.1 9.2S-1.2 34.7 9.2 42.9l592 464c10.4 8.2 25.5 6.3 33.7-4.1s6.3-25.5-4.1-33.7L525.6 386.7c39.6-40.6 66.4-86.1 79.9-118.4c3.3-7.9 3.3-16.7 0-24.6c-14.9-35.7-46.2-87.7-93-131.1C465.5 68.8 400.8 32 320 32c-68.2 0-125 26.3-169.3 60.8L38.8 5.1zM223.1 149.5C248.6 126.2 282.7 112 320 112c79.5 0 144 64.5 144 144c0 24.9-6.3 48.3-17.4 68.7L408 294.5c5.2-11.8 8-24.8 8-38.5c0-53-43-96-96-96c-2.8 0-5.6 .1-8.4 .4c5.3 9.3 8.4 20.1 8.4 31.6c0 10.2-2.4 19.8-6.6 28.3l-90.3-70.8zm223.1 298L373 389.9c-16.4 6.5-34.3 10.1-53 10.1c-79.5 0-144-64.5-144-144c0-6.9 .5-13.6 1.4-20.2L83.1 161.5C60.3 191.2 44 220.8 34.5 243.7c-3.3 7.9-3.3 16.7 0 24.6c14.9 35.7 46.2 87.7 93 131.1C174.5 443.2 239.2 480 320 480c47.8 0 89.9-12.9 126.2-32.5z"/></svg></span></template>
+        <template id=fa-copy><span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M502.6 70.63l-61.25-61.25C435.4 3.371 427.2 0 418.7 0H255.1c-35.35 0-64 28.66-64 64l.0195 256C192 355.4 220.7 384 256 384h192c35.2 0 64-28.8 64-64V93.25C512 84.77 508.6 76.63 502.6 70.63zM464 320c0 8.836-7.164 16-16 16H255.1c-8.838 0-16-7.164-16-16L239.1 64.13c0-8.836 7.164-16 16-16h128L384 96c0 17.67 14.33 32 32 32h47.1V320zM272 448c0 8.836-7.164 16-16 16H63.1c-8.838 0-16-7.164-16-16L47.98 192.1c0-8.836 7.164-16 16-16H160V128H63.99c-35.35 0-64 28.65-64 64l.0098 256C.002 483.3 28.66 512 64 512h192c35.2 0 64-28.8 64-64v-32h-47.1L272 448z"/></svg></span></template>
+        <template id=fa-play><span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 384 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M73 39c-14.8-9.1-33.4-9.4-48.5-.9S0 62.6 0 80V432c0 17.4 9.4 33.4 24.5 41.9s33.7 8.1 48.5-.9L361 297c14.3-8.7 23-24.2 23-41s-8.7-32.2-23-41L73 39z"/></svg></span></template>
+        <template id=fa-clock-rotate-left><span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M75 75L41 41C25.9 25.9 0 36.6 0 57.9V168c0 13.3 10.7 24 24 24H134.1c21.4 0 32.1-25.9 17-41l-30.8-30.8C155 85.5 203 64 256 64c106 0 192 86 192 192s-86 192-192 192c-40.8 0-78.6-12.7-109.7-34.4c-14.5-10.1-34.4-6.6-44.6 7.9s-6.6 34.4 7.9 44.6C151.2 495 201.7 512 256 512c141.4 0 256-114.6 256-256S397.4 0 256 0C185.3 0 121.3 28.7 75 75zm181 53c-13.3 0-24 10.7-24 24V256c0 6.4 2.5 12.5 7 17l72 72c9.4 9.4 24.6 9.4 33.9 0s9.4-24.6 0-33.9l-65-65V152c0-13.3-10.7-24-24-24z"/></svg></span></template>
+
+
+
+        <script>
+            window.playground_copyable = true;
+        </script>
+
+
+        <script src="elasticlunr-ef4e11c1.min.js"></script>
+        <script src="mark-09e88c2c.min.js"></script>
+        <script src="searcher-09f2665d.js"></script>
+
+        <script src="clipboard-1626706a.min.js"></script>
+        <script src="highlight-abc7f01d.js"></script>
+        <script src="book-c22b7243.js"></script>
+
+        <!-- Custom JS scripts -->
+        <script src="ferris-2317480c.js"></script>
+
+
+
+    </div>
+    </body>
+</html>

@@ -1,0 +1,794 @@
+<!DOCTYPE HTML>
+<html lang="en" class="light sidebar-visible" dir="ltr">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>Menerapkan Concurrency dengan Async - The Rust Programming Language</title>
+
+
+        <!-- Custom HTML head -->
+
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff">
+
+        <link rel="icon" href="favicon-de23e50b.svg">
+        <link rel="shortcut icon" href="favicon-8114d1fc.png">
+        <link rel="stylesheet" href="css/variables-8adf115d.css">
+        <link rel="stylesheet" href="css/general-0392ca55.css">
+        <link rel="stylesheet" href="css/chrome-fc474251.css">
+        <link rel="stylesheet" href="css/print-9e4910d8.css" media="print">
+
+        <!-- Fonts -->
+        <link rel="stylesheet" href="fonts/fonts-9644e21d.css">
+
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" id="mdbook-highlight-css" href="highlight-493f70e1.css">
+        <link rel="stylesheet" id="mdbook-tomorrow-night-css" href="tomorrow-night-4c0ae647.css">
+        <link rel="stylesheet" id="mdbook-ayu-highlight-css" href="ayu-highlight-3fdfc3ac.css">
+
+        <!-- Custom theme stylesheets -->
+        <link rel="stylesheet" href="ferris-d33b75bf.css">
+        <link rel="stylesheet" href="theme/2018-edition-4e126c62.css">
+        <link rel="stylesheet" href="theme/semantic-notes-9b5766c0.css">
+        <link rel="stylesheet" href="theme/listing-cab26221.css">
+
+
+        <!-- Provide site root and default themes to javascript -->
+        <script>
+            const path_to_root = "";
+            const default_light_theme = "light";
+            const default_dark_theme = "navy";
+            window.path_to_searchindex_js = "searchindex-e298a7a7.js";
+        </script>
+        <!-- Start loading toc.js asap -->
+        <script src="toc-8d1d8862.js"></script>
+    </head>
+    <body>
+    <div id="mdbook-help-container">
+        <div id="mdbook-help-popup">
+            <h2 class="mdbook-help-title">Keyboard shortcuts</h2>
+            <div>
+                <p>Press <kbd>←</kbd> or <kbd>→</kbd> to navigate between chapters</p>
+                <p>Press <kbd>S</kbd> or <kbd>/</kbd> to search in the book</p>
+                <p>Press <kbd>?</kbd> to show this help</p>
+                <p>Press <kbd>Esc</kbd> to hide this help</p>
+            </div>
+        </div>
+    </div>
+    <div id="mdbook-body-container">
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script>
+            try {
+                let theme = localStorage.getItem('mdbook-theme');
+                let sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script>
+            const default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? default_dark_theme : default_light_theme;
+            let theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            const html = document.documentElement;
+            html.classList.remove('light')
+            html.classList.add(theme);
+            html.classList.add("js");
+        </script>
+
+        <input type="checkbox" id="mdbook-sidebar-toggle-anchor" class="hidden">
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script>
+            let sidebar = null;
+            const sidebar_toggle = document.getElementById("mdbook-sidebar-toggle-anchor");
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            } else {
+                sidebar = 'hidden';
+                sidebar_toggle.checked = false;
+            }
+            if (sidebar === 'visible') {
+                sidebar_toggle.checked = true;
+            } else {
+                html.classList.remove('sidebar-visible');
+            }
+        </script>
+
+        <nav id="mdbook-sidebar" class="sidebar" aria-label="Table of contents">
+            <!-- populated by js -->
+            <mdbook-sidebar-scrollbox class="sidebar-scrollbox"></mdbook-sidebar-scrollbox>
+            <noscript>
+                <iframe class="sidebar-iframe-outer" src="toc.html"></iframe>
+            </noscript>
+            <div id="mdbook-sidebar-resize-handle" class="sidebar-resize-handle">
+                <div class="sidebar-resize-indicator"></div>
+            </div>
+        </nav>
+
+        <div id="mdbook-page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                <div id="mdbook-menu-bar-hover-placeholder"></div>
+                <div id="mdbook-menu-bar" class="menu-bar sticky">
+                    <div class="left-buttons">
+                        <label id="mdbook-sidebar-toggle" class="icon-button" for="mdbook-sidebar-toggle-anchor" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="mdbook-sidebar">
+                            <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M0 96C0 78.3 14.3 64 32 64H416c17.7 0 32 14.3 32 32s-14.3 32-32 32H32C14.3 128 0 113.7 0 96zM0 256c0-17.7 14.3-32 32-32H416c17.7 0 32 14.3 32 32s-14.3 32-32 32H32c-17.7 0-32-14.3-32-32zM448 416c0 17.7-14.3 32-32 32H32c-17.7 0-32-14.3-32-32s14.3-32 32-32H416c17.7 0 32 14.3 32 32z"/></svg></span>
+                        </label>
+                        <button id="mdbook-theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="mdbook-theme-list">
+                            <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M371.3 367.1c27.3-3.9 51.9-19.4 67.2-42.9L600.2 74.1c12.6-19.5 9.4-45.3-7.6-61.2S549.7-4.4 531.1 9.6L294.4 187.2c-24 18-38.2 46.1-38.4 76.1L371.3 367.1zm-19.6 25.4l-116-104.4C175.9 290.3 128 339.6 128 400c0 3.9 .2 7.8 .6 11.6c1.8 17.5-10.2 36.4-27.8 36.4H96c-17.7 0-32 14.3-32 32s14.3 32 32 32H240c61.9 0 112-50.1 112-112c0-2.5-.1-5-.2-7.5z"/></svg></span>
+                        </button>
+                        <ul id="mdbook-theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                            <li role="none"><button role="menuitem" class="theme" id="mdbook-theme-default_theme">Auto</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="mdbook-theme-light">Light</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="mdbook-theme-rust">Rust</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="mdbook-theme-coal">Coal</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="mdbook-theme-navy">Navy</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="mdbook-theme-ayu">Ayu</button></li>
+                        </ul>
+                        <button id="mdbook-search-toggle" class="icon-button" type="button" title="Search (`/`)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="/ s" aria-controls="mdbook-searchbar">
+                            <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M416 208c0 45.9-14.9 88.3-40 122.7L502.6 457.4c12.5 12.5 12.5 32.8 0 45.3s-32.8 12.5-45.3 0L330.7 376c-34.4 25.2-76.8 40-122.7 40C93.1 416 0 322.9 0 208S93.1 0 208 0S416 93.1 416 208zM208 352c79.5 0 144-64.5 144-144s-64.5-144-144-144S64 128.5 64 208s64.5 144 144 144z"/></svg></span>
+                        </button>
+                    </div>
+
+                    <h1 class="menu-title">The Rust Programming Language</h1>
+
+                    <div class="right-buttons">
+                        <a href="print.html" title="Print this book" aria-label="Print this book">
+                            <span class=fa-svg id="print-button"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M128 0C92.7 0 64 28.7 64 64v96h64V64H354.7L384 93.3V160h64V93.3c0-17-6.7-33.3-18.7-45.3L400 18.7C388 6.7 371.7 0 354.7 0H128zM384 352v32 64H128V384 368 352H384zm64 32h32c17.7 0 32-14.3 32-32V256c0-35.3-28.7-64-64-64H64c-35.3 0-64 28.7-64 64v96c0 17.7 14.3 32 32 32H64v64c0 35.3 28.7 64 64 64H384c35.3 0 64-28.7 64-64V384zm-16-88c-13.3 0-24-10.7-24-24s10.7-24 24-24s24 10.7 24 24s-10.7 24-24 24z"/></svg></span>
+                        </a>
+                        <a href="https://github.com/rust-lang/book" title="Git repository" aria-label="Git repository">
+                            <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 496 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M165.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6zm-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3zm44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9zM244.8 8C106.1 8 0 113.3 0 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C428.2 457.8 496 362.9 496 252 496 113.3 383.5 8 244.8 8zM97.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1zm-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7zm32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1zm-11.4-14.7c-1.6 1-1.6 3.6 0 5.9 1.6 2.3 4.3 3.3 5.6 2.3 1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2z"/></svg></span>
+                        </a>
+
+                    </div>
+                </div>
+
+                <div id="mdbook-search-wrapper" class="hidden">
+                    <form id="mdbook-searchbar-outer" class="searchbar-outer">
+                        <div class="search-wrapper">
+                            <input type="search" id="mdbook-searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="mdbook-searchresults-outer" aria-describedby="searchresults-header">
+                            <div class="spinner-wrapper">
+                                <span class=fa-svg id="fa-spin"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M304 48c0-26.5-21.5-48-48-48s-48 21.5-48 48s21.5 48 48 48s48-21.5 48-48zm0 416c0-26.5-21.5-48-48-48s-48 21.5-48 48s21.5 48 48 48s48-21.5 48-48zM48 304c26.5 0 48-21.5 48-48s-21.5-48-48-48s-48 21.5-48 48s21.5 48 48 48zm464-48c0-26.5-21.5-48-48-48s-48 21.5-48 48s21.5 48 48 48s48-21.5 48-48zM142.9 437c18.7-18.7 18.7-49.1 0-67.9s-49.1-18.7-67.9 0s-18.7 49.1 0 67.9s49.1 18.7 67.9 0zm0-294.2c18.7-18.7 18.7-49.1 0-67.9S93.7 56.2 75 75s-18.7 49.1 0 67.9s49.1 18.7 67.9 0zM369.1 437c18.7 18.7 49.1 18.7 67.9 0s18.7-49.1 0-67.9s-49.1-18.7-67.9 0s-18.7 49.1 0 67.9z"/></svg></span>
+                            </div>
+                        </div>
+                    </form>
+                    <div id="mdbook-searchresults-outer" class="searchresults-outer hidden">
+                        <div id="mdbook-searchresults-header" class="searchresults-header"></div>
+                        <ul id="mdbook-searchresults">
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script>
+                    document.getElementById('mdbook-sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('mdbook-sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#mdbook-sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="mdbook-content" class="content">
+                    <main>
+                        <!-- Judul lama. Jangan dihapus atau tautan bisa rusak. -->
+<p><a id="concurrency-with-async"></a></p>
+<h2 id="menerapkan-concurrency-dengan-async"><a class="header" href="#menerapkan-concurrency-dengan-async">Menerapkan Concurrency dengan Async</a></h2>
+<p>Di bagian ini, kami akan menerapkan async ke beberapa tantangan
+concurrency yang sama yang kami hadapi dengan thread di Bab 16.
+Karena kami sudah membahas banyak ide kunci di sana, di bagian ini
+kami akan fokus pada apa yang berbeda antara thread dan future.</p>
+<p>Dalam banyak kasus, API untuk bekerja dengan concurrency menggunakan
+async sangat mirip dengan yang untuk thread. Di kasus lain, mereka
+berakhir cukup berbeda. Bahkan ketika API <em>terlihat</em> mirip antara
+thread dan async, mereka sering punya perilaku yang berbeda—dan
+hampir selalu punya karakteristik performa yang berbeda.</p>
+<!-- Judul lama. Jangan dihapus atau tautan bisa rusak. -->
+<p><a id="counting"></a></p>
+<h3 id="membuat-task-baru-dengan-spawn_task"><a class="header" href="#membuat-task-baru-dengan-spawn_task">Membuat Task Baru dengan <code>spawn_task</code></a></h3>
+<p>Operasi pertama yang kami hadapi di bagian <a href="ch16-01-threads.html#creating-a-new-thread-with-spawn">“Membuat Thread Baru
+dengan <code>spawn</code>”</a><!-- ignore --> Bab 16 adalah counting
+naik di dua thread terpisah. Mari lakukan hal yang sama menggunakan
+async. Crate <code>trpl</code> menyediakan fungsi <code>spawn_task</code> yang terlihat
+sangat mirip dengan API <code>thread::spawn</code>, dan fungsi <code>sleep</code> yang
+adalah versi async dari API <code>thread::sleep</code>. Kami bisa menggunakan
+keduanya bersama untuk mengimplementasikan contoh counting, seperti
+yang ditampilkan di Listing 17-6.</p>
+<figure class="listing" id="listing-17-6">
+<span class="file-name">Filename: src/main.rs</span>
+<pre class="playground"><code class="language-rust edition2024"><span class="boring">extern crate trpl; // required for mdbook test
+</span><span class="boring">
+</span>use std::time::Duration;
+
+fn main() {
+    trpl::block_on(async {
+        trpl::spawn_task(async {
+            for i in 1..10 {
+                println!("hi number {i} from the first task!");
+                trpl::sleep(Duration::from_millis(500)).await;
+            }
+        });
+
+        for i in 1..5 {
+            println!("hi number {i} from the second task!");
+            trpl::sleep(Duration::from_millis(500)).await;
+        }
+    });
+}</code></pre>
+<figcaption><a href="#listing-17-6">Listing 17-6</a>: Membuat task baru untuk mencetak satu hal sementara task main mencetak hal lain</figcaption>
+</figure>
+<p>Sebagai titik awal, kami menyiapkan fungsi <code>main</code> kami dengan
+<code>trpl::block_on</code> sehingga fungsi level atas kami bisa async.</p>
+<blockquote>
+<p>Catatan: Mulai titik ini ke depan di bab ini, setiap contoh akan
+menyertakan wrapping kode persis sama dengan <code>trpl::block_on</code> di
+<code>main</code>, jadi kami akan sering melewatinya sama seperti kami
+lakukan dengan <code>main</code>. Ingat untuk menyertakannya di kode Anda!</p>
+</blockquote>
+<p>Lalu kami menulis dua loop di dalam blok itu, masing-masing berisi
+pemanggilan <code>trpl::sleep</code>, yang menunggu setengah detik (500
+millidetik) sebelum mengirim pesan berikutnya. Kami meletakkan satu
+loop di badan <code>trpl::spawn_task</code> dan yang lain di loop <code>for</code> level
+atas. Kami juga menambahkan <code>await</code> setelah pemanggilan <code>sleep</code>.</p>
+<p>Kode ini berperilaku mirip dengan implementasi berbasis
+thread—termasuk fakta bahwa Anda mungkin melihat pesan muncul dalam
+urutan yang berbeda di terminal Anda sendiri saat Anda menjalankannya:</p>
+<pre><code class="language-text">hi number 1 from the second task!
+hi number 1 from the first task!
+hi number 2 from the first task!
+hi number 2 from the second task!
+hi number 3 from the first task!
+hi number 3 from the second task!
+hi number 4 from the first task!
+hi number 4 from the second task!
+hi number 5 from the first task!
+</code></pre>
+<p>Versi ini berhenti begitu loop <code>for</code> di badan blok async main
+selesai, karena task yang di-spawn oleh <code>spawn_task</code> dihentikan saat
+fungsi <code>main</code> berakhir. Jika Anda ingin ia berjalan hingga task
+selesai, Anda butuh join handle untuk menunggu task pertama
+selesai. Dengan thread, kami menggunakan metode <code>join</code> untuk
+“memblokir” sampai thread selesai berjalan. Di Listing 17-7, kami
+bisa menggunakan <code>await</code> untuk hal yang sama, karena handle task
+sendiri adalah future. Tipe <code>Output</code>-nya adalah <code>Result</code>, jadi kami
+juga unwrap setelah await-nya.</p>
+<figure class="listing" id="listing-17-7">
+<span class="file-name">Filename: src/main.rs</span>
+<pre class="playground"><code class="language-rust edition2024"><span class="boring">extern crate trpl; // required for mdbook test
+</span><span class="boring">
+</span><span class="boring">use std::time::Duration;
+</span><span class="boring">
+</span><span class="boring">fn main() {
+</span><span class="boring">    trpl::block_on(async {
+</span>        let handle = trpl::spawn_task(async {
+            for i in 1..10 {
+                println!("hi number {i} from the first task!");
+                trpl::sleep(Duration::from_millis(500)).await;
+            }
+        });
+
+        for i in 1..5 {
+            println!("hi number {i} from the second task!");
+            trpl::sleep(Duration::from_millis(500)).await;
+        }
+
+        handle.await.unwrap();
+<span class="boring">    });
+</span><span class="boring">}</span></code></pre>
+<figcaption><a href="#listing-17-7">Listing 17-7</a>: Menggunakan <code>await</code> dengan join handle untuk menjalankan task hingga selesai</figcaption>
+</figure>
+<p>Versi diperbarui ini berjalan sampai <em>kedua</em> loop selesai:</p>
+<pre><code class="language-text">hi number 1 from the second task!
+hi number 1 from the first task!
+hi number 2 from the first task!
+hi number 2 from the second task!
+hi number 3 from the first task!
+hi number 3 from the second task!
+hi number 4 from the first task!
+hi number 4 from the second task!
+hi number 5 from the first task!
+hi number 6 from the first task!
+hi number 7 from the first task!
+hi number 8 from the first task!
+hi number 9 from the first task!
+</code></pre>
+<p>Sejauh ini, terlihat async dan thread memberikan hasil serupa, hanya
+dengan sintaks berbeda: menggunakan <code>await</code> alih-alih memanggil
+<code>join</code> pada join handle, dan await pemanggilan <code>sleep</code>.</p>
+<p>Perbedaan lebih besar adalah kami tidak perlu mem-spawn thread sistem
+operasi lain untuk melakukan ini. Faktanya, kami bahkan tidak perlu
+mem-spawn task di sini. Karena blok async kompilasi ke future
+anonim, kami bisa menaruh setiap loop di blok async dan membiarkan
+runtime menjalankan keduanya hingga selesai menggunakan fungsi
+<code>trpl::join</code>.</p>
+<p>Di bagian <a href="ch16-01-threads.html#waiting-for-all-threads-to-finish">“Menunggu Semua Thread Selesai”</a><!-- ignore
+--> Bab 16, kami menunjukkan cara menggunakan metode <code>join</code> pada
+tipe <code>JoinHandle</code> yang dikembalikan saat Anda memanggil
+<code>std::thread::spawn</code>. Fungsi <code>trpl::join</code> mirip, tapi untuk future.
+Saat Anda memberikannya dua future, ia menghasilkan satu future baru
+yang output-nya adalah tuple yang berisi output dari setiap future
+yang Anda teruskan begitu <em>keduanya</em> selesai. Dengan demikian, di
+Listing 17-8, kami menggunakan <code>trpl::join</code> untuk menunggu <code>fut1</code> dan
+<code>fut2</code> selesai. Kami <em>tidak</em> await <code>fut1</code> dan <code>fut2</code> tapi sebagai
+gantinya future baru yang dihasilkan <code>trpl::join</code>. Kami mengabaikan
+output, karena itu hanya tuple yang berisi dua nilai unit.</p>
+<figure class="listing" id="listing-17-8">
+<span class="file-name">Filename: src/main.rs</span>
+<pre class="playground"><code class="language-rust edition2024"><span class="boring">extern crate trpl; // required for mdbook test
+</span><span class="boring">
+</span><span class="boring">use std::time::Duration;
+</span><span class="boring">
+</span><span class="boring">fn main() {
+</span><span class="boring">    trpl::block_on(async {
+</span>        let fut1 = async {
+            for i in 1..10 {
+                println!("hi number {i} from the first task!");
+                trpl::sleep(Duration::from_millis(500)).await;
+            }
+        };
+
+        let fut2 = async {
+            for i in 1..5 {
+                println!("hi number {i} from the second task!");
+                trpl::sleep(Duration::from_millis(500)).await;
+            }
+        };
+
+        trpl::join(fut1, fut2).await;
+<span class="boring">    });
+</span><span class="boring">}</span></code></pre>
+<figcaption><a href="#listing-17-8">Listing 17-8</a>: Menggunakan <code>trpl::join</code> untuk menunggu dua future anonim</figcaption>
+</figure>
+<p>Saat kami menjalankan ini, kami melihat kedua future berjalan hingga
+selesai:</p>
+<pre><code class="language-text">hi number 1 from the first task!
+hi number 1 from the second task!
+hi number 2 from the first task!
+hi number 2 from the second task!
+hi number 3 from the first task!
+hi number 3 from the second task!
+hi number 4 from the first task!
+hi number 4 from the second task!
+hi number 5 from the first task!
+hi number 6 from the first task!
+hi number 7 from the first task!
+hi number 8 from the first task!
+hi number 9 from the first task!
+</code></pre>
+<p>Sekarang, Anda akan melihat urutan yang persis sama setiap kali, yang
+sangat berbeda dari yang kami lihat dengan thread dan dengan
+<code>trpl::spawn_task</code> di Listing 17-7. Itu karena fungsi <code>trpl::join</code>
+<em>adil</em> (fair), artinya ia memeriksa setiap future dengan frekuensi
+yang sama, bergantian di antara mereka, dan tidak pernah membiarkan
+satu balapan ke depan jika yang lain siap. Dengan thread, sistem
+operasi memutuskan thread mana yang dicek dan berapa lama biarkan
+berjalan. Dengan async Rust, runtime memutuskan task mana yang
+dicek. (Dalam praktiknya, detailnya jadi rumit karena async runtime
+mungkin menggunakan thread sistem operasi di bawah tabir sebagai
+bagian dari cara ia mengelola concurrency, jadi menjamin keadilan
+bisa jadi pekerjaan lebih bagi runtime—tapi tetap mungkin!) Runtime
+tidak harus menjamin keadilan untuk operasi manapun, dan mereka
+sering menawarkan API berbeda untuk membiarkan Anda memilih apakah
+Anda mau keadilan atau tidak.</p>
+<p>Coba beberapa variasi await-ing future dan lihat apa yang mereka
+lakukan:</p>
+<ul>
+<li>Hapus blok async dari sekitar salah satu atau kedua loop.</li>
+<li>Await setiap blok async segera setelah mendefinisikannya.</li>
+<li>Bungkus hanya loop pertama di blok async, dan await future hasilnya
+setelah badan loop kedua.</li>
+</ul>
+<p>Untuk tantangan ekstra, lihat apakah Anda bisa menemukan outputnya
+akan seperti apa di setiap kasus <em>sebelum</em> menjalankan kode!</p>
+<!-- Judul lama. Jangan dihapus atau tautan bisa rusak. -->
+<p><a id="message-passing"></a>
+<a id="counting-up-on-two-tasks-using-message-passing"></a></p>
+<h3 id="mengirim-data-antara-dua-task-menggunakan-message-passing"><a class="header" href="#mengirim-data-antara-dua-task-menggunakan-message-passing">Mengirim Data Antara Dua Task Menggunakan Message Passing</a></h3>
+<p>Berbagi data antar future juga akan familiar: kami akan menggunakan
+message passing lagi, tapi kali ini dengan versi async dari tipe dan
+fungsi. Kami akan mengambil jalan sedikit berbeda dari yang kami
+lakukan di bagian <a href="ch16-02-message-passing.html">“Mentransfer Data Antar Thread dengan Message
+Passing”</a><!-- ignore --> Bab 16 untuk
+mengilustrasikan beberapa perbedaan kunci antara concurrency berbasis
+thread dan berbasis future. Di Listing 17-9, kami akan mulai dengan
+hanya satu blok async—<em>tanpa</em> mem-spawn task terpisah seperti yang
+kami lakukan mem-spawn thread terpisah.</p>
+<figure class="listing" id="listing-17-9">
+<span class="file-name">Filename: src/main.rs</span>
+<pre class="playground"><code class="language-rust edition2024"><span class="boring">extern crate trpl; // required for mdbook test
+</span><span class="boring">
+</span><span class="boring">fn main() {
+</span><span class="boring">    trpl::block_on(async {
+</span>        let (tx, mut rx) = trpl::channel();
+
+        let val = String::from("hi");
+        tx.send(val).unwrap();
+
+        let received = rx.recv().await.unwrap();
+        println!("received '{received}'");
+<span class="boring">    });
+</span><span class="boring">}</span></code></pre>
+<figcaption><a href="#listing-17-9">Listing 17-9</a>: Membuat channel async dan menetapkan kedua bagian ke <code>tx</code> dan <code>rx</code></figcaption>
+</figure>
+<p>Di sini, kami menggunakan <code>trpl::channel</code>, versi async dari API
+channel multiple-producer, single-consumer yang kami gunakan dengan
+thread di Bab 16. Versi async dari API hanya sedikit berbeda dari
+versi berbasis thread: ia menggunakan receiver <code>rx</code> yang mutable
+bukan immutable, dan metode <code>recv</code>-nya menghasilkan future yang
+perlu di-await bukannya menghasilkan nilai langsung. Sekarang kami
+bisa mengirim pesan dari pengirim ke penerima. Perhatikan bahwa kami
+tidak perlu mem-spawn thread terpisah atau bahkan task; kami hanya
+perlu await pemanggilan <code>rx.recv</code>.</p>
+<p>Metode <code>Receiver::recv</code> sinkron di <code>std::mpsc::channel</code> memblokir
+sampai menerima pesan. Metode <code>trpl::Receiver::recv</code> tidak, karena
+ia async. Alih-alih memblokir, ia menyerahkan kontrol kembali ke
+runtime sampai baik pesan diterima atau sisi pengirim channel
+tertutup. Sebaliknya, kami tidak await pemanggilan <code>send</code>, karena ia
+tidak memblokir. Ia tidak perlu, karena channel yang kami kirimkan
+adalah unbounded.</p>
+<blockquote>
+<p>Catatan: Karena semua kode async ini berjalan di blok async di
+pemanggilan <code>trpl::block_on</code>, segala sesuatunya di dalamnya bisa
+menghindari blocking. Akan tetapi, kode <em>di luar</em> akan memblokir
+pada fungsi <code>block_on</code> mengembalikan. Itu poin keseluruhan fungsi
+<code>trpl::block_on</code>: ia membiarkan Anda <em>memilih</em> di mana memblokir
+pada beberapa set kode async, dan dengan demikian di mana
+bertransisi antara kode sync dan async.</p>
+</blockquote>
+<p>Perhatikan dua hal tentang contoh ini. Pertama, pesan akan tiba
+segera. Kedua, meskipun kami menggunakan future di sini, belum ada
+concurrency. Segala sesuatunya di listing terjadi berurutan, sama
+seperti jika tidak ada future yang terlibat.</p>
+<p>Mari atasi bagian pertama dengan mengirim serangkaian pesan dan
+sleep di antaranya, seperti yang ditampilkan di Listing 17-10.</p>
+<!-- We cannot test this one because it never stops! -->
+<figure class="listing" id="listing-17-10">
+<span class="file-name">Filename: src/main.rs</span>
+<pre><code class="language-rust ignore"><span class="boring">extern crate trpl; // required for mdbook test
+</span><span class="boring">
+</span><span class="boring">use std::time::Duration;
+</span><span class="boring">
+</span><span class="boring">fn main() {
+</span><span class="boring">    trpl::block_on(async {
+</span>        let (tx, mut rx) = trpl::channel();
+
+        let vals = vec![
+            String::from("hi"),
+            String::from("from"),
+            String::from("the"),
+            String::from("future"),
+        ];
+
+        for val in vals {
+            tx.send(val).unwrap();
+            trpl::sleep(Duration::from_millis(500)).await;
+        }
+
+        while let Some(value) = rx.recv().await {
+            println!("received '{value}'");
+        }
+<span class="boring">    });
+</span><span class="boring">}</span></code></pre>
+<figcaption><a href="#listing-17-10">Listing 17-10</a>: Mengirim dan menerima beberapa pesan lewat channel async dan sleep dengan <code>await</code> di antara tiap pesan</figcaption>
+</figure>
+<p>Selain mengirim pesan, kami butuh menerima mereka. Dalam kasus ini,
+karena kami tahu berapa pesan yang datang, kami bisa melakukan itu
+secara manual dengan memanggil <code>rx.recv().await</code> empat kali. Di dunia
+nyata, bagaimanapun, kami umumnya akan menunggu sejumlah <em>tidak
+diketahui</em> pesan, jadi kami butuh terus menunggu sampai kami
+menentukan bahwa tidak ada lagi pesan.</p>
+<p>Di Listing 16-10, kami menggunakan loop <code>for</code> untuk memproses semua
+item yang diterima dari channel sinkron. Rust belum punya cara untuk
+menggunakan loop <code>for</code> dengan seri item <em>asinkronus</em>, bagaimanapun,
+jadi kami butuh menggunakan loop yang belum kami lihat sebelumnya:
+loop <code>while let</code> bersyarat. Ini adalah versi loop dari konstruksi <code>if let</code> yang kami lihat kembali di bagian <a href="ch06-03-if-let.html">“Alur Kontrol Ringkas dengan
+<code>if let</code> dan <code>let...else</code>”</a><!-- ignore --> Bab 6. Loop ini
+akan terus eksekusi selama pola yang dispesifikasikan terus cocok
+dengan nilai.</p>
+<p>Pemanggilan <code>rx.recv</code> menghasilkan future, yang kami await. Runtime
+akan jeda future sampai siap. Begitu pesan tiba, future akan resolve
+ke <code>Some(message)</code> sebanyak kali pesan tiba. Saat channel tertutup,
+terlepas dari apakah <em>ada</em> pesan yang tiba, future akan sebagai
+gantinya resolve ke <code>None</code> untuk menandakan tidak ada lagi nilai dan
+karena itu kami harus berhenti polling—yaitu, berhenti await.</p>
+<p>Loop <code>while let</code> menarik semua ini bersama. Jika hasil pemanggilan
+<code>rx.recv().await</code> adalah <code>Some(message)</code>, kami mendapat akses ke
+pesan dan bisa menggunakannya di badan loop, sama seperti yang kami
+lakukan dengan <code>if let</code>. Jika hasilnya <code>None</code>, loop berakhir. Setiap
+kali loop selesai, ia menghitik titik await lagi, jadi runtime
+menjedanya lagi sampai pesan lain tiba.</p>
+<p>Kode kini berhasil mengirim dan menerima semua pesan.
+Sayangnya, masih ada beberapa masalah. Untuk satu hal, pesan tidak
+tiba pada interval setengah detik. Mereka tiba semua sekaligus, 2
+detik (2,000 milidetik) setelah memulai program. Untuk yang lain,
+program ini juga tidak pernah keluar! Sebagai gantinya, ia menunggu
+selamanya pesan baru. Anda perlu mematikannya menggunakan
+<kbd>ctrl</kbd>-<kbd>C</kbd>.</p>
+<h4 id="kode-di-dalam-satu-blok-async-dieksekusi-secara-linier"><a class="header" href="#kode-di-dalam-satu-blok-async-dieksekusi-secara-linier">Kode Di Dalam Satu Blok Async Dieksekusi Secara Linier</a></h4>
+<p>Mari mulai dengan memeriksa mengapa pesan datang semua sekaligus
+setelah penundaan penuh, bukannya datang dengan jeda di antara
+masing-masing. Di dalam blok async yang diberikan, urutan di mana
+kata kunci <code>await</code> muncul di kode juga urutan di mana mereka
+dieksekusi saat program berjalan.</p>
+<p>Hanya ada satu blok async di Listing 17-10, jadi segala sesuatunya
+di dalamnya berjalan linier. Masih tidak ada concurrency. Semua
+pemanggilan <code>tx.send</code> terjadi, disisipi dengan semua pemanggilan
+<code>trpl::sleep</code> dan titik await mereka. Baru lalu loop <code>while let</code>
+bisa melewati titik await manapun pada pemanggilan <code>recv</code>.</p>
+<p>Untuk mendapat perilaku yang kami inginkan, di mana jeda sleep
+terjadi di antara tiap pesan, kami perlu menaruh operasi <code>tx</code> dan
+<code>rx</code> di blok async mereka sendiri, seperti yang ditampilkan di
+Listing 17-11. Lalu runtime bisa mengeksekusi masing-masing
+terpisah menggunakan <code>trpl::join</code>, sama seperti di Listing 17-8.
+Lagi, kami await hasil pemanggilan <code>trpl::join</code>, bukan future
+individu. Jika kami await future individu berurutan, kami akan
+kembali ke alur sequential—persis apa yang kami coba <em>hindari</em>.</p>
+<!-- We cannot test this one because it never stops! -->
+<figure class="listing" id="listing-17-11">
+<span class="file-name">Filename: src/main.rs</span>
+<pre><code class="language-rust ignore"><span class="boring">extern crate trpl; // required for mdbook test
+</span><span class="boring">
+</span><span class="boring">use std::time::Duration;
+</span><span class="boring">
+</span><span class="boring">fn main() {
+</span><span class="boring">    trpl::block_on(async {
+</span><span class="boring">        let (tx, mut rx) = trpl::channel();
+</span><span class="boring">
+</span>        let tx_fut = async {
+            let vals = vec![
+                String::from("hi"),
+                String::from("from"),
+                String::from("the"),
+                String::from("future"),
+            ];
+
+            for val in vals {
+                tx.send(val).unwrap();
+                trpl::sleep(Duration::from_millis(500)).await;
+            }
+        };
+
+        let rx_fut = async {
+            while let Some(value) = rx.recv().await {
+                println!("received '{value}'");
+            }
+        };
+
+        trpl::join(tx_fut, rx_fut).await;
+<span class="boring">    });
+</span><span class="boring">}</span></code></pre>
+<figcaption><a href="#listing-17-11">Listing 17-11</a>: Memisahkan <code>send</code> dan <code>recv</code> ke blok <code>async</code> mereka sendiri dan await future untuk blok-blok itu</figcaption>
+</figure>
+<p>Dengan kode yang diperbarui di Listing 17-11, pesan dicetak pada
+interval 500-milidetik, bukannya semua sekaligus setelah 2 detik.</p>
+<h4 id="memindahkan-kepemilikan-ke-blok-async"><a class="header" href="#memindahkan-kepemilikan-ke-blok-async">Memindahkan Kepemilikan Ke Blok Async</a></h4>
+<p>Program masih tidak pernah keluar, bagaimanapun, karena cara loop
+<code>while let</code> berinteraksi dengan <code>trpl::join</code>:</p>
+<ul>
+<li>Future yang dikembalikan dari <code>trpl::join</code> selesai hanya sekali
+<em>kedua</em> future yang diteruskan ke itu selesai.</li>
+<li>Future <code>tx_fut</code> selesai begitu ia selesai sleep setelah mengirim
+pesan terakhir di <code>vals</code>.</li>
+<li>Future <code>rx_fut</code> tidak akan selesai sampai loop <code>while let</code> berakhir.</li>
+<li>Loop <code>while let</code> tidak akan berakhir sampai await <code>rx.recv</code>
+menghasilkan <code>None</code>.</li>
+<li>Await <code>rx.recv</code> akan mengembalikan <code>None</code> hanya sekali sisi lain
+channel ditutup.</li>
+<li>Channel akan tertutup hanya jika kami memanggil <code>rx.close</code> atau
+saat sisi pengirim, <code>tx</code>, di-drop.</li>
+<li>Kami tidak memanggil <code>rx.close</code> di mana pun, dan <code>tx</code> tidak akan
+di-drop sampai blok async terluar yang diteruskan ke
+<code>trpl::block_on</code> berakhir.</li>
+<li>Blok tidak bisa berakhir karena ia diblokir pada <code>trpl::join</code>
+selesai, yang membawa kami kembali ke atas daftar ini.</li>
+</ul>
+<p>Saat ini, blok async tempat kami mengirim pesan hanya <em>mem pinjam</em>
+<code>tx</code> karena mengirim pesan tidak butuh kepemilikan, tapi jika kami
+bisa <em>move</em> <code>tx</code> ke blok async itu, ia akan di-drop begitu blok
+itu berakhir. Di bagian <a href="ch13-01-closures.html#capturing-references-or-moving-ownership">“Menangkap Referensi atau Memindahkan
+Kepemilikan”</a><!-- ignore --> Bab 13, Anda belajar
+cara menggunakan kata kunci <code>move</code> dengan closure, dan, seperti yang
+dibahas di bagian <a href="ch16-01-threads.html#using-move-closures-with-threads">“Menggunakan Closure <code>move</code> dengan
+Thread”</a><!-- ignore --> Bab 16, kami sering perlu
+memindahkan data ke closure saat bekerja dengan thread. Dinamika
+dasar yang sama berlaku untuk blok async, jadi kata kunci <code>move</code>
+bekerja dengan blok async sama seperti dengan closure.</p>
+<p>Di Listing 17-12, kami mengubah blok yang digunakan mengirim pesan
+dari <code>async</code> ke <code>async move</code>.</p>
+<figure class="listing" id="listing-17-12">
+<span class="file-name">Filename: src/main.rs</span>
+<pre class="playground"><code class="language-rust edition2024"><span class="boring">extern crate trpl; // required for mdbook test
+</span><span class="boring">
+</span><span class="boring">use std::time::Duration;
+</span><span class="boring">
+</span><span class="boring">fn main() {
+</span><span class="boring">    trpl::block_on(async {
+</span>        let (tx, mut rx) = trpl::channel();
+
+        let tx_fut = async move {
+            // --snip--
+<span class="boring">            let vals = vec![
+</span><span class="boring">                String::from("hi"),
+</span><span class="boring">                String::from("from"),
+</span><span class="boring">                String::from("the"),
+</span><span class="boring">                String::from("future"),
+</span><span class="boring">            ];
+</span><span class="boring">
+</span><span class="boring">            for val in vals {
+</span><span class="boring">                tx.send(val).unwrap();
+</span><span class="boring">                trpl::sleep(Duration::from_millis(500)).await;
+</span><span class="boring">            }
+</span><span class="boring">        };
+</span><span class="boring">
+</span><span class="boring">        let rx_fut = async {
+</span><span class="boring">            while let Some(value) = rx.recv().await {
+</span><span class="boring">                println!("received '{value}'");
+</span><span class="boring">            }
+</span><span class="boring">        };
+</span><span class="boring">
+</span><span class="boring">        trpl::join(tx_fut, rx_fut).await;
+</span><span class="boring">    });
+</span><span class="boring">}</span></code></pre>
+<figcaption><a href="#listing-17-12">Listing 17-12</a>: Revisi kode dari Listing 17-11 yang benar-benar shutdown saat selesai</figcaption>
+</figure>
+<p>Saat kami menjalankan versi <em>ini</em> dari kode, ia shutdown dengan
+graceful setelah pesan terakhir dikirim dan diterima. Selanjutnya,
+mari lihat apa yang perlu diubah untuk mengirim data dari lebih dari
+satu future.</p>
+<h4 id="menggabungkan-sejumlah-future-dengan-makro-join"><a class="header" href="#menggabungkan-sejumlah-future-dengan-makro-join">Menggabungkan Sejumlah Future dengan Makro <code>join!</code></a></h4>
+<p>Channel async ini juga multiple-producer channel, jadi kami bisa
+memanggil <code>clone</code> pada <code>tx</code> jika kami ingin mengirim pesan dari
+beberapa future, seperti yang ditampilkan di Listing 17-13.</p>
+<figure class="listing" id="listing-17-13">
+<span class="file-name">Filename: src/main.rs</span>
+<pre class="playground"><code class="language-rust edition2024"><span class="boring">extern crate trpl; // required for mdbook test
+</span><span class="boring">
+</span><span class="boring">use std::time::Duration;
+</span><span class="boring">
+</span><span class="boring">fn main() {
+</span><span class="boring">    trpl::block_on(async {
+</span>        let (tx, mut rx) = trpl::channel();
+
+        let tx1 = tx.clone();
+        let tx1_fut = async move {
+            let vals = vec![
+                String::from("hi"),
+                String::from("from"),
+                String::from("the"),
+                String::from("future"),
+            ];
+
+            for val in vals {
+                tx1.send(val).unwrap();
+                trpl::sleep(Duration::from_millis(500)).await;
+            }
+        };
+
+        let rx_fut = async {
+            while let Some(value) = rx.recv().await {
+                println!("received '{value}'");
+            }
+        };
+
+        let tx_fut = async move {
+            let vals = vec![
+                String::from("more"),
+                String::from("messages"),
+                String::from("for"),
+                String::from("you"),
+            ];
+
+            for val in vals {
+                tx.send(val).unwrap();
+                trpl::sleep(Duration::from_millis(1500)).await;
+            }
+        };
+
+        trpl::join!(tx1_fut, tx_fut, rx_fut);
+<span class="boring">    });
+</span><span class="boring">}</span></code></pre>
+<figcaption><a href="#listing-17-13">Listing 17-13</a>: Menggunakan beberapa produser dengan blok async</figcaption>
+</figure>
+<p>Pertama, kami clone <code>tx</code>, menciptakan <code>tx1</code> di luar blok async
+pertama. Kami move <code>tx1</code> ke blok itu sama seperti yang kami lakukan
+sebelumnya dengan <code>tx</code>. Lalu, nanti, kami move <code>tx</code> asli ke blok
+async <em>baru</em>, di mana kami mengirim pesan lebih banyak pada jeda
+sedikit lebih lambat. Kami kebetulan menaruh blok async baru ini
+setelah blok async untuk menerima pesan, tapi bisa juga diletakkan
+sebelumnya. Kuncinya adalah urutan future di-await, bukan di mana
+mereka dibuat.</p>
+<p>Kedua blok async untuk mengirim pesan perlu menjadi blok <code>async move</code> sehingga <code>tx</code> dan <code>tx1</code> di-drop saat blok-blok itu selesai.
+Sebaliknya, kami akan kembali ke loop tak terbatas yang sama di mana
+kami mulai.</p>
+<p>Akhirnya, kami beralih dari <code>trpl::join</code> ke <code>trpl::join!</code> untuk
+menangani future tambahan: makro <code>join!</code> await sejumlah future
+sembarang di mana kami tahu jumlah future pada waktu kompilasi.
+Kami akan membahas await kumpulan future jumlah tak diketahui nanti
+di bab ini.</p>
+<p>Sekarang kami melihat semua pesan dari kedua future pengirim, dan
+karena future pengirim menggunakan jeda sedikit berbeda setelah
+mengirim, pesan juga diterima pada interval yang berbeda:</p>
+<pre><code class="language-text">received 'hi'
+received 'more'
+received 'from'
+received 'the'
+received 'messages'
+received 'future'
+received 'for'
+received 'you'
+</code></pre>
+<p>Kami telah mengeksplorasi cara menggunakan message passing untuk
+mengirim data antar future, bagaimana kode di dalam blok async
+berjalan secara sequential, cara memindahkan kepemilikan ke blok
+async, dan cara menggabungkan beberapa future. Selanjutnya, mari
+bahas bagaimana dan kapa memberitahu runtime bahwa ia bisa beralih
+ke task lain.</p>
+
+                    </main>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+                            <a rel="prev" href="ch17-01-futures-and-syntax.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                                <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M41.4 233.4c-12.5 12.5-12.5 32.8 0 45.3l160 160c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3L109.3 256 246.6 118.6c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0l-160 160z"/></svg></span>
+                            </a>
+
+                            <a rel="next prefetch" href="ch17-03-more-futures.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                                <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M278.6 233.4c12.5 12.5 12.5 32.8 0 45.3l-160 160c-12.5 12.5-32.8 12.5-45.3 0s-12.5-32.8 0-45.3L210.7 256 73.4 118.6c-12.5-12.5-12.5-32.8 0-45.3s32.8-12.5 45.3 0l160 160z"/></svg></span>
+                            </a>
+
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+                    <a rel="prev" href="ch17-01-futures-and-syntax.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                        <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M41.4 233.4c-12.5 12.5-12.5 32.8 0 45.3l160 160c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3L109.3 256 246.6 118.6c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0l-160 160z"/></svg></span>
+                    </a>
+
+                    <a rel="next prefetch" href="ch17-03-more-futures.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                        <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M278.6 233.4c12.5 12.5 12.5 32.8 0 45.3l-160 160c-12.5 12.5-32.8 12.5-45.3 0s-12.5-32.8 0-45.3L210.7 256 73.4 118.6c-12.5-12.5-12.5-32.8 0-45.3s32.8-12.5 45.3 0l160 160z"/></svg></span>
+                    </a>
+            </nav>
+
+        </div>
+
+        <template id=fa-eye><span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M288 32c-80.8 0-145.5 36.8-192.6 80.6C48.6 156 17.3 208 2.5 243.7c-3.3 7.9-3.3 16.7 0 24.6C17.3 304 48.6 356 95.4 399.4C142.5 443.2 207.2 480 288 480s145.5-36.8 192.6-80.6c46.8-43.5 78.1-95.4 93-131.1c3.3-7.9 3.3-16.7 0-24.6c-14.9-35.7-46.2-87.7-93-131.1C433.5 68.8 368.8 32 288 32zM432 256c0 79.5-64.5 144-144 144s-144-64.5-144-144s64.5-144 144-144s144 64.5 144 144zM288 192c0 35.3-28.7 64-64 64c-11.5 0-22.3-3-31.6-8.4c-.2 2.8-.4 5.5-.4 8.4c0 53 43 96 96 96s96-43 96-96s-43-96-96-96c-2.8 0-5.6 .1-8.4 .4c5.3 9.3 8.4 20.1 8.4 31.6z"/></svg></span></template>
+        <template id=fa-eye-slash><span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M38.8 5.1C28.4-3.1 13.3-1.2 5.1 9.2S-1.2 34.7 9.2 42.9l592 464c10.4 8.2 25.5 6.3 33.7-4.1s6.3-25.5-4.1-33.7L525.6 386.7c39.6-40.6 66.4-86.1 79.9-118.4c3.3-7.9 3.3-16.7 0-24.6c-14.9-35.7-46.2-87.7-93-131.1C465.5 68.8 400.8 32 320 32c-68.2 0-125 26.3-169.3 60.8L38.8 5.1zM223.1 149.5C248.6 126.2 282.7 112 320 112c79.5 0 144 64.5 144 144c0 24.9-6.3 48.3-17.4 68.7L408 294.5c5.2-11.8 8-24.8 8-38.5c0-53-43-96-96-96c-2.8 0-5.6 .1-8.4 .4c5.3 9.3 8.4 20.1 8.4 31.6c0 10.2-2.4 19.8-6.6 28.3l-90.3-70.8zm223.1 298L373 389.9c-16.4 6.5-34.3 10.1-53 10.1c-79.5 0-144-64.5-144-144c0-6.9 .5-13.6 1.4-20.2L83.1 161.5C60.3 191.2 44 220.8 34.5 243.7c-3.3 7.9-3.3 16.7 0 24.6c14.9 35.7 46.2 87.7 93 131.1C174.5 443.2 239.2 480 320 480c47.8 0 89.9-12.9 126.2-32.5z"/></svg></span></template>
+        <template id=fa-copy><span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M502.6 70.63l-61.25-61.25C435.4 3.371 427.2 0 418.7 0H255.1c-35.35 0-64 28.66-64 64l.0195 256C192 355.4 220.7 384 256 384h192c35.2 0 64-28.8 64-64V93.25C512 84.77 508.6 76.63 502.6 70.63zM464 320c0 8.836-7.164 16-16 16H255.1c-8.838 0-16-7.164-16-16L239.1 64.13c0-8.836 7.164-16 16-16h128L384 96c0 17.67 14.33 32 32 32h47.1V320zM272 448c0 8.836-7.164 16-16 16H63.1c-8.838 0-16-7.164-16-16L47.98 192.1c0-8.836 7.164-16 16-16H160V128H63.99c-35.35 0-64 28.65-64 64l.0098 256C.002 483.3 28.66 512 64 512h192c35.2 0 64-28.8 64-64v-32h-47.1L272 448z"/></svg></span></template>
+        <template id=fa-play><span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 384 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M73 39c-14.8-9.1-33.4-9.4-48.5-.9S0 62.6 0 80V432c0 17.4 9.4 33.4 24.5 41.9s33.7 8.1 48.5-.9L361 297c14.3-8.7 23-24.2 23-41s-8.7-32.2-23-41L73 39z"/></svg></span></template>
+        <template id=fa-clock-rotate-left><span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M75 75L41 41C25.9 25.9 0 36.6 0 57.9V168c0 13.3 10.7 24 24 24H134.1c21.4 0 32.1-25.9 17-41l-30.8-30.8C155 85.5 203 64 256 64c106 0 192 86 192 192s-86 192-192 192c-40.8 0-78.6-12.7-109.7-34.4c-14.5-10.1-34.4-6.6-44.6 7.9s-6.6 34.4 7.9 44.6C151.2 495 201.7 512 256 512c141.4 0 256-114.6 256-256S397.4 0 256 0C185.3 0 121.3 28.7 75 75zm181 53c-13.3 0-24 10.7-24 24V256c0 6.4 2.5 12.5 7 17l72 72c9.4 9.4 24.6 9.4 33.9 0s9.4-24.6 0-33.9l-65-65V152c0-13.3-10.7-24-24-24z"/></svg></span></template>
+
+
+
+        <script>
+            window.playground_copyable = true;
+        </script>
+
+
+        <script src="elasticlunr-ef4e11c1.min.js"></script>
+        <script src="mark-09e88c2c.min.js"></script>
+        <script src="searcher-09f2665d.js"></script>
+
+        <script src="clipboard-1626706a.min.js"></script>
+        <script src="highlight-abc7f01d.js"></script>
+        <script src="book-c22b7243.js"></script>
+
+        <!-- Custom JS scripts -->
+        <script src="ferris-2317480c.js"></script>
+
+
+
+    </div>
+    </body>
+</html>

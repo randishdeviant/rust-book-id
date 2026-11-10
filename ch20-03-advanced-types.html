@@ -1,0 +1,608 @@
+<!DOCTYPE HTML>
+<html lang="en" class="light sidebar-visible" dir="ltr">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>Tipe Lanjutan - The Rust Programming Language</title>
+
+
+        <!-- Custom HTML head -->
+
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff">
+
+        <link rel="icon" href="favicon-de23e50b.svg">
+        <link rel="shortcut icon" href="favicon-8114d1fc.png">
+        <link rel="stylesheet" href="css/variables-8adf115d.css">
+        <link rel="stylesheet" href="css/general-0392ca55.css">
+        <link rel="stylesheet" href="css/chrome-fc474251.css">
+        <link rel="stylesheet" href="css/print-9e4910d8.css" media="print">
+
+        <!-- Fonts -->
+        <link rel="stylesheet" href="fonts/fonts-9644e21d.css">
+
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" id="mdbook-highlight-css" href="highlight-493f70e1.css">
+        <link rel="stylesheet" id="mdbook-tomorrow-night-css" href="tomorrow-night-4c0ae647.css">
+        <link rel="stylesheet" id="mdbook-ayu-highlight-css" href="ayu-highlight-3fdfc3ac.css">
+
+        <!-- Custom theme stylesheets -->
+        <link rel="stylesheet" href="ferris-d33b75bf.css">
+        <link rel="stylesheet" href="theme/2018-edition-4e126c62.css">
+        <link rel="stylesheet" href="theme/semantic-notes-9b5766c0.css">
+        <link rel="stylesheet" href="theme/listing-cab26221.css">
+
+
+        <!-- Provide site root and default themes to javascript -->
+        <script>
+            const path_to_root = "";
+            const default_light_theme = "light";
+            const default_dark_theme = "navy";
+            window.path_to_searchindex_js = "searchindex-e298a7a7.js";
+        </script>
+        <!-- Start loading toc.js asap -->
+        <script src="toc-8d1d8862.js"></script>
+    </head>
+    <body>
+    <div id="mdbook-help-container">
+        <div id="mdbook-help-popup">
+            <h2 class="mdbook-help-title">Keyboard shortcuts</h2>
+            <div>
+                <p>Press <kbd>←</kbd> or <kbd>→</kbd> to navigate between chapters</p>
+                <p>Press <kbd>S</kbd> or <kbd>/</kbd> to search in the book</p>
+                <p>Press <kbd>?</kbd> to show this help</p>
+                <p>Press <kbd>Esc</kbd> to hide this help</p>
+            </div>
+        </div>
+    </div>
+    <div id="mdbook-body-container">
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script>
+            try {
+                let theme = localStorage.getItem('mdbook-theme');
+                let sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script>
+            const default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? default_dark_theme : default_light_theme;
+            let theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            const html = document.documentElement;
+            html.classList.remove('light')
+            html.classList.add(theme);
+            html.classList.add("js");
+        </script>
+
+        <input type="checkbox" id="mdbook-sidebar-toggle-anchor" class="hidden">
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script>
+            let sidebar = null;
+            const sidebar_toggle = document.getElementById("mdbook-sidebar-toggle-anchor");
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            } else {
+                sidebar = 'hidden';
+                sidebar_toggle.checked = false;
+            }
+            if (sidebar === 'visible') {
+                sidebar_toggle.checked = true;
+            } else {
+                html.classList.remove('sidebar-visible');
+            }
+        </script>
+
+        <nav id="mdbook-sidebar" class="sidebar" aria-label="Table of contents">
+            <!-- populated by js -->
+            <mdbook-sidebar-scrollbox class="sidebar-scrollbox"></mdbook-sidebar-scrollbox>
+            <noscript>
+                <iframe class="sidebar-iframe-outer" src="toc.html"></iframe>
+            </noscript>
+            <div id="mdbook-sidebar-resize-handle" class="sidebar-resize-handle">
+                <div class="sidebar-resize-indicator"></div>
+            </div>
+        </nav>
+
+        <div id="mdbook-page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                <div id="mdbook-menu-bar-hover-placeholder"></div>
+                <div id="mdbook-menu-bar" class="menu-bar sticky">
+                    <div class="left-buttons">
+                        <label id="mdbook-sidebar-toggle" class="icon-button" for="mdbook-sidebar-toggle-anchor" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="mdbook-sidebar">
+                            <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M0 96C0 78.3 14.3 64 32 64H416c17.7 0 32 14.3 32 32s-14.3 32-32 32H32C14.3 128 0 113.7 0 96zM0 256c0-17.7 14.3-32 32-32H416c17.7 0 32 14.3 32 32s-14.3 32-32 32H32c-17.7 0-32-14.3-32-32zM448 416c0 17.7-14.3 32-32 32H32c-17.7 0-32-14.3-32-32s14.3-32 32-32H416c17.7 0 32 14.3 32 32z"/></svg></span>
+                        </label>
+                        <button id="mdbook-theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="mdbook-theme-list">
+                            <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M371.3 367.1c27.3-3.9 51.9-19.4 67.2-42.9L600.2 74.1c12.6-19.5 9.4-45.3-7.6-61.2S549.7-4.4 531.1 9.6L294.4 187.2c-24 18-38.2 46.1-38.4 76.1L371.3 367.1zm-19.6 25.4l-116-104.4C175.9 290.3 128 339.6 128 400c0 3.9 .2 7.8 .6 11.6c1.8 17.5-10.2 36.4-27.8 36.4H96c-17.7 0-32 14.3-32 32s14.3 32 32 32H240c61.9 0 112-50.1 112-112c0-2.5-.1-5-.2-7.5z"/></svg></span>
+                        </button>
+                        <ul id="mdbook-theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                            <li role="none"><button role="menuitem" class="theme" id="mdbook-theme-default_theme">Auto</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="mdbook-theme-light">Light</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="mdbook-theme-rust">Rust</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="mdbook-theme-coal">Coal</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="mdbook-theme-navy">Navy</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="mdbook-theme-ayu">Ayu</button></li>
+                        </ul>
+                        <button id="mdbook-search-toggle" class="icon-button" type="button" title="Search (`/`)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="/ s" aria-controls="mdbook-searchbar">
+                            <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M416 208c0 45.9-14.9 88.3-40 122.7L502.6 457.4c12.5 12.5 12.5 32.8 0 45.3s-32.8 12.5-45.3 0L330.7 376c-34.4 25.2-76.8 40-122.7 40C93.1 416 0 322.9 0 208S93.1 0 208 0S416 93.1 416 208zM208 352c79.5 0 144-64.5 144-144s-64.5-144-144-144S64 128.5 64 208s64.5 144 144 144z"/></svg></span>
+                        </button>
+                    </div>
+
+                    <h1 class="menu-title">The Rust Programming Language</h1>
+
+                    <div class="right-buttons">
+                        <a href="print.html" title="Print this book" aria-label="Print this book">
+                            <span class=fa-svg id="print-button"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M128 0C92.7 0 64 28.7 64 64v96h64V64H354.7L384 93.3V160h64V93.3c0-17-6.7-33.3-18.7-45.3L400 18.7C388 6.7 371.7 0 354.7 0H128zM384 352v32 64H128V384 368 352H384zm64 32h32c17.7 0 32-14.3 32-32V256c0-35.3-28.7-64-64-64H64c-35.3 0-64 28.7-64 64v96c0 17.7 14.3 32 32 32H64v64c0 35.3 28.7 64 64 64H384c35.3 0 64-28.7 64-64V384zm-16-88c-13.3 0-24-10.7-24-24s10.7-24 24-24s24 10.7 24 24s-10.7 24-24 24z"/></svg></span>
+                        </a>
+                        <a href="https://github.com/rust-lang/book" title="Git repository" aria-label="Git repository">
+                            <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 496 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M165.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6zm-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3zm44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9zM244.8 8C106.1 8 0 113.3 0 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C428.2 457.8 496 362.9 496 252 496 113.3 383.5 8 244.8 8zM97.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1zm-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7zm32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1zm-11.4-14.7c-1.6 1-1.6 3.6 0 5.9 1.6 2.3 4.3 3.3 5.6 2.3 1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2z"/></svg></span>
+                        </a>
+
+                    </div>
+                </div>
+
+                <div id="mdbook-search-wrapper" class="hidden">
+                    <form id="mdbook-searchbar-outer" class="searchbar-outer">
+                        <div class="search-wrapper">
+                            <input type="search" id="mdbook-searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="mdbook-searchresults-outer" aria-describedby="searchresults-header">
+                            <div class="spinner-wrapper">
+                                <span class=fa-svg id="fa-spin"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M304 48c0-26.5-21.5-48-48-48s-48 21.5-48 48s21.5 48 48 48s48-21.5 48-48zm0 416c0-26.5-21.5-48-48-48s-48 21.5-48 48s21.5 48 48 48s48-21.5 48-48zM48 304c26.5 0 48-21.5 48-48s-21.5-48-48-48s-48 21.5-48 48s21.5 48 48 48zm464-48c0-26.5-21.5-48-48-48s-48 21.5-48 48s21.5 48 48 48s48-21.5 48-48zM142.9 437c18.7-18.7 18.7-49.1 0-67.9s-49.1-18.7-67.9 0s-18.7 49.1 0 67.9s49.1 18.7 67.9 0zm0-294.2c18.7-18.7 18.7-49.1 0-67.9S93.7 56.2 75 75s-18.7 49.1 0 67.9s49.1 18.7 67.9 0zM369.1 437c18.7 18.7 49.1 18.7 67.9 0s18.7-49.1 0-67.9s-49.1-18.7-67.9 0s-18.7 49.1 0 67.9z"/></svg></span>
+                            </div>
+                        </div>
+                    </form>
+                    <div id="mdbook-searchresults-outer" class="searchresults-outer hidden">
+                        <div id="mdbook-searchresults-header" class="searchresults-header"></div>
+                        <ul id="mdbook-searchresults">
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script>
+                    document.getElementById('mdbook-sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('mdbook-sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#mdbook-sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="mdbook-content" class="content">
+                    <main>
+                        <h1 id="tipe-lanjutan"><a class="header" href="#tipe-lanjutan">Tipe Lanjutan</a></h1>
+<p>Sistem tipe Rust memiliki beberapa fitur yang sejauh ini kami sebutkan
+tapi belum dibahas. Kami akan memulai dengan membahas newtype
+secara umum saat kami memeriksa mengapa mereka berguna sebagai tipe.
+Lalu, kami akan lanjut ke type aliases, fitur yang mirip dengan
+newtype tapi dengan semantik sedikit berbeda. Kami juga akan
+membahas tipe <code>!</code> dan dynamically sized types.</p>
+<!-- Judul lama. Jangan dihapus atau tautan bisa rusak. -->
+<p><a id="using-the-newtype-pattern-for-type-safety-and-abstraction"></a></p>
+<h3 id="keamanan-tipe-dan-abstraksi-dengan-pola-newtype"><a class="header" href="#keamanan-tipe-dan-abstraksi-dengan-pola-newtype">Keamanan Tipe dan Abstraksi dengan Pola Newtype</a></h3>
+<p>Bagian ini mengasumsikan Anda telah membaca bagian sebelumnya
+<a href="ch20-02-advanced-traits.html#implementing-external-traits-with-the-newtype-pattern">“Mengimplementasikan Trait Eksternal dengan Pola Newtype”</a><!-- ignore -->. Pola newtype juga berguna untuk tugas di luar yang
+telah kami bahas sejauh ini, termasuk menegakkan secara statis
+bahwa nilai tidak pernah bercampur dan menunjukan satuan dari sebuah
+nilai. Anda melihat contoh penggunaan newtype untuk menunjukan satuan
+di Listing 20-16: Ingat bahwa struct <code>Millimeters</code> dan <code>Meters</code>
+meng-wrap nilai <code>u32</code> dalam newtype. Jika kita menulis fungsi dengan
+parameter bertipe <code>Millimeters</code>, kita tidak akan bisa mengompilasi
+program yang tidak sengaja mencoba memanggil fungsi itu dengan nilai
+bertipe <code>Meters</code> atau <code>u32</code> biasa.</p>
+<p>Kita juga bisa menggunakan pola newtype untuk mengabstraksi detail
+implementasi sebuah tipe: Tipe baru bisa mengekspos API publik yang
+berbeda dari API tipe dalam privat.</p>
+<p>Newtype juga bisa menyembunyikan implementasi internal. Misalnya,
+kita bisa menyediakan tipe <code>People</code> untuk wrap <code>HashMap&lt;i32, String&gt;</code>
+yang menyimpan ID orang yang terkait dengan nama mereka. Kode yang
+menggunakan <code>People</code> hanya akan berinteraksi dengan API publik yang
+kami sediakan, seperti metode untuk menambah string nama ke koleksi
+<code>People</code>; kode itu tidak perlu tahu bahwa kami menetapkan ID <code>i32</code>
+ke nama secara internal. Pola newtype adalah cara ringan untuk
+mencapai enkapsulasi guna menyembunyikan detail implementasi, yang
+kami bahas di bagian <a href="ch18-01-what-is-oo.html#encapsulation-that-hides-implementation-details">“Enkapsulasi yang Menyembunyikan Detail
+Implementasi”</a><!-- ignore --> di Bab 18.</p>
+<!-- Judul lama. Jangan dihapus atau tautan bisa rusak. -->
+<p><a id="creating-type-synonyms-with-type-aliases"></a></p>
+<h3 id="sinonim-tipe-dan-type-aliases"><a class="header" href="#sinonim-tipe-dan-type-aliases">Sinonim Tipe dan Type Aliases</a></h3>
+<p>Rust menyediakan kemampuan untuk mendeklarasikan <em>type alias</em> untuk
+memberi nama lain pada tipe existing. Untuk ini kita menggunakan kata
+kunci <code>type</code>. Misalnya, kita bisa membuat alias <code>Kilometers</code> ke <code>i32</code>
+seperti ini:</p>
+<pre class="playground"><code class="language-rust edition2024"><span class="boring">fn main() {
+</span>    type Kilometers = i32;
+<span class="boring">
+</span><span class="boring">    let x: i32 = 5;
+</span><span class="boring">    let y: Kilometers = 5;
+</span><span class="boring">
+</span><span class="boring">    println!("x + y = {}", x + y);
+</span><span class="boring">}</span></code></pre>
+<p>Sekarang alias <code>Kilometers</code> adalah <em>sinonim</em> untuk <code>i32</code>; tidak
+seperti tipe <code>Millimeters</code> dan <code>Meters</code> yang kami buat di Listing
+20-16, <code>Kilometers</code> bukan tipe baru yang terpisah. Nilai yang
+bertipe <code>Kilometers</code> akan diperlakukan sama seperti nilai bertipe
+<code>i32</code>:</p>
+<pre class="playground"><code class="language-rust edition2024"><span class="boring">fn main() {
+</span>    type Kilometers = i32;
+
+    let x: i32 = 5;
+    let y: Kilometers = 5;
+
+    println!("x + y = {}", x + y);
+<span class="boring">}</span></code></pre>
+<p>Karena <code>Kilometers</code> dan <code>i32</code> adalah tipe yang sama, kita bisa
+menambahkan nilai kedua tipe tersebut dan bisa meneruskan nilai
+<code>Kilometers</code> ke fungsi yang menerima parameter <code>i32</code>. Akan tetapi,
+menggunakan metode ini, kita tidak mendapat manfaat pemeriksaan tipe
+yang kita dapatkan dari pola newtype yang dibahas sebelumnya. Dengan
+kata lain, jika kita mencampurkan nilai <code>Kilometers</code> dan <code>i32</code>
+di suatu tempat, compiler tidak akan memberi error.</p>
+<p>Kasus penggunaan utama untuk sinonim tipe adalah mengurangi
+pengulangan. Misalnya, kita mungkin memiliki tipe panjang seperti ini:</p>
+<pre><code class="language-rust ignore">Box&lt;dyn Fn() + Send + 'static&gt;</code></pre>
+<p>Menulis tipe panjang ini di tanda tangan fungsi dan sebagai anotasi
+tipe di seluruh kode bisa melelahkan dan rawan error. Bayangkan
+memiliki proyek penuh kode seperti di Listing 20-25.</p>
+<figure class="listing" id="listing-20-25">
+<pre class="playground"><code class="language-rust edition2024"><span class="boring">fn main() {
+</span>    let f: Box&lt;dyn Fn() + Send + 'static&gt; = Box::new(|| println!("hi"));
+
+    fn takes_long_type(f: Box&lt;dyn Fn() + Send + 'static&gt;) {
+        // --snip--
+    }
+
+    fn returns_long_type() -&gt; Box&lt;dyn Fn() + Send + 'static&gt; {
+        // --snip--
+<span class="boring">        Box::new(|| ())
+</span>    }
+<span class="boring">}</span></code></pre>
+<figcaption><a href="#listing-20-25">Listing 20-25</a>: Menggunakan tipe panjang di banyak tempat</figcaption>
+</figure>
+<p>Type alias membuat kode ini lebih mudah dikelola dengan mengurangi
+pengulangan. Di Listing 20-26, kami memperkenalkan alias bernama
+<code>Thunk</code> untuk tipe verbose dan bisa mengganti semua penggunaan tipe
+dengan alias pendek <code>Thunk</code>.</p>
+<figure class="listing" id="listing-20-26">
+<pre class="playground"><code class="language-rust edition2024"><span class="boring">fn main() {
+</span>    type Thunk = Box&lt;dyn Fn() + Send + 'static&gt;;
+
+    let f: Thunk = Box::new(|| println!("hi"));
+
+    fn takes_long_type(f: Thunk) {
+        // --snip--
+    }
+
+    fn returns_long_type() -&gt; Thunk {
+        // --snip--
+<span class="boring">        Box::new(|| ())
+</span>    }
+<span class="boring">}</span></code></pre>
+<figcaption><a href="#listing-20-26">Listing 20-26</a>: Memperkenalkan type alias, <code>Thunk</code>, untuk mengurangi pengulangan</figcaption>
+</figure>
+<p>Kode ini jauh lebih mudah dibaca dan ditulis! Memilih nama yang
+bermakna untuk type alias bisa membantu mengomunikasikan niat Anda
+sekaligus (<em>thunk</em> adalah kata untuk kode yang dievaluasi nanti,
+jadi nama ini cocok untuk closure yang disimpan).</p>
+<p>Type aliases juga sering digunakan dengan tipe <code>Result&lt;T, E&gt;</code> untuk
+mengurangi pengulangan. Pertimbangkan modul <code>std::io</code> di pustaka
+standar. Operasi I/O sering mengembalikan <code>Result&lt;T, E&gt;</code> untuk
+menangani situasi saat operasi gagal bekerja. Pustaka ini punya
+struct <code>std::io::Error</code> yang mewakili semua error I/O yang mungkin.
+Banyak fungsi di <code>std::io</code> akan mengembalikan <code>Result&lt;T, E&gt;</code> di mana
+<code>E</code> adalah <code>std::io::Error</code>, seperti fungsi-fungsi ini di trait
+<code>Write</code>:</p>
+<pre><code class="language-rust noplayground">use std::fmt;
+use std::io::Error;
+
+pub trait Write {
+    fn write(&amp;mut self, buf: &amp;[u8]) -&gt; Result&lt;usize, Error&gt;;
+    fn flush(&amp;mut self) -&gt; Result&lt;(), Error&gt;;
+
+    fn write_all(&amp;mut self, buf: &amp;[u8]) -&gt; Result&lt;(), Error&gt;;
+    fn write_fmt(&amp;mut self, fmt: fmt::Arguments) -&gt; Result&lt;(), Error&gt;;
+}</code></pre>
+<p><code>Result&lt;..., Error&gt;</code> diulang banyak. Oleh karena itu, <code>std::io</code> punya
+deklarasi type alias ini:</p>
+<pre><code class="language-rust noplayground"><span class="boring">use std::fmt;
+</span><span class="boring">
+</span>type Result&lt;T&gt; = std::result::Result&lt;T, std::io::Error&gt;;
+<span class="boring">
+</span><span class="boring">pub trait Write {
+</span><span class="boring">    fn write(&amp;mut self, buf: &amp;[u8]) -&gt; Result&lt;usize&gt;;
+</span><span class="boring">    fn flush(&amp;mut self) -&gt; Result&lt;()&gt;;
+</span><span class="boring">
+</span><span class="boring">    fn write_all(&amp;mut self, buf: &amp;[u8]) -&gt; Result&lt;()&gt;;
+</span><span class="boring">    fn write_fmt(&amp;mut self, fmt: fmt::Arguments) -&gt; Result&lt;()&gt;;
+</span><span class="boring">}</span></code></pre>
+<p>Karena deklarasi ini di modul <code>std::io</code>, kita bisa menggunakan alias
+fully qualified <code>std::io::Result&lt;T&gt;</code>; yaitu, <code>Result&lt;T, E&gt;</code> dengan
+<code>E</code> diisi sebagai <code>std::io::Error</code>. Tanda tangan fungsi trait <code>Write</code>
+akhirnya terlihat seperti ini:</p>
+<pre><code class="language-rust noplayground"><span class="boring">use std::fmt;
+</span><span class="boring">
+</span><span class="boring">type Result&lt;T&gt; = std::result::Result&lt;T, std::io::Error&gt;;
+</span><span class="boring">
+</span>pub trait Write {
+    fn write(&amp;mut self, buf: &amp;[u8]) -&gt; Result&lt;usize&gt;;
+    fn flush(&amp;mut self) -&gt; Result&lt;()&gt;;
+
+    fn write_all(&amp;mut self, buf: &amp;[u8]) -&gt; Result&lt;()&gt;;
+    fn write_fmt(&amp;mut self, fmt: fmt::Arguments) -&gt; Result&lt;()&gt;;
+}</code></pre>
+<p>Type alias membantu dalam dua cara: Ia membuat kode lebih mudah
+ditulis <em>dan</em> memberi kita interface yang konsisten di seluruh
+<code>std::io</code>. Karena itu alias, itu hanyalah <code>Result&lt;T, E&gt;</code> lain, yang
+berarti kita bisa menggunakan metode apa pun yang bekerja pada
+<code>Result&lt;T, E&gt;</code> dengannya, serta sintaks khusus seperti operator <code>?</code>.</p>
+<h3 id="never-type-yang-tidak-pernah-mengembalikan"><a class="header" href="#never-type-yang-tidak-pernah-mengembalikan">Never Type Yang Tidak Pernah Mengembalikan</a></h3>
+<p>Rust memiliki tipe khusus bernama <code>!</code> yang dikenal dalam terminologi
+teori tipe sebagai <em>empty type</em> karena tidak punya nilai. Kami
+lebih suka menyebutnya <em>never type</em> karena ia berdiri di tempat tipe
+pengembalian saat fungsi tidak akan pernah mengembalikan. Ini
+contohnya:</p>
+<pre><code class="language-rust noplayground">fn bar() -&gt; ! {
+    // --snip--
+<span class="boring">    panic!();
+</span>}</code></pre>
+<p>Kode ini dibaca sebagai “fungsi <code>bar</code> mengembalikan never.” Fungsi
+yang mengembalikan never disebut <em>diverging functions</em>. Kita tidak
+bisa membuat nilai bertipe <code>!</code>, jadi <code>bar</code> tidak mungkin pernah
+mengembalikan.</p>
+<p>Tapi apa gunanya tipe yang tidak bisa Anda buat nilainya? Ingat kode
+dari Listing 2-5, bagian dari game tebak angka; kami mereproduksi
+sedikit di sini di Listing 20-27.</p>
+<figure class="listing" id="listing-20-27">
+<pre><code class="language-rust ignore"><span class="boring">use std::cmp::Ordering;
+</span><span class="boring">use std::io;
+</span><span class="boring">
+</span><span class="boring">use rand::prelude::*;
+</span><span class="boring">
+</span><span class="boring">fn main() {
+</span><span class="boring">    println!("Guess the number!");
+</span><span class="boring">
+</span><span class="boring">    let secret_number = rand::rng().random_range(1..=100);
+</span><span class="boring">
+</span><span class="boring">    println!("The secret number is: {secret_number}");
+</span><span class="boring">
+</span><span class="boring">    loop {
+</span><span class="boring">        println!("Please input your guess.");
+</span><span class="boring">
+</span><span class="boring">        let mut guess = String::new();
+</span><span class="boring">
+</span><span class="boring">        // --snip--
+</span><span class="boring">
+</span><span class="boring">        io::stdin()
+</span><span class="boring">            .read_line(&amp;mut guess)
+</span><span class="boring">            .expect("Failed to read line");
+</span><span class="boring">
+</span>        let guess: u32 = match guess.trim().parse() {
+            Ok(num) =&gt; num,
+            Err(_) =&gt; continue,
+        };
+<span class="boring">
+</span><span class="boring">        println!("You guessed: {guess}");
+</span><span class="boring">
+</span><span class="boring">        // --snip--
+</span><span class="boring">
+</span><span class="boring">        match guess.cmp(&amp;secret_number) {
+</span><span class="boring">            Ordering::Less =&gt; println!("Too small!"),
+</span><span class="boring">            Ordering::Greater =&gt; println!("Too big!"),
+</span><span class="boring">            Ordering::Equal =&gt; {
+</span><span class="boring">                println!("You win!");
+</span><span class="boring">                break;
+</span><span class="boring">            }
+</span><span class="boring">        }
+</span><span class="boring">    }
+</span><span class="boring">}</span></code></pre>
+<figcaption><a href="#listing-20-27">Listing 20-27</a>: Sebuah <code>match</code> dengan arm yang berakhir di <code>continue</code></figcaption>
+</figure>
+<p>Saat itu, kami melewati beberapa detail di kode ini. Di bagian
+<a href="ch06-02-match.html#the-match-control-flow-construct">“Konstruksi Alur Kontrol <code>match</code>”</a><!-- ignore --> di Bab 6, kami membahas bahwa arm <code>match</code> harus
+semua mengembalikan tipe yang sama. Jadi, misalnya, kode berikut
+tidak bekerja:</p>
+<pre><code class="language-rust ignore does_not_compile"><span class="boring">fn main() {
+</span><span class="boring">    let guess = "3";
+</span>    let guess = match guess.trim().parse() {
+        Ok(_) =&gt; 5,
+        Err(_) =&gt; "hello",
+    };
+<span class="boring">}</span></code></pre>
+<p>Tipe <code>guess</code> dalam kode ini harus integer <em>dan</em> string, dan Rust
+mewajibkan <code>guess</code> hanya punya satu tipe. Jadi, apa yang dikembalikan
+<code>continue</code>? Bagaimana kami diizinkan mengembalikan <code>u32</code> dari satu
+arm dan punya arm lain yang berakhir dengan <code>continue</code> di Listing
+20-27?</p>
+<p>Seperti yang mungkin Anda duga, <code>continue</code> punya nilai <code>!</code>. Yaitu,
+saat Rust menghitung tipe <code>guess</code>, ia melihat kedua arm match, yang
+pertama dengan nilai <code>u32</code> dan yang kedua dengan nilai <code>!</code>. Karena
+<code>!</code> tidak pernah bisa punya nilai, Rust memutuskan bahwa tipe
+<code>guess</code> adalah <code>u32</code>.</p>
+<p>Cara formal mendeskripsikan perilaku ini adalah ekspresi bertipe <code>!</code>
+bisa di-coerce ke tipe lain apa pun. Kita diizinkan mengakhiri arm
+<code>match</code> ini dengan <code>continue</code> karena <code>continue</code> tidak mengembalikan
+nilai; alih-alih, ia memindahkan kontrol kembali ke atas loop, jadi
+di kasus <code>Err</code>, kita tidak pernah menetapkan nilai ke <code>guess</code>.</p>
+<p>Never type berguna dengan makro <code>panic!</code> juga. Ingat fungsi <code>unwrap</code>
+yang kami panggil pada nilai <code>Option&lt;T&gt;</code> untuk menghasilkan nilai atau
+panic dengan definisi ini:</p>
+<pre><code class="language-rust ignore"><span class="boring">enum Option&lt;T&gt; {
+</span><span class="boring">    Some(T),
+</span><span class="boring">    None,
+</span><span class="boring">}
+</span><span class="boring">
+</span><span class="boring">use crate::Option::*;
+</span><span class="boring">
+</span>impl&lt;T&gt; Option&lt;T&gt; {
+    pub fn unwrap(self) -&gt; T {
+        match self {
+            Some(val) =&gt; val,
+            None =&gt; panic!("called `Option::unwrap()` on a `None` value"),
+        }
+    }
+}</code></pre>
+<p>Di kode ini, hal yang sama terjadi seperti di <code>match</code> di Listing
+20-27: Rust melihat bahwa <code>val</code> bertipe <code>T</code> dan <code>panic!</code> bertipe <code>!</code>,
+jadi hasil dari keseluruhan ekspresi <code>match</code> adalah <code>T</code>. Kode ini
+bekerja karena <code>panic!</code> tidak menghasilkan nilai; ia mengakhiri
+program. Di kasus <code>None</code>, kita tidak akan mengembalikan nilai dari
+<code>unwrap</code>, jadi kode ini valid.</p>
+<p>Satu ekspresi terakhir yang punya tipe <code>!</code> adalah loop:</p>
+<pre><code class="language-rust ignore"><span class="boring">fn main() {
+</span>    print!("forever ");
+
+    loop {
+        print!("and ever ");
+    }
+<span class="boring">}</span></code></pre>
+<p>Di sini, loop tidak pernah berakhir, jadi <code>!</code> adalah nilai ekspresi.
+Akan tetapi, ini tidak akan benar jika kita menyertakan <code>break</code>,
+karena loop akan berhenti saat sampai ke <code>break</code>.</p>
+<h3 id="dynamically-sized-types-dan-trait-sized"><a class="header" href="#dynamically-sized-types-dan-trait-sized">Dynamically Sized Types dan Trait <code>Sized</code></a></h3>
+<p>Rust butuh mengetahui detail tertentu tentang tipe-tipenya, seperti
+berapa ruang yang dialokasikan untuk nilai tipe tertentu. Ini
+meninggalkan satu sudut sistem tipenya sedikit membingungkan pada
+awalnya: konsep <em>dynamically sized types</em>. Kadang disebut <em>DSTs</em> atau
+<em>unsized types</em>, tipe-tipe ini memungkinkan kita menulis kode
+menggunakan nilai yang ukurannya hanya bisa kita ketahui pada
+runtime.</p>
+<p>Mari selami detail tipe dynamically sized yang disebut <code>str</code>, yang
+kami gunakan sepanjang buku. Itu benar, bukan <code>&amp;str</code>, tapi <code>str</code>
+sendiri, adalah DST. Di banyak kasus, seperti saat menyimpan teks
+yang dimasukkan pengguna, kita tidak bisa tahu panjang string sampai
+runtime. Artinya kita tidak bisa membuat variabel bertipe <code>str</code>,
+dan tidak bisa mengambil argumen bertipe <code>str</code>. Pertimbangkan kode
+berikut, yang tidak bekerja:</p>
+<pre><code class="language-rust ignore does_not_compile"><span class="boring">fn main() {
+</span>    let s1: str = "Hello there!";
+    let s2: str = "How's it going?";
+<span class="boring">}</span></code></pre>
+<p>Rust butuh tahu berapa memori yang dialokasikan untuk nilai apa pun
+dari tipe tertentu, dan semua nilai dari sebuah tipe harus menggunakan
+jumlah memori yang sama. Jika Rust mengizinkan kita menulis kode ini,
+dua nilai <code>str</code> ini harus memakan ruang yang sama. Tapi mereka
+punya panjang berbeda: <code>s1</code> butuh 12 byte penyimpanan dan <code>s2</code> butuh
+15. Inilah mengapa tidak mungkin membuat variabel yang menampung
+dynamically sized type.</p>
+<p>Jadi, apa yang kita lakukan? Di kasus ini, Anda sudah tahu jawabannya:
+Kita membuat tipe <code>s1</code> dan <code>s2</code> menjadi string slice (<code>&amp;str</code>) alih-alih
+<code>str</code>. Ingat dari bagian <a href="ch04-03-slices.html#string-slices">“String Slices”</a><!-- ignore -->
+di Bab 4 bahwa struktur data slice hanya menyimpan posisi awal dan
+panjang slice. Jadi, meski <code>&amp;T</code> adalah nilai tunggal yang menyimpan
+alamat memori di mana <code>T</code> berada, string slice adalah <em>dua</em> nilai:
+alamat <code>str</code> dan panjangnya. Sebagai gantinya, kita bisa mengetahui
+ukuran nilai string slice pada waktu kompilasi: Ia dua kali panjang
+<code>usize</code>. Yaitu, kita selalu tahu ukuran string slice, tidak peduli
+sepanjang apa string yang dirujuknya. Secara umum, inilah cara
+dynamically sized types digunakan di Rust: Mereka memiliki tambahan
+metadata yang menyimpan ukuran informasi dinamis. Aturan emas
+dynamically sized types adalah kita harus selalu meletakkan nilai
+dynamically sized types di balik pointer semacamnya.</p>
+<p>Kita bisa mengkombinasikan <code>str</code> dengan semua jenis pointer: misalnya,
+<code>Box&lt;str&gt;</code> atau <code>Rc&lt;str&gt;</code>. Faktanya, Anda sudah melihat ini sebelumnya
+tapi dengan dynamically sized type yang berbeda: trait. Setiap trait
+adalah dynamically sized type yang bisa kita rujuk dengan menggunakan
+nama trait. Di bagian <a href="ch18-02-trait-objects.html#using-trait-objects-to-abstract-over-shared-behavior">“Menggunakan Trait Objects untuk Mengabstraksi
+Perilaku Bersama”</a><!--
+ignore --> di Bab 18, kami menyebutkan bahwa untuk menggunakan trait
+sebagai trait objects, kita harus meletakkannya di balik pointer,
+seperti <code>&amp;dyn Trait</code> atau <code>Box&lt;dyn Trait&gt;</code> (<code>Rc&lt;dyn Trait&gt;</code> juga
+akan bekerja).</p>
+<p>Untuk bekerja dengan DST, Rust menyediakan trait <code>Sized</code> untuk
+menentukan apakah ukuran tipe diketahui pada waktu kompilasi. Trait
+ini secara otomatis diimplementasikan untuk semua hal yang ukurannya
+diketahui pada waktu kompilasi. Di samping itu, Rust secara implisit
+menambahkan bound pada <code>Sized</code> ke setiap fungsi generik. Yaitu,
+definisi fungsi generik seperti ini:</p>
+<pre><code class="language-rust ignore">fn generic&lt;T&gt;(t: T) {
+    // --snip--
+}</code></pre>
+<p>sebenarnya diperlakukan seolah-olah kita menulis ini:</p>
+<pre><code class="language-rust ignore">fn generic&lt;T: Sized&gt;(t: T) {
+    // --snip--
+}</code></pre>
+<p>Secara default, fungsi generik hanya akan bekerja pada tipe yang
+memiliki ukuran diketahui pada waktu kompilasi. Akan tetapi, Anda
+bisa menggunakan sintaks khusus berikut untuk melonggarkan batasan
+ini:</p>
+<pre><code class="language-rust ignore">fn generic&lt;T: ?Sized&gt;(t: &amp;T) {
+    // --snip--
+}</code></pre>
+<p>Trait bound pada <code>?Sized</code> berarti “<code>T</code> mungkin atau tidak <code>Sized</code>,”
+dan notasi ini meng-override default bahwa tipe generik harus punya
+ukuran diketahui pada waktu kompilasi. Sintaks <code>?Trait</code> dengan arti
+ini hanya tersedia untuk <code>Sized</code>, bukan trait lain.</p>
+<p>Perhatikan juga bahwa kami menukar tipe parameter <code>t</code> dari <code>T</code> ke
+<code>&amp;T</code>. Karena tipe mungkin tidak <code>Sized</code>, kita perlu menggunakannya
+di balik semacam pointer. Di kasus ini, kami memilih referensi.</p>
+<p>Selanjutnya, kami akan membahas fungsi dan closure!</p>
+
+                    </main>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+                            <a rel="prev" href="ch20-02-advanced-traits.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                                <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M41.4 233.4c-12.5 12.5-12.5 32.8 0 45.3l160 160c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3L109.3 256 246.6 118.6c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0l-160 160z"/></svg></span>
+                            </a>
+
+                            <a rel="next prefetch" href="ch20-04-advanced-functions-and-closures.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                                <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M278.6 233.4c12.5 12.5 12.5 32.8 0 45.3l-160 160c-12.5 12.5-32.8 12.5-45.3 0s-12.5-32.8 0-45.3L210.7 256 73.4 118.6c-12.5-12.5-12.5-32.8 0-45.3s32.8-12.5 45.3 0l160 160z"/></svg></span>
+                            </a>
+
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+                    <a rel="prev" href="ch20-02-advanced-traits.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                        <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M41.4 233.4c-12.5 12.5-12.5 32.8 0 45.3l160 160c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3L109.3 256 246.6 118.6c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0l-160 160z"/></svg></span>
+                    </a>
+
+                    <a rel="next prefetch" href="ch20-04-advanced-functions-and-closures.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                        <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M278.6 233.4c12.5 12.5 12.5 32.8 0 45.3l-160 160c-12.5 12.5-32.8 12.5-45.3 0s-12.5-32.8 0-45.3L210.7 256 73.4 118.6c-12.5-12.5-12.5-32.8 0-45.3s32.8-12.5 45.3 0l160 160z"/></svg></span>
+                    </a>
+            </nav>
+
+        </div>
+
+        <template id=fa-eye><span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M288 32c-80.8 0-145.5 36.8-192.6 80.6C48.6 156 17.3 208 2.5 243.7c-3.3 7.9-3.3 16.7 0 24.6C17.3 304 48.6 356 95.4 399.4C142.5 443.2 207.2 480 288 480s145.5-36.8 192.6-80.6c46.8-43.5 78.1-95.4 93-131.1c3.3-7.9 3.3-16.7 0-24.6c-14.9-35.7-46.2-87.7-93-131.1C433.5 68.8 368.8 32 288 32zM432 256c0 79.5-64.5 144-144 144s-144-64.5-144-144s64.5-144 144-144s144 64.5 144 144zM288 192c0 35.3-28.7 64-64 64c-11.5 0-22.3-3-31.6-8.4c-.2 2.8-.4 5.5-.4 8.4c0 53 43 96 96 96s96-43 96-96s-43-96-96-96c-2.8 0-5.6 .1-8.4 .4c5.3 9.3 8.4 20.1 8.4 31.6z"/></svg></span></template>
+        <template id=fa-eye-slash><span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M38.8 5.1C28.4-3.1 13.3-1.2 5.1 9.2S-1.2 34.7 9.2 42.9l592 464c10.4 8.2 25.5 6.3 33.7-4.1s6.3-25.5-4.1-33.7L525.6 386.7c39.6-40.6 66.4-86.1 79.9-118.4c3.3-7.9 3.3-16.7 0-24.6c-14.9-35.7-46.2-87.7-93-131.1C465.5 68.8 400.8 32 320 32c-68.2 0-125 26.3-169.3 60.8L38.8 5.1zM223.1 149.5C248.6 126.2 282.7 112 320 112c79.5 0 144 64.5 144 144c0 24.9-6.3 48.3-17.4 68.7L408 294.5c5.2-11.8 8-24.8 8-38.5c0-53-43-96-96-96c-2.8 0-5.6 .1-8.4 .4c5.3 9.3 8.4 20.1 8.4 31.6c0 10.2-2.4 19.8-6.6 28.3l-90.3-70.8zm223.1 298L373 389.9c-16.4 6.5-34.3 10.1-53 10.1c-79.5 0-144-64.5-144-144c0-6.9 .5-13.6 1.4-20.2L83.1 161.5C60.3 191.2 44 220.8 34.5 243.7c-3.3 7.9-3.3 16.7 0 24.6c14.9 35.7 46.2 87.7 93 131.1C174.5 443.2 239.2 480 320 480c47.8 0 89.9-12.9 126.2-32.5z"/></svg></span></template>
+        <template id=fa-copy><span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M502.6 70.63l-61.25-61.25C435.4 3.371 427.2 0 418.7 0H255.1c-35.35 0-64 28.66-64 64l.0195 256C192 355.4 220.7 384 256 384h192c35.2 0 64-28.8 64-64V93.25C512 84.77 508.6 76.63 502.6 70.63zM464 320c0 8.836-7.164 16-16 16H255.1c-8.838 0-16-7.164-16-16L239.1 64.13c0-8.836 7.164-16 16-16h128L384 96c0 17.67 14.33 32 32 32h47.1V320zM272 448c0 8.836-7.164 16-16 16H63.1c-8.838 0-16-7.164-16-16L47.98 192.1c0-8.836 7.164-16 16-16H160V128H63.99c-35.35 0-64 28.65-64 64l.0098 256C.002 483.3 28.66 512 64 512h192c35.2 0 64-28.8 64-64v-32h-47.1L272 448z"/></svg></span></template>
+        <template id=fa-play><span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 384 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M73 39c-14.8-9.1-33.4-9.4-48.5-.9S0 62.6 0 80V432c0 17.4 9.4 33.4 24.5 41.9s33.7 8.1 48.5-.9L361 297c14.3-8.7 23-24.2 23-41s-8.7-32.2-23-41L73 39z"/></svg></span></template>
+        <template id=fa-clock-rotate-left><span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M75 75L41 41C25.9 25.9 0 36.6 0 57.9V168c0 13.3 10.7 24 24 24H134.1c21.4 0 32.1-25.9 17-41l-30.8-30.8C155 85.5 203 64 256 64c106 0 192 86 192 192s-86 192-192 192c-40.8 0-78.6-12.7-109.7-34.4c-14.5-10.1-34.4-6.6-44.6 7.9s-6.6 34.4 7.9 44.6C151.2 495 201.7 512 256 512c141.4 0 256-114.6 256-256S397.4 0 256 0C185.3 0 121.3 28.7 75 75zm181 53c-13.3 0-24 10.7-24 24V256c0 6.4 2.5 12.5 7 17l72 72c9.4 9.4 24.6 9.4 33.9 0s9.4-24.6 0-33.9l-65-65V152c0-13.3-10.7-24-24-24z"/></svg></span></template>
+
+
+
+        <script>
+            window.playground_copyable = true;
+        </script>
+
+
+        <script src="elasticlunr-ef4e11c1.min.js"></script>
+        <script src="mark-09e88c2c.min.js"></script>
+        <script src="searcher-09f2665d.js"></script>
+
+        <script src="clipboard-1626706a.min.js"></script>
+        <script src="highlight-abc7f01d.js"></script>
+        <script src="book-c22b7243.js"></script>
+
+        <!-- Custom JS scripts -->
+        <script src="ferris-2317480c.js"></script>
+
+
+
+    </div>
+    </body>
+</html>
