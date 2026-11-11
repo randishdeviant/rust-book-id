@@ -292,7 +292,7 @@ seperti <code>1_000</code>, yang akan memiliki nilai yang sama seperti jika Anda
 yakin, default Rust umumnya tempat yang baik untuk memulai: Tipe integer
 default ke <code>i32</code>. Situasi utama di mana Anda akan menggunakan <code>isize</code> atau
 <code>usize</code> adalah saat mengindeks beberapa jenis koleksi.</p>
-<section class="note" aria-role="note">
+<blockquote>
 <h5 id="overflow-integer"><a class="header" href="#overflow-integer">Overflow Integer</a></h5>
 <p>Katakanlah Anda memiliki variabel bertipe <code>u8</code> yang bisa menampung nilai antara
 0 dan 255. Jika Anda mencoba mengubah variabel ke nilai di luar rentang
@@ -301,9 +301,7 @@ salah satu dari dua perilaku. Saat Anda mengompilasi dalam mode debug, Rust
 menyertakan pemeriksaan overflow integer yang menyebabkan program Anda <em>panic</em> di
 runtime jika perilaku ini terjadi. Rust menggunakan istilah <em>panicking</em> ketika
 program keluar dengan kesalahan; kami akan membahas panic lebih mendalam di
-bagian <a href="ch09-01-unrecoverable-errors-with-panic.html">“Kesalahan Tak Terpulihkan dengan <code>panic!</code>”</a>&lt;!–</p>
-<blockquote>
-<p>ignore –&gt; di Bab 9.</p>
+bagian <a href="ch09-01-unrecoverable-errors-with-panic.html">“Kesalahan Tak Terpulihkan dengan <code>panic!</code>”</a>di Bab 9.</p>
 
 <p>Saat Anda mengompilasi dalam mode release dengan flag <code>--release</code>, Rust
 <em>tidak</em> menyertakan pemeriksaan overflow integer yang menyebabkan panic.
@@ -566,7 +564,7 @@ jenis kesalahan ini dengan segera keluar alih-alih mengizinkan akses memori dan
 melanjutkan. Bab 9 membahas lebih lanjut penanganan kesalahan Rust dan bagaimana
 Anda bisa menulis kode yang aman, mudah dibaca, yang tidak panic dan tidak
 mengizinkan akses memori tidak valid.</p>
-</section>
+
                     </main>
 
                     <nav class="nav-wrapper" aria-label="Page navigation">
